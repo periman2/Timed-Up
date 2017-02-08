@@ -42,7 +42,7 @@ router.get("/getarrays", function(req, res){
 //get group's arrays
 
 router.get("/:groupid/getgrouparrays", function(req, res){
-    groupid = req.params.groupid;
+    var groupid = req.params.groupid;
     Groups.findById(groupid).populate("groupies").exec()
     .then(function(group){
         console.log("the groupies is:",group.groupies);
@@ -69,7 +69,7 @@ router.post("/delarray", function(req, res){
     var arrayid = req.body.arrayid;
     Friendlist.find({authid: req.user._id}).exec()
     .then(function(list){
-        newlist = list[0];
+        var newlist = list[0];
         for(var i = newlist.arrays.length - 1; i >= 0; i--){
             if(newlist.arrays[i]._id.equals(arrayid)){
                 newlist.arrays.splice(i, 1);

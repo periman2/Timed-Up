@@ -16,7 +16,7 @@ $(document).ready(function(){
     function getmyarrays(){
         $.ajax({
             type: 'GET',
-            url: "http://localhost:3000/getarrays",
+            url: "/getarrays",
             success: function(data){
                 console.log(data.length) 
             },
@@ -66,7 +66,7 @@ $(document).ready(function(){
     function getgrouparrays(){
         $.ajax({
             type: "GET", 
-            url: "http://localhost:3000/" + groupid + "/getgrouparrays",
+            url: groupid + "/getgrouparrays",
             success: function(allarrays){
                 editarrays(allarrays);
             },
@@ -119,7 +119,7 @@ $(document).ready(function(){
     function deletearray(arrayid) {
         $.ajax({
             type: "POST",
-            url: "http://localhost:3000/delarray",
+            url: "/delarray",
             data: {arrayid: arrayid},
             success: function(data){
                 console.log("success");

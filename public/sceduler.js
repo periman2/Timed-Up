@@ -158,7 +158,7 @@ $(document).ready(function(){
     function getarrays(){
         $.ajax({
             type: 'GET',
-            url: "http://localhost:3000/getarrays",
+            url: "/getarrays",
             success: function(data){
                 //console.log(data.length);
                 var newdata = convertarrays(data);
@@ -178,7 +178,7 @@ $(document).ready(function(){
         var now = moment(newdate).toISOString();
         $.ajax({
             type:"POST",
-            url:"http://localhost:3000/addarray",
+            url:"/addarray",
             data:{value: array, time: now},
             success: function(data){
                 console.log("done it!");

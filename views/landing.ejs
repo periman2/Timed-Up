@@ -46,13 +46,14 @@
             <% if(list.groups.length > 0) { %>
                 <h3>You are included in the following groups:</h3>
                 <% list.groups.forEach(function(group){ %>
-                    <p><%= group.groupid.name %> made by <%= group.authid.username %></p>
+                    <a href="/<%= group._id %>" class="btn btn-success"><h3><%= group.groupid.name %> </h3><h4>made by </h4><h3><%= group.authid.username %></h3></a>
                 <% }) %>
             <% } %>
         </div>
     <% } else { %>
     <h2> Please register or login</h2>
     <% } %>
+    <script type="text/javascript" src="/javascript.js"></script>
 </div>
 
 

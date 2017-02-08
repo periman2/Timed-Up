@@ -44,7 +44,7 @@ $(document).ready(function(){
     function getgroups(){
         $.ajax({
             type:"GET",
-            url: "http://localhost:3000/getmygroups",
+            url: "/getmygroups",
             success: function(groups) {
                 creategroups(groups);
             },
@@ -55,10 +55,8 @@ $(document).ready(function(){
     }
 
     var friendlist = $("#friendlist").html();
-    
-    if($(location).attr("href") === "http://localhost:3000/" && friendlist !== undefined) {
-        getgroups();
-    }
+
+    getgroups();
     
 
     $("#addgroup").click(function(){
@@ -67,7 +65,7 @@ $(document).ready(function(){
 
             $.ajax({
                 type: "POST",
-                url: "http://localhost:3000/creategroup",
+                url: "/creategroup",
                 data: name,
                 success: function(groups) {
                     if(groups){
@@ -93,11 +91,11 @@ $(document).ready(function(){
         console.log(friendid);
         $.ajax({
             type: "DELETE",
-            url: "http://localhost:3000/deletefriend", 
+            url: "/deletefriend", 
             data: {friendid: friendid},
             success: function(result){
                 console.log("deleted!");
-                window.location.href = "http://localhost:3000/"
+                window.location.href = "/"
             }
         })
         return false;
@@ -109,7 +107,7 @@ $(document).ready(function(){
         console.log("name : " , groupname);
         $.ajax({
             type: "DELETE",
-            url: "http://localhost:3000/deletegroup", 
+            url: "/deletegroup", 
             data: {groupname: groupname},
             success: function(result){
                 if(result) {
@@ -117,7 +115,7 @@ $(document).ready(function(){
                     return console.log("deleted group!");
                 }
                 // console.log("not deleted group!");
-                // window.location.href = "http://localhost:3000/"
+                // window.location.href = "/"
             }
         })
         return false;
@@ -130,7 +128,7 @@ $(document).ready(function(){
         console.log( groupname, groupiename);
         $.ajax({
             type: "POST",
-            url: "http://localhost:3000/deletegroupie", 
+            url: "/deletegroupie", 
             data: {groupiename : groupiename , groupname: groupname},
             success: function(result){
                 if(result) {
@@ -138,7 +136,7 @@ $(document).ready(function(){
                     return console.log("deleted groupie!");
                 }
                 //console.log("not deleted group!");
-                //window.location.href = "http://localhost:3000/"
+                //window.location.href = "/"
             },
             error: function(err){
                 console.log(err);
@@ -167,11 +165,11 @@ $(document).ready(function(){
         $(".activated .title").each(function(i, element){
             groupnames.push($(this).html());
         });
-        console.log(groupnames);
+        console.log("groupnames", groupnames);
         if(groupnames.length > 0) {
             $.ajax({
                 type: "POST",
-                url: "http://localhost:3000/addgroupie",
+                url: "/addgroupie",
                 data: {friendid: friendid, groupnames:groupnames},
                 success: function(result){
                     getgroups();

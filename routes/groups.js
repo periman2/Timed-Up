@@ -30,7 +30,7 @@ router.delete("/deletegroup", function(req, res){
                             console.log("friendlist after removal", updatedlist)
                             Groups.findByIdAndRemove(group[0]._id).exec()
                             .then(function(err){
-                                return callback();
+                                callback();
                                 
 
                             }).catch(function(err){
@@ -69,21 +69,14 @@ router.post("/addgroupie", function(req, res){
     Groups.find({authid: req.user._id, name:{$in: req.body.groupnames}}).exec()
     .then(function(groups){
         async.forEachOf(groups, function(group, keys, callback){
-            newgroup = group;
-            newgroup.groupies.push(req.body.friendid);
-            Groups.update({authid: req.user._id, name:group.name}, newgroup).exec()
+            Groups.update({authid: req.user._id, name:group.name}, {$push: {groupies: req.body.friendid}}).exec()
             .then(function(updatedgroup){
-                //console.log(updatedgroup);
                 Friendlist.find({authid: req.body.friendid}).exec()
                 .then(function(list){
-                    newlist = list[0];
-                    thisgroup = {authid: group.authid, groupid: group._id};
-                    newlist.groups.push(thisgroup);
-                    //console.log("newlist: ", newlist);
-                    Friendlist.findByIdAndUpdate(newlist._id, newlist, {new: true}).exec()
+                    Friendlist.findByIdAndUpdate(newlist._id, {$push: {groups: {authid: group.authid, groupid: group._id}}}).exec()
                     .then(function(updatedlist){
-                        //console.log("updatedlist: ", updatedlist);
-                        return callback();
+                        console.log("updatedlist: ", updatedlist);
+                        callback();
                     }).catch(function(err){
                         throw err;
                     });

@@ -44,7 +44,7 @@ router.put("/search", function(req, res){
 router.delete("/deletefriend", function(req, res){
     Friendlist.find({authid: req.user._id}).exec()
     .then(function(list){
-        newlist = list[0];
+        var newlist = list[0];
         var friendid = req.body.friendid;
         var index = newlist.friends.indexOf(friendid);
         newlist.friends.splice(index, 1);

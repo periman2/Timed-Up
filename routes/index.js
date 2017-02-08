@@ -22,7 +22,7 @@ router.get("/", function(req, res) {
 });
 
 router.get('/favicon.ico', function(req, res) {
-    res.send(204);
+    res.sendStatus(204);
 });
 
 
