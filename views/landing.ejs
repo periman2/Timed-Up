@@ -1,0 +1,59 @@
+
+<% include partials/header %>
+
+
+
+<div class="container">
+    <% if(user) { %>
+        <div class="times">
+            <a href="/myscedule" class="btn btn-success">My Scedule</a>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                <div id="friendlist">
+                    <h3>My friendList</h3>
+                    <h4>Add friend by username.</h4>
+                    <form class="form-group" action="/search?_method=PUT" method="POST">
+                        <input type="text" name="nfriend[friendname]" class="form-control input-md" placeholder="Add friend">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default">Search</button>
+                        </span>
+                    </form>
+                    <ul>
+                    <% list.friends.forEach(function(friend){ %>
+                        <li class="left">
+                            <i class="fa fa-times deletelist" aria-hidden="true"></i>
+                            <p class="hidden friend"><%= friend._id %></p>
+                            <p class="friendname"><%= friend.username %></p>
+                        </li>
+                    <% }) %>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-8">
+                <h3>My Groups</h3>
+                <h4>Group name:</h4>
+                <form action="#" class="form-group">
+                    <input type="text" name="groupname" id="groupname" class="form-control input-md" placeholder="Group name" required>
+                    <button id="addgroup" class="btn btn-default">Create Group</button>
+                </form>
+                <div id="groups">
+                
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <% if(list.groups.length > 0) { %>
+                <h3>You are included in the following groups:</h3>
+                <% list.groups.forEach(function(group){ %>
+                    <p><%= group.groupid.name %> made by <%= group.authid.username %></p>
+                <% }) %>
+            <% } %>
+        </div>
+    <% } else { %>
+    <h2> Please register or login</h2>
+    <% } %>
+</div>
+
+
+<% include partials/footer %>

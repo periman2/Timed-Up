@@ -1,0 +1,32 @@
+<% include partials/header %>
+
+
+<div class="container">
+
+    <h1 id="titlesc">Welcome to your scedule page, <%= user.username %></h1>
+
+    <div class="row">
+        <div class="col-xs-6">
+            <form class="form group">
+                <label class="label">From</label>
+                <input class="form-control" type="text" class="inp" name="daterange" value="" />
+            </form>
+        </div>
+        <div class="col-xs-6">
+            <form class="form group">
+                <label class="label">To</label>
+                <input class="form-control" type="text" class="inp" name="daterange2" value="" />
+            </form>
+        </div>
+        
+    </div>
+    <button class="btn btn-success formbut" id="submit">Submit Range</button>
+    <br>
+    <a class="btn btn-warning formbut" href="/">Go back</a>
+    <div id="arrays">
+    </div>
+
+</div>
+
+<script type="text/javascript" src="/sceduler.js"></script>
+<% include partials/footer %>

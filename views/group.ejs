@@ -1,0 +1,15 @@
+<% include partials/header %>
+
+
+<div class="container">
+    <h2>Welcome to group <%= group.name %></h2>
+    <h2>Group Members:</h2>
+    <% group.groupies.forEach(function(groupie){ %>
+        <h3><%= groupie.username %></h3>
+    <% }) %>
+    <div class="besttimes">
+    </div>
+</div>
+
+<script type="text/javascript" src="/timecalc.js"></script>
+<% include partials/footer %>

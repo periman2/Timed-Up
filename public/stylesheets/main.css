@@ -1,0 +1,79 @@
+body {
+    background-color:rgba(33, 33, 33, 1);
+    color: rgba(176, 176, 176, 1);
+}
+
+#groups {
+    min-height: 60px;
+    color: rgba(204, 204, 204, 1);
+    font-size: 18px;
+    /*overflow: scroll;*/
+}
+
+/*#groups ul {
+    background-color:rgba(184, 184, 184, 1);
+    width: 10%;
+    min-height: 30px;
+}*/
+
+.hidden {
+    display: none;
+}
+
+.deletelist:hover {
+    cursor: pointer;
+}
+
+.deletelist{
+    float: left;
+}
+
+.title:hover {
+    cursor: pointer;
+}
+
+.deletegroup:hover {
+    cursor: pointer;
+}
+
+.friendname:hover {
+    cursor: pointer;
+}
+
+.friendname {
+    float: left;
+}
+
+.col-xs-8 form {
+    width: 50%;
+    display: inline-block;
+}
+
+.col-xs-4 form {
+    width: 70%;
+    display: inline-block;
+}
+
+#friendlist li {
+    font-size: 30px;
+    clear: both;
+    
+}
+
+li {
+    list-style-type: none;
+}
+
+.label{
+    font-size: 40px;
+    text-align: center;
+}
+
+.formbut {
+    margin: 30px;
+}
+
+#titlesc {
+    font-size:  50px;
+    color: white;
+}
