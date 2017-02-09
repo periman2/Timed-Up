@@ -103,7 +103,7 @@ $(document).ready(function(){
     function deletearray(arrayid) {
         $.ajax({
             type: "POST",
-            url: "http://localhost:3000/delarray",
+            url: "/delarray",
             data: {arrayid: arrayid},
             success: function(data){
                 console.log("success");
