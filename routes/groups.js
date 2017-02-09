@@ -6,6 +6,7 @@ var User = require("../models/user");
 var Friendlist = require("../models/friends");
 var Groups = require("../models/groups")
 var async = require("async");
+var mongoose    = require("mongoose");
 
 //delete group
 router.delete("/deletegroup", function(req, res){
@@ -31,8 +32,6 @@ router.delete("/deletegroup", function(req, res){
                             Groups.findByIdAndRemove(group[0]._id).exec()
                             .then(function(err){
                                 callback();
-                                
-
                             }).catch(function(err){
                                 throw err;
                             });
@@ -71,15 +70,10 @@ router.post("/addgroupie", function(req, res){
         async.forEachOf(groups, function(group, keys, callback){
             Groups.update({authid: req.user._id, name:group.name}, {$push: {groupies: req.body.friendid}}).exec()
             .then(function(updatedgroup){
-                Friendlist.find({authid: req.body.friendid}).exec()
-                .then(function(list){
-                    Friendlist.findByIdAndUpdate(newlist._id, {$push: {groups: {authid: group.authid, groupid: group._id}}}).exec()
-                    .then(function(updatedlist){
-                        console.log("updatedlist: ", updatedlist);
-                        callback();
-                    }).catch(function(err){
-                        throw err;
-                    });
+                Friendlist.findOneAndUpdate({authid: req.body.friendid}, {$push: {groups: {authid: group.authid, groupid: group._id}}}).exec()
+                .then(function(updatedlist){
+                    console.log("updatedlist: ", updatedlist);
+                    callback();
                 }).catch(function(err){
                     throw err;
                 });

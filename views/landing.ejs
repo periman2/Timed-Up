@@ -42,11 +42,11 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="incgroups">
             <% if(list.groups.length > 0) { %>
                 <h3>You are included in the following groups:</h3>
                 <% list.groups.forEach(function(group){ %>
-                    <a href="/<%= group._id %>" class="btn btn-success"><h3><%= group.groupid.name %> </h3><h4>made by </h4><h3><%= group.authid.username %></h3></a>
+                    <button class="btn btn-success inc"><h3 class="firstone"><%= group.groupid.name %> </h3><h4>made by </h4><h3><%= group.authid.username %></h3><h3 class='hidden authorid'><%= group.authid._id %></h3><h3 class='hidden groupid'><%= group.groupid._id %></h3></button>
                 <% }) %>
             <% } %>
         </div>

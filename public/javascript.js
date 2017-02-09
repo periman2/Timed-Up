@@ -18,7 +18,8 @@ $(document).ready(function(){
                 "</p>");
             });
 
-            $("#" + group._id).append("<br><hr><a href='/" + group._id + "' class='btn btn-success grouppage' >Show Group Page</a>")
+            $("#" + group._id).append("<br><hr><a href='/" + group._id + "' class='btn btn-success grouppage' >Show Group Page</a>");
+            console.log(group._id, typeof group._id);
             $("#" + group._id).css({
                 "background-color": "rgba(184, 184, 184, 1)",
                 "color": "rgba(56, 56, 56, 1)" ,
@@ -179,6 +180,27 @@ $(document).ready(function(){
             return
         }
 
+    });
+
+    //get included groups links
+    $(".incgroups").on("click", ".inc", function() {
+        var name = $(this).children(".firstone").html();
+        var authid = $(this).children(".authorid").html();
+        var groupid = $(this).children(".groupid").html();
+        console.log(name, authid, groupid);
+        var url = "/" + groupid;
+        window.location.href = url;
+        // $.ajax({
+        //     type:"GET", 
+        //     url: url,
+        //     success: function(data){
+        //         console.log(data);
+        //     },
+        //     error: function(err){
+        //         console.log(err);
+        //     }
+        // })
+        // return false;
     });
 
 

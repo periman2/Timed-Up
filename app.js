@@ -19,7 +19,7 @@ arrayRoutes = require("./routes/arrays");
     
 
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/coordinator21");
+mongoose.connect("mongodb://localhost/coordinator25");
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));

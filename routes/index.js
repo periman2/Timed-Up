@@ -6,6 +6,7 @@ var User = require("../models/user");
 var Friendlist = require("../models/friends");
 var Groups = require("../models/groups")
 var async = require("async");
+var mongoose    = require("mongoose");
 
 router.get("/", function(req, res) {
     if(req.user !== undefined){
@@ -85,11 +86,12 @@ router.get("/register", function(req, res){
 
 
 router.get("/:groupid", isloggedin,function(req, res){
-    Groups.findById(req.params.groupid).populate("groupies").exec()
+    groupid = req.params.groupid;
+    console.log(groupid, typeof groupid);
+    Groups.findById(groupid).populate("groupies").exec()
     .then(function(group){
+        console.log(group)
         res.render("group", {group: group});
-    }).catch(function(err){
-        throw err;
     })
 })
 

@@ -157,10 +157,7 @@ $(document).ready(function(){
           return [];
         }
       }
-    }
-
-    // var person1 = [[13.91666, 18.91666]];
-    // var person2 = [[13.51666, 29.51666], [13.51666, 29.51666]];
+    }var person2 = [[13.51666, 29.51666], [13.51666, 29.51666]];
 
     function comparearrays(array1, array2) {
       var matched = [];
@@ -186,10 +183,5 @@ $(document).ready(function(){
       }
       return solvedarray;
     }
-
-    // var end = finalcompare(person1, person2);
-
-  //  console.log("finalllll:", finalcompare(person1, person2));
-
 
 });  

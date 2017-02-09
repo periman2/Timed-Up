@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "async": "^2.1.4",
-    "asynch": "^0.5.2",
     "body-parser": "^1.16.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
@@ -19,7 +18,8 @@
     "express-session": "^1.15.0",
     "method-override": "^2.3.7",
     "moment": "^2.17.1",
-    "mongoose": "^4.7.2",
+    "mongodb": "^2.2.22",
+    "mongoose": "^4.8.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^4.0.0"
