@@ -53,9 +53,8 @@ app.use(friendRoutes);
 app.use(groupRoutes);
 app.use(arrayRoutes);
 app.use(indexRoutes);
-mongodb = 
-//mongoose.connect("mongodb://localhost/coordinator25");
-mongoose.connect("mongodb://myname:wkVRAhWELq@ds145639.mlab.com:45639/timedup");
+
+mongoose.connect(process.env.DATABASEURL);
 var PORT = process.env.PORT || 3000;
 
 
