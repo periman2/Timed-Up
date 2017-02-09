@@ -19,7 +19,7 @@ arrayRoutes = require("./routes/arrays");
     
 
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/coordinator25");
+
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
@@ -53,12 +53,16 @@ app.use(friendRoutes);
 app.use(groupRoutes);
 app.use(arrayRoutes);
 app.use(indexRoutes);
+//mongoose.connect("mongodb://localhost/coordinator25");
+mongoose.connect("mongodb://myname:wkVRAhWELq@ds145639.mlab.com:45639/timedup");
+var PORT = process.env.mongodb || 3000
+
 
 app.get("*", function(req, res){
     res.send("<h1>Sorry, no page here for you, you sneaky person!</h1>")
 })
 
-app.listen(3000, function() {
+app.listen(PORT, function() {
     console.log("The Time Coordinator server has started");
 });
 
