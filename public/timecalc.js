@@ -13,12 +13,14 @@ $(document).ready(function(){
         return num - 2 * num;
     }
 
+    //get my own available times
+
     function getmyarrays(){
         $.ajax({
             type: 'GET',
             url: "/getarrays",
             success: function(data){
-                console.log(data.length) 
+                console.log(data.length);
             },
             error: function(err){
                 console.log(err);
@@ -28,9 +30,9 @@ $(document).ready(function(){
     }
 
     function show(result){
+        //THIS IS WHERE THE ARRAYS ARE COMPARED!!
         var end = finalcompare(this, result);
         console.log("end is : ", end);
-        
         if(end.length > 0) {
             $(".besttimes").html("");
             $(".besttimes").append("<h2>This group has common times at those dates: </h2>");
@@ -46,9 +48,11 @@ $(document).ready(function(){
                 )
             });
         } else {
-            $(".besttimes").html("<h2>This group does not have any common time.</h2>");
+            $(".besttimes").html("<h2>This group does not have any common time yet.</h2>");
         }
     }
+
+    //all the work of my whole life happens here
 
     function editarrays(everything){
         var onlyarrays = []
@@ -56,10 +60,8 @@ $(document).ready(function(){
             //console.log(data[0], data[1]);
             var newarray = constractor(arrays);
             onlyarrays.push(newarray[0]);
-            console.log("this is it!", newarray);
+            //console.log("this is it!", newarray);
         });
-        //console.log("okaaaay", onlyarrays);
-        
         show(onlyarrays);
     }
 
@@ -157,7 +159,7 @@ $(document).ready(function(){
           return [];
         }
       }
-    }var person2 = [[13.51666, 29.51666], [13.51666, 29.51666]];
+    }
 
     function comparearrays(array1, array2) {
       var matched = [];

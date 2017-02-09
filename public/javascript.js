@@ -182,27 +182,6 @@ $(document).ready(function(){
 
     });
 
-    //get included groups links
-    $(".incgroups").on("click", ".inc", function() {
-        var name = $(this).children(".firstone").html();
-        var authid = $(this).children(".authorid").html();
-        var groupid = $(this).children(".groupid").html();
-        console.log(name, authid, groupid);
-        var url = "/" + groupid;
-        window.location.href = url;
-        // $.ajax({
-        //     type:"GET", 
-        //     url: url,
-        //     success: function(data){
-        //         console.log(data);
-        //     },
-        //     error: function(err){
-        //         console.log(err);
-        //     }
-        // })
-        // return false;
-    });
-
 
     
 });

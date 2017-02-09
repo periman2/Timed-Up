@@ -14,9 +14,9 @@
                     <h3>My friendList</h3>
                     <h4>Add friend by username.</h4>
                     <form class="form-group" action="/search?_method=PUT" method="POST">
-                        <input type="text" name="nfriend[friendname]" class="form-control input-md" placeholder="Add friend">
+                        <input type="text" name="nfriend[friendname]" class="form-control input-md" placeholder="Username">
                         <span class="input-group-btn">
-                            <button class="btn btn-default">Search</button>
+                            <button class="btn btn-default">Add</button>
                         </span>
                     </form>
                     <ul>
@@ -46,7 +46,7 @@
             <% if(list.groups.length > 0) { %>
                 <h3>You are included in the following groups:</h3>
                 <% list.groups.forEach(function(group){ %>
-                    <button class="btn btn-success inc"><h3 class="firstone"><%= group.groupid.name %> </h3><h4>made by </h4><h3><%= group.authid.username %></h3><h3 class='hidden authorid'><%= group.authid._id %></h3><h3 class='hidden groupid'><%= group.groupid._id %></h3></button>
+                    <a class="btn btn-success" href="/<%= group.groupid._id %>"><h3 class="firstone"><%= group.groupid.name %> </h3><h4>made by </h4><h3><%= group.authid.username %></h3></a>
                 <% }) %>
             <% } %>
         </div>

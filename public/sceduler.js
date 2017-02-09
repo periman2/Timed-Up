@@ -28,7 +28,7 @@ $(document).ready(function(){
 
     $('input[name="daterange"]').daterangepicker({
         timePicker: true,
-        autoUpdateInput: false,
+        autoUpdateInput: true,
         "alwaysShowCalendars": true,
         "singleDatePicker": true,
         timePickerIncrement: 5,
@@ -44,7 +44,7 @@ $(document).ready(function(){
 
     $('input[name="daterange2"]').daterangepicker({
         timePicker: true,
-        autoUpdateInput: false,
+        autoUpdateInput: true,
         "alwaysShowCalendars": true,
         "singleDatePicker": true,
         timePickerIncrement: 5,
@@ -65,7 +65,6 @@ $(document).ready(function(){
         var formated2 = moment(value2, 'MM/DD/YYYY h:mm A');
         hoursfromnow2 = reverse(moment().diff(formated2,"hours", true));
         console.log(hoursfromnow1 ,hoursfromnow2 );
-        // how to show duration passed afterwards: moment().toString() ,moment(newdate).add(hoursfromnow1,"hours").toString())
     }
         
 
