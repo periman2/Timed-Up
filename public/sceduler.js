@@ -28,7 +28,7 @@ $(document).ready(function(){
 
     $('input[name="daterange"]').daterangepicker({
         timePicker: true,
-        autoUpdateInput: true,
+        autoUpdateInput: false,
         "alwaysShowCalendars": true,
         "singleDatePicker": true,
         timePickerIncrement: 5,
@@ -44,7 +44,7 @@ $(document).ready(function(){
 
     $('input[name="daterange2"]').daterangepicker({
         timePicker: true,
-        autoUpdateInput: true,
+        autoUpdateInput: false,
         "alwaysShowCalendars": true,
         "singleDatePicker": true,
         timePickerIncrement: 5,
@@ -136,17 +136,24 @@ $(document).ready(function(){
 
     function buildarrays(arrays){
         $("#arrays").html("");
-        $("#arrays").append("<h2> Your are available at:</h2>");
+        if(arrays.length > 0){
+            $("#arrays").append("<h2>Your are available at:</h2>");
+        } else {
+            $("#arrays").append("<h2>Your added ranges will show up here</h2>");
+        }
+        
 
         arrays.forEach(function(daydiff){
             $("#arrays").append(
                 "<div class='myarray'><h3>"
                  + moment(daydiff[0]).format('MMMM Do, YYYY h:mm A') + 
                  " for: <br>"
-                 + Math.floor(daydiff[1]) + 
-                 " hours and " 
+                 + Math.floor(daydiff[1]/24) + 
+                 " Days, "
+                 + Math.floor(24 * (daydiff[1]/24 - Math.floor(daydiff[1]/24)))
+                 + " Hours and "
                  + Math.floor(60 * (daydiff[1] - Math.floor(daydiff[1]))) +
-                 " minutes.</h3><button class='btn btn-danger' >Delete Range</button><p class='hidden'>"
+                 " Minutes.</h3><button class='btn btn-danger' >Delete Range</button><p class='hidden'>"
                   + daydiff[2] + 
                   "</p></div>"
             )

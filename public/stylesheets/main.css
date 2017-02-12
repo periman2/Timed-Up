@@ -1,11 +1,80 @@
+html {
+    height: 100%;
+}
 body {
     background-color:rgba(33, 33, 33, 1);
     color: rgba(176, 176, 176, 1);
+    height: 100%;
 }
 
+.container-fluid{
+    background-color:rgba(235, 235, 235, 1);
+    padding: 40px;
+    height: 100%
+}
+
+.container {
+    
+}
+
+
+@media(min-width: 992px) {
+    .navbar-collapse {
+        height: auto;
+        border-top: 0;
+        box-shadow: none;
+        max-height: none;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .navbar-collapse.collapse {
+        display: block !important;
+        width: auto !important;
+        padding-bottom: 0;
+        overflow: visible !important;
+    }
+    .navbar-collapse.in {
+        overflow-x: visible;
+    }
+    .navbar {
+        max-width: 300px;
+        margin-right: 0;
+        margin-left: 0;
+    }
+    .navbar-nav,
+    .navbar-nav > li,
+    .navbar-left,
+    .navbar-right,
+    .navbar-header {
+        float: none !important;
+    }
+
+    
+
+    .navbar-right .dropdown-menu {
+        left: 0;
+        right: auto;
+    }
+    navbar-collapse .navbar-nav.navbar-right:last-child {
+        margin-right:0;
+    }
+}
+
+.navbar {
+    padding: 5px;
+}
+
+.col-md-9 {
+    height: 100%;
+}
+
+.navbar-brand {
+    font-size: 3em;
+}
+
+
 #groups {
-    min-height: 60px;
-    color: rgba(204, 204, 204, 1);
+    color: rgba(41, 41, 41, 1);
     font-size: 18px;
     /*overflow: scroll;*/
 }
@@ -67,6 +136,7 @@ li {
 .label{
     font-size: 40px;
     text-align: center;
+    color: rgba(41, 41, 41, 1);
 }
 
 .formbut {
@@ -75,5 +145,9 @@ li {
 
 #titlesc {
     font-size:  50px;
-    color: white;
+    color: rgba(41, 41, 41, 1);
+}
+
+#arrays {
+    color: rgba(41, 41, 41, 1);
 }

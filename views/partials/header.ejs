@@ -19,36 +19,53 @@
         
     </head>
     <body>
-        <nav class = "navbar navbar-inverted">
-            <div class = "container">
-                <div class = "navbar-header">
-                    <a class = "navbar-brand" href = "/">Timed-UP</a>
-                </div>
-                <div class = "collapse navbar-collapse">
-                    <ul class = "nav navbar-nav navbar-right">
-                    <% if(!currentUser) { %>
-                        <li><a href = "/login">Login</a></li>
-                        <li><a href = "/register">Sing Up</a></li>
-                    <% } else { %>
-                        <li><a href = "#"> Signed in as: <%= currentUser.username %></a></li>
-                        <li><a href = "/logout">Logout</a></li>
-                    <% } %>
-                    </ul>
-                </div>
+    <div  class="container-fluid"> 
+        <div class="row">
+            <div class="col-md-3">
+                <nav class = "navbar navbar-default" role="navigation">
+                    <div class = "navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-exi-collapse">
+                        <span class="sr-only"> Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                        <a class = "navbar-brand" href = "/">Timed-UP</a>
+                    </div>
+                    <div class="navbar collapse navbar-collapse navbar-exi-collapse">
+                        <ul class = "nav navbar-nav">
+                        <% if(!currentUser) { %>
+                            <li><a href = "/login">Login</a></li>
+                            <li><a href = "/register">Sign Up</a></li>
+                        <% } else { %>
+                            <li> Signed in as: <%= currentUser.username %></li>
+                            <li><a href = "/logout">Logout</a></li>
+                            <form class="navbar-form navbar-left" role="search">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Username">
+                                </div>
+                                <button type="submit" class="btn btn-default">Add Friend</button>
+                            </form>
+                            <ul class="dropdown-menu groups">
+                            </ul>
+                        <% } %>
+                        </ul>
+                    </div>
+                </nav>
             </div>
-        </nav>
-        <% if(error && error.length > 0) { %>
-            <div class="container">
-                <div class="alert alert-danger" role="alert">
-                    <%= error %>
-                </div>
+            <div class="col-md-9">
+                <% if(error && error.length > 0) { %>
+                    <div class="container">
+                        <div class="alert alert-danger" role="alert">
+                            <%= error %>
+                        </div>
 
-            </div>
-        <% } %>
-        <% if(success && success.length > 0) { %>
-            <div class="container">
-                <div class="alert alert-success" role="alert">
-                    <%= success %>
-                </div>
-            </div>
-        <% } %>
+                    </div>
+                <% } %>
+                <% if(success && success.length > 0) { %>
+                    <div class="container">
+                        <div class="alert alert-success" role="alert">
+                            <%= success %>
+                        </div>
+                    </div>
+                <% } %>

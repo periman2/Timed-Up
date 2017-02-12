@@ -14,7 +14,7 @@ $(document).ready(function(){
     }
 
     //get my own available times
-
+ 
     function getmyarrays(){
         $.ajax({
             type: 'GET',
@@ -54,22 +54,12 @@ $(document).ready(function(){
 
     //all the work of my whole life happens here
 
-    function editarrays(everything){
-        var onlyarrays = []
-        everything.forEach(function(arrays){
-            //console.log(data[0], data[1]);
-            var newarray = constractor(arrays);
-            onlyarrays.push(newarray[0]);
-            //console.log("this is it!", newarray);
-        });
-        show(onlyarrays);
-    }
-
     function getgrouparrays(){
         $.ajax({
             type: "GET", 
             url: groupid + "/getgrouparrays",
             success: function(allarrays){
+                //most important function is this one:
                 editarrays(allarrays);
             },
             error: function(err){
@@ -79,7 +69,123 @@ $(document).ready(function(){
         return false;
     }
 
-    getgrouparrays();
+    function editarrays(everything){
+        var onlyarrays = []
+        var arrayswithnames = [];
+        everything.forEach(function(arrays){
+            //console.log(data[0], data[1]);
+            var newarray = constractor(arrays);
+            onlyarrays.push(newarray[0]);
+            arrayswithnames.push(newarray);
+            //console.log("this is it!", newarray);
+        });
+        show(onlyarrays);
+        var allcommontimes = comparedwithnames(arrayswithnames);
+        var pairs = getonlypairs(allcommontimes);
+        console.log("all ever common times: ", allcommontimes, "only pairs are :", pairs)
+    }
+
+    function getonlypairs(all){
+        var pairs = [];
+        for(var i = 0; i < all.length; i++){
+            if(all[i][1].length === 2){
+                pairs.push(all[i]); 
+            }
+        }
+        return pairs;
+    }
+
+    function elementedit(element){
+        var finalarray = [];
+        var temp = element[0][0];
+        var compared;
+        var names = [];
+        for(var i = 0; i < element.length; i++){
+            names.push(element[i][1]);
+            if(element[i + 1] != undefined){
+                //console.log("pairs:",temp, element[i + 1][0]);
+                temp = finalcompare(this, [temp, element[i + 1][0]]);
+                if (temp != undefined && temp.length > 0){
+                    compared = [temp, names];
+                } else {
+                    break;
+                }
+            }
+        }
+
+        return compared;
+    }
+
+    function add(a, b){
+        return a + b;
+    }
+
+    function checkifitexists(array, arrays){
+        checker = [];
+        arrays.forEach(function(element){
+            if(element[1].length === array[1].length) {
+                var temp = [];
+                for(var i = 0; i < element[1].length; i ++){
+                    //console.log(array[1].indexOf(element[1][i]));
+                    if(array[1].indexOf(element[1][i]) >= 0){
+                        temp.push(1);
+                    }
+                }
+                //console.log(element[1], array[1].length, temp, temp.reduce(add, 0))
+                if(temp.reduce(add, 0) === array[1].length){
+                    checker.push(1);
+                } else {
+                    checker.push(0);
+                }
+            } else {
+                checker.push(0);
+            }
+        });
+        //console.log(checker)
+        return checker.reduce(add, 0);
+
+    }
+
+    function comparedwithnames(arrays){
+        var permArr = [],
+        usedChars = [];
+
+        function permutate(input) {
+            var i, ch;
+            for (i = 0; i < input.length; i++) {
+                ch = input.splice(i, 1)[0];
+                usedChars.push(ch);
+                if (input.length == 0) {
+                    permArr.push(usedChars.slice());
+                }
+                permutate(input);
+                input.splice(i, 0, ch);
+                usedChars.pop();
+            }
+            return permArr
+        };
+    
+        var allperms = permutate(arrays);
+        var ending = [];
+        allperms.forEach(function(element){
+            var el = elementedit(element);
+            if(el !== undefined && el.length > 0){
+                //console.log(el.length, el, "elementtttt");
+                var check = checkifitexists(el, ending);
+                if(check === 0){
+                    ending.push(el);
+                }
+            }
+            
+        })
+        return ending;
+        console.log("all people with common times are:", ending);
+    }
+
+
+
+
+
     function clarify(array) {
         temp = array.value.map(function(element){
             return eval(element);
@@ -176,7 +282,7 @@ $(document).ready(function(){
 
     function finalcompare() {
       var args = Array.prototype.slice.call(arguments)[1];
-      console.log("args are:", args);
+      //console.log("args are:", args);
       var solvedarray = args[0];
       for (var i = 0; i < args.length; i ++) {
         if ( args[i + 1] !== undefined) {
@@ -185,5 +291,9 @@ $(document).ready(function(){
       }
       return solvedarray;
     }
+
+    // time calc combinations
+    getgrouparrays();
+
 
 });  

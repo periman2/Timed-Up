@@ -63,7 +63,7 @@ app.get("*", function(req, res){
 })
 
 app.listen(PORT, function() {
-    console.log("The Time Coordinator server has started");
+    console.log("The Timed Up server has started");
 });
 
 
