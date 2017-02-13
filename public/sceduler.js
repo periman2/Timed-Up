@@ -99,6 +99,21 @@ $(document).ready(function(){
         
     });
 
+    $(".deletelist").click(function() {
+        var friendid= $(this).next(".hidden").html();
+        console.log(friendid);
+        $.ajax({
+            type: "DELETE",
+            url: "/deletefriend", 
+            data: {friendid: friendid},
+            success: function(result){
+                console.log("deleted!");
+                location.reload();
+            }
+        })
+        return false;
+    });
+
     function deletearray(arrayid) {
         $.ajax({
             type: "POST",
@@ -138,9 +153,7 @@ $(document).ready(function(){
         $("#arrays").html("");
         if(arrays.length > 0){
             $("#arrays").append("<h2>Your are available at:</h2>");
-        } else {
-            $("#arrays").append("<h2>Your added ranges will show up here</h2>");
-        }
+        } 
         
 
         arrays.forEach(function(daydiff){
@@ -158,7 +171,7 @@ $(document).ready(function(){
                   "</p></div>"
             )
         });
-        $(".myarray").append();
+        
     }
 
     function getarrays(){

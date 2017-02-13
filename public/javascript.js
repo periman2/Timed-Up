@@ -4,8 +4,8 @@ $(document).ready(function(){
     function creategroups(groups){
         $("#groups").html("");
         $.each(groups, function(i, group){
-            console.log(group);
-            $("#groups").append("<div id='" + group._id + "'></div>");
+            //console.log(group);
+            $("#groups").append("<div class='col-xs-3' id='" + group._id + "'></div>");
             $("#" + group._id).append(
                 "<li><p class='title' style='float:left;'>"
                     + group.name + 
@@ -18,16 +18,16 @@ $(document).ready(function(){
                 "</p>");
             });
 
-            $("#" + group._id).append("<br><hr><a href='/" + group._id + "' class='btn btn-success grouppage' >Show Group Page</a>");
-            console.log(group._id, typeof group._id);
+            $("#" + group._id).append("<br><hr><a href='/" + group._id + "' class='btn btn-default grouppage' >Show Group Page</a>");
+            //console.log(group._id, typeof group._id);
             $("#" + group._id).css({
-                "background-color": "rgba(184, 184, 184, 1)",
+                "background-color": "rgba(117, 150, 240, 0.6)",
                 "color": "rgba(56, 56, 56, 1)" ,
                 "min-width": "27%", 
                 "min-height": "30px",
                 "float": "left",
                 "border": "2px solid black",
-                "border-radius":"15px",
+                "border-radius":"5px",
                 "position": "relative",
                 "padding": "10px",
                 "overflow": "auto",
@@ -88,7 +88,7 @@ $(document).ready(function(){
 
     //delete friend from list
     $(".deletelist").click(function() {
-        var friendid= $(this).next(".hidden").html();
+        var friendid= $(this).parent().parent().children().html();
         console.log(friendid);
         $.ajax({
             type: "DELETE",
@@ -96,9 +96,10 @@ $(document).ready(function(){
             data: {friendid: friendid},
             success: function(result){
                 console.log("deleted!");
-                window.location.href = "/"
+                
             }
         })
+        location.reload();
         return false;
     });
 
@@ -148,7 +149,9 @@ $(document).ready(function(){
 
     //toggle selected item
 
-    $("#groups").on("click", ".title", function() {
+    $("#groups").on("click", ".title", function(event) {
+        event.preventDefault();
+        event.stopPropagation();
         var div = $(this).parent().parent();
         if(div.hasClass("activated")) {
             $(this).parent().parent().css("background-color", "rgba(184, 184, 184, 1)");
@@ -160,8 +163,10 @@ $(document).ready(function(){
 
     //add friend to selected groups
 
-    $(".friendname").click(function(){
-        var friendid = $(this).prev().html();
+    $(".friendname").click(function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        var friendid = $(this).parent().parent().children().html();
         var groupnames = [];
         $(".activated .title").each(function(i, element){
             groupnames.push($(this).html());
@@ -173,6 +178,7 @@ $(document).ready(function(){
                 url: "/addgroupie",
                 data: {friendid: friendid, groupnames:groupnames},
                 success: function(result){
+                    console.log("magic results", result);
                     getgroups();
                 }
             });

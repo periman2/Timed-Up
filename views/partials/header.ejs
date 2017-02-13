@@ -14,8 +14,7 @@
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-        
+        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />  
         
     </head>
     <body>
@@ -38,14 +37,39 @@
                             <li><a href = "/login">Login</a></li>
                             <li><a href = "/register">Sign Up</a></li>
                         <% } else { %>
-                            <li> Signed in as: <%= currentUser.username %></li>
-                            <li><a href = "/logout">Logout</a></li>
-                            <form class="navbar-form navbar-left" role="search">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Username">
-                                </div>
-                                <button type="submit" class="btn btn-default">Add Friend</button>
+                            <li><h3> Signed in as: <strong><%= currentUser.username %></strong></h3></li>
+                            <br>
+                            <li class="times">
+                                <a href="/myscedule" class="btn btn-default btn-lg">My Scedule</a>
+                            </li>
+                            <li class="myowngroups">
+                                <a href="/" class="btn btn-default btn-lg">My Groups</a>
+                            </li>
+                            <br>
+                            <h3 class="text-center">My Friendlist</h3>
+                            <form  action="/search?_method=PUT" method="POST" class="navbar-form navbar-left" role="search">
+                                <input type="text" name="nfriend[friendname]" class="form-control input-md" placeholder="Username">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default">Add Friend</button>
+                                </span>
                             </form>
+                            <div class="myfriendlist">
+                            <% list.friends.forEach(function(friend){ %>
+                            <li class="friendbox row">
+                                <p class="hidden friend"><%= friend._id %></p>
+                                <div class="col-xs-3">
+                                    <i class="fa fa-times deletelist" aria-hidden="true"></i>
+                                </div>
+                                <div class="col-xs-9 text-left">
+                                    <p class="friendname"><%= friend.username %></p>
+                                </div>
+                                
+                                
+                            </li>
+                            <% }) %>
+                            </div>
+                            <br>
+                            <li><a class="btn btn-default" href = "/logout">Logout</a></li>
                             <ul class="dropdown-menu groups">
                             </ul>
                         <% } %>

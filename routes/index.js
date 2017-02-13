@@ -26,12 +26,11 @@ router.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);
 });
 
-
 //go to sceduling page
 router.get("/myscedule",isloggedin,  function(req, res){
-    Friendlist.find({authid: req.user._id}).exec()
+    Friendlist.find({authid: req.user._id}).populate("friends groups.authid groups.groupid").exec()
     .then(function(list){
-        res.render("scedule", {list: list, user: req.user, arrays: list[0].arrays});
+        res.render("scedule", {list: list[0], user: req.user, arrays: list[0].arrays});
     }).catch(function(err){
         throw err;
     })
@@ -45,7 +44,7 @@ router.get("/login", function(req, res){
 
 router.post("/login", passport.authenticate("local", 
 {
-    successRedirect: "/",
+    successRedirect: "/myscedule",
     failureRedirect: "/login"
 }) ,function(req, res){
 });
@@ -72,8 +71,8 @@ router.post("/register", function(req, res) {
                     return res.redirect("/register");
                 }
                 //console.log(list);
-                req.flash("success", "Welcome to Timed-UP! " + user.username);
-                res.redirect("/");
+                req.flash("success", "Welcome to Timed-UP! Start with adding" + user.username);
+                res.redirect("/myscedule");
             });
         });
     });
@@ -87,11 +86,18 @@ router.get("/register", function(req, res){
 
 router.get("/:groupid", isloggedin,function(req, res){
     groupid = req.params.groupid;
-    console.log(groupid, typeof groupid);
+    //console.log(groupid, typeof groupid);
     Groups.findById(groupid).populate("groupies").exec()
     .then(function(group){
-        console.log(group)
-        res.render("group", {group: group});
+        Friendlist.find({authid: req.user._id}).populate("friends groups.authid groups.groupid").exec()
+        .then(function(list){
+            //console.log(list, "this isth elist")
+            res.render("group", {group: group, list: list[0]});
+        }).catch(function(err){
+            throw err;
+        });
+    }).catch(function(err){
+        throw err;
     })
 })
 

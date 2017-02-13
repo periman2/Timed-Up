@@ -1,22 +1,40 @@
 html {
     height: 100%;
+    width: 100%
 }
 body {
-    background-color:rgba(33, 33, 33, 1);
-    color: rgba(176, 176, 176, 1);
+    background-color:rgba(235, 235, 235, 1);
+    color: rgba(41, 41, 41, 1);
     height: 100%;
 }
 
 .container-fluid{
     background-color:rgba(235, 235, 235, 1);
     padding: 40px;
-    height: 100%
+    height: 100%;
 }
 
 .container {
     
 }
 
+.member {
+    background-color:rgba(20, 20, 20, 0.2);
+    color: rgba(20, 20, 20, 0.9);
+    border-radius: 5px;
+    margin: 5px;
+}
+
+hr {
+    border-color: black;
+}
+
+#arrays {
+    max-height: 300px;
+    overflow-y: scroll;
+    border: 1px solid rgba(20, 20, 20, 1);;
+    border-radius: 20px;
+}
 
 @media(min-width: 992px) {
     .navbar-collapse {
@@ -64,9 +82,9 @@ body {
     padding: 5px;
 }
 
-.col-md-9 {
+/*.col-md-9 {
     height: 100%;
-}
+}*/
 
 .navbar-brand {
     font-size: 3em;
@@ -94,7 +112,29 @@ body {
 }
 
 .deletelist{
-    float: left;
+}
+
+.myfriendlist {
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
+.friendbox {
+    border: 2px solid rgba(96, 104, 123, 1);
+    border-radius: 4px;
+    text-align: center;
+    color: rgba(96, 104, 123, 1);
+    font-size: 22px;
+    margin: 5px;
+}
+
+.friendbox .col-xs-3 {
+    border-right: 1px solid rgba(96, 104, 123, 1);
+}
+
+.besttimes {
+    max-height: 400px;
+    overflow-y: scroll;
 }
 
 .title:hover {
@@ -110,8 +150,9 @@ body {
 }
 
 .friendname {
-    float: left;
+
 }
+
 
 .col-xs-8 form {
     width: 50%;
@@ -125,8 +166,6 @@ body {
 
 #friendlist li {
     font-size: 30px;
-    clear: both;
-    
 }
 
 li {
@@ -137,6 +176,11 @@ li {
     font-size: 40px;
     text-align: center;
     color: rgba(41, 41, 41, 1);
+}
+
+.navbar .text-center{
+    color: rgba(41, 41, 41, 1);
+    font-size: 30px
 }
 
 .formbut {
@@ -150,4 +194,8 @@ li {
 
 #arrays {
     color: rgba(41, 41, 41, 1);
+}
+
+#groupname{
+    width: 20%;
 }

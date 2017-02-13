@@ -13,6 +13,21 @@ $(document).ready(function(){
         return num - 2 * num;
     }
 
+    $(".deletelist").click(function() {
+        var friendid= $(this).next(".hidden").html();
+        console.log(friendid);
+        $.ajax({
+            type: "DELETE",
+            url: "/deletefriend", 
+            data: {friendid: friendid},
+            success: function(result){
+                console.log("deleted!");
+                location.reload();
+            }
+        })
+        return false;
+    });
+
     //get my own available times
  
     function getmyarrays(){

@@ -84,7 +84,7 @@ router.post("/addgroupie", function(req, res){
             if(err){
                 console.log(err);
             } else {
-                res.send("works!");
+                res.send(groups);
             }
         });
         

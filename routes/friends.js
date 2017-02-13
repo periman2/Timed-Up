@@ -21,13 +21,13 @@ router.put("/search", function(req, res){
                     .then(function(updatedlist){
                         console.log("updated list " + updatedlist);
                         req.flash("success",req.body.nfriend.friendname + " is added to your friendlist!");
-                        res.redirect("/");
+                        res.redirect(req.get('referer'));
                     }).catch(function(err){
                         throw err;
                     })
                 } else {
                     req.flash("error", "You already added tha person to your friendlist");
-                    res.redirect("/");
+                    res.redirect(req.get('referer'));
                 }
             })
             .catch(function(error){
@@ -35,7 +35,7 @@ router.put("/search", function(req, res){
             });
         } else {
             req.flash("error", "Username isn't available");
-            res.redirect("/");
+            res.redirect(req.get('referer'));
         }
     });
 });
