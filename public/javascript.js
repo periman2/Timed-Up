@@ -1,15 +1,23 @@
 
 $(document).ready(function(){
+
+    function updategroupclass(group) {
+        var thisgroup = $("#" + group._id);
+        //console.log(thisgroup.html());
+        thisgroup.addClass("activated");
+        thisgroup.css("background-color", "rgba(69, 232, 85, 0.6)");
+    }
     
     function creategroups(groups){
         $("#groups").html("");
         $.each(groups, function(i, group){
             //console.log(group);
-            $("#groups").append("<div class='col-xs-3' id='" + group._id + "'></div>");
+            
+            $("#groups").append("<div class='col-md-3' id='" + group._id + "'></div>");
             $("#" + group._id).append(
                 "<li><p class='title' style='float:left;'>"
                     + group.name + 
-                    "</p></li><button style='float:right;display:table-cell' class='btn btn-danger deletegroup' >X</button><br><hr>"
+                    "</p></li><button style='float:right;display:inline' class='btn btn-danger deletegroup' >X</button><br><hr>"
                     );
 
             group.groupies.forEach(function(groupie){
@@ -21,16 +29,15 @@ $(document).ready(function(){
             $("#" + group._id).append("<br><hr><a href='/" + group._id + "' class='btn btn-default grouppage' >Show Group Page</a>");
             //console.log(group._id, typeof group._id);
             $("#" + group._id).css({
-                "background-color": "rgba(117, 150, 240, 0.6)",
+                "background-color": "rgba(117, 150, 240, 0.4)",
                 "color": "rgba(56, 56, 56, 1)" ,
                 "min-width": "27%", 
                 "min-height": "30px",
-                "float": "left",
-                "border": "2px solid black",
+                "max-heigth": "200px",
+                "border": "1px solid rgba(20, 20, 20, 0.3)",
                 "border-radius":"5px",
                 "position": "relative",
                 "padding": "10px",
-                "overflow": "auto",
                 "white-space": "nowrap"
             });
             $(".title").css({
@@ -48,6 +55,22 @@ $(document).ready(function(){
             url: "/getmygroups",
             success: function(groups) {
                 creategroups(groups);
+            },
+            error: function(){
+                console.log("error happened");
+            }
+        });
+    }
+
+    function updategroups(newgroups) {
+        $.ajax({
+            type:"GET",
+            url: "/getmygroups",
+            success: function(groups) {
+                creategroups(groups);
+                newgroups.forEach(function(newgroup){
+                    updategroupclass(newgroup);
+                });
             },
             error: function(){
                 console.log("error happened");
@@ -134,8 +157,9 @@ $(document).ready(function(){
             data: {groupiename : groupiename , groupname: groupname},
             success: function(result){
                 if(result) {
+
                     getgroups();
-                    return console.log("deleted groupie!");
+                    return console.log("deleted groupie!", result);
                 }
                 //console.log("not deleted group!");
                 //window.location.href = "/"
@@ -150,13 +174,12 @@ $(document).ready(function(){
     //toggle selected item
 
     $("#groups").on("click", ".title", function(event) {
-        event.preventDefault();
-        event.stopPropagation();
         var div = $(this).parent().parent();
+        //console.log(div.html())
         if(div.hasClass("activated")) {
-            $(this).parent().parent().css("background-color", "rgba(184, 184, 184, 1)");
+            div.css("background-color", "rgba(117, 150, 240, 0.4)");
         } else {
-            $(this).parent().parent().css("background-color", "rgba(186, 212, 165, 1)");
+            div.css("background-color", "rgba(69, 232, 85, 0.6)");
         }
         div.toggleClass("activated");
     });
@@ -164,10 +187,9 @@ $(document).ready(function(){
     //add friend to selected groups
 
     $(".friendname").click(function(event){
-        event.preventDefault();
-        event.stopPropagation();
         var friendid = $(this).parent().parent().children().html();
         var groupnames = [];
+        var groupiesnames = [];
         $(".activated .title").each(function(i, element){
             groupnames.push($(this).html());
         });
@@ -178,8 +200,7 @@ $(document).ready(function(){
                 url: "/addgroupie",
                 data: {friendid: friendid, groupnames:groupnames},
                 success: function(result){
-                    console.log("magic results", result);
-                    getgroups();
+                    updategroups(result);
                 }
             });
         } else {

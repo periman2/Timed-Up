@@ -309,6 +309,4 @@ $(document).ready(function(){
 
     // time calc combinations
     getgrouparrays();
-
-
 });  

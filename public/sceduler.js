@@ -153,7 +153,9 @@ $(document).ready(function(){
         $("#arrays").html("");
         if(arrays.length > 0){
             $("#arrays").append("<h2>Your are available at:</h2>");
-        } 
+        } else {
+            $("#arrays").append("<h2>Your free time ranges will all show up here.</h2>");
+        }
         
 
         arrays.forEach(function(daydiff){
@@ -168,7 +170,7 @@ $(document).ready(function(){
                  + Math.floor(60 * (daydiff[1] - Math.floor(daydiff[1]))) +
                  " Minutes.</h3><button class='btn btn-danger' >Delete Range</button><p class='hidden'>"
                   + daydiff[2] + 
-                  "</p></div>"
+                  "</p></div><hr>"
             )
         });
         

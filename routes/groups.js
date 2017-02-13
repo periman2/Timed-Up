@@ -65,7 +65,7 @@ router.delete("/deletegroup", function(req, res){
 //addgroupie
 
 router.post("/addgroupie", function(req, res){
-    Groups.find({authid: req.user._id, name:{$in: req.body.groupnames}}).exec()
+    Groups.find({authid: req.user._id, name:{$in: req.body.groupnames}}).populate("groupies").exec()
     .then(function(groups){
         async.forEachOf(groups, function(group, keys, callback){
             Groups.update({authid: req.user._id, name:group.name}, {$push: {groupies: req.body.friendid}}).exec()
@@ -103,6 +103,7 @@ router.post("/deletegroupie", function(req, res){
        newgroup = group[0];
         for(var i = newgroup.groupies.length - 1; i >= 0; i --){
             if(newgroup.groupies[i].username === groupiename) {
+                
                 newgroup.groupies.splice(i, 1);
             }
         }
@@ -126,7 +127,7 @@ router.post("/deletegroupie", function(req, res){
                     }
                     Friendlist.findByIdAndUpdate(newlist._id, newlist, {new: true}).exec()
                     .then(function(updatedlist){
-                        console.log("finallist", updatedlist);
+                        //console.log("finallist", updatedlist);
                         res.send("done it finaly ");
                     }).catch(function(err){
                         throw err;
