@@ -100,17 +100,17 @@ $(document).ready(function(){
     });
 
     $(".deletelist").click(function() {
-        var friendid= $(this).next(".hidden").html();
-        console.log(friendid);
+        var friendid= $(this).prev().html();
         $.ajax({
             type: "DELETE",
             url: "/deletefriend", 
             data: {friendid: friendid},
             success: function(result){
-                console.log("deleted!");
-                location.reload();
+                //console.log("deleted!");
+                
             }
         })
+        location.reload();
         return false;
     });
 

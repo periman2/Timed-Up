@@ -137,8 +137,9 @@ $(document).ready(function(){
 
     //delete friend from list
     $(".deletelist").click(function() {
-        var friendid= $(this).parent().parent().children().html();
-        //console.log(friendid);
+        var friendid= $(this).prev().html();
+        console.log(friendid);
+        console.log(friendid);
         $.ajax({
             type: "DELETE",
             url: "/deletefriend", 
