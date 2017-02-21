@@ -9,12 +9,12 @@ body {
 
 .container-fluid{
     background-color:rgba(235, 235, 235, 1);
-    padding: 4% 15%;
     height: 100%;
+    padding: 0 5%;
 }
 
-.container {
-    
+.instructions {
+    width: 80%;
 }
 
 .member {
@@ -42,7 +42,7 @@ hr {
 
 @media(min-width: 992px) {
     .navbar-collapse {
-        height: auto;
+        height: 100%;
         border-top: 0;
         box-shadow: none;
         max-height: none;
@@ -83,26 +83,11 @@ hr {
 }
 
 
-/*.col-md-9 {
-    height: 100%;
-}*/
-
-.navbar-brand {
-    font-size: 3em;
-}
-
-
 #groups {
     color: rgba(41, 41, 41, 1);
     font-size: 18px;
     /*overflow: scroll;*/
 }
-
-/*#groups ul {
-    background-color:rgba(184, 184, 184, 1);
-    width: 10%;
-    min-height: 30px;
-}*/
 
 .hidden {
     display: none;
@@ -110,9 +95,6 @@ hr {
 
 .deletelist:hover {
     cursor: pointer;
-}
-
-.deletelist{
 }
 
 .myfriendlist {
@@ -144,7 +126,6 @@ hr {
 
 .displayedmembers {
     max-height: 350px;
-    /*overflow-y: scroll;*/
 }
 /* Scrollbar */ 
 
@@ -195,11 +176,6 @@ hr {
     cursor: pointer;
 }
 
-.friendname {
-
-}
-
-
 #friendlist li {
     font-size: 30px;
 }
@@ -223,9 +199,11 @@ li {
     margin: 30px;
 }
 
-.thetitle {
+
+.navbar-default .navbar-brand {
     font-size:  40px;
     color: rgba(41, 41, 41, 1);
+    align: center;
 }
 
 #arrays {
