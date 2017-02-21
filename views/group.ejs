@@ -12,12 +12,26 @@ Here you can see the combined common time of all the group members<br>
 <h2>Group Members:</h2>
 <div id="members" class="row">
     <% group.groupies.forEach(function(groupie){ %>
-        <div class="col-xs-1 member"><h3><%= groupie.username %></h3></div>
+        <div class="member"><h3><%= groupie.username %></h3></div>
     <% }) %>
 </div>
 <br>
 <hr>
 <div class="besttimes">
+    <div class='row'>
+        <div class='allmembers col-xs-4 btn btn-default active'>
+            <h3>All Members</h3>
+        </div>
+        <div class='onlycommon col-xs-4 btn btn-default'>
+            <h3>Common Time</h3>
+        </div>
+        <div class='pairs col-xs-4 btn btn-default'>
+            <h3>Pairs</h3>
+        </div>
+    </div>
+    <div class='displayedmembers'>
+        
+    </div>
 </div>
 
 

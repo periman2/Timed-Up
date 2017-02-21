@@ -5,13 +5,25 @@
 
 
     <% if(user) { %>
-        
+
         <div class="row">
             <div class="col-md-12">
-                <h3>My Groups</h3>
+                <div class="head">
+                    <h3>My Groups</h3>
+                    <p class='instructions'>
+                        This is your groups page. In this page you can create remove and edit your groups 
+                        as well as view the groups other users have included you in.
+                        To start creating groups first add yourself to your friendlist and then make your first group 
+                        by choosing a group name and clicking on the "Create Group" button.<br>
+                        <br>To add a person from your friendlist to your new group just select the group(s) you want by clicking on its name
+                        (you can select multiple groups at once) and then click on the friend you want to add to the group(s). It's that easy.
+                    </p>
+                    <button class="inst btn btn-sm btn-default">Hide Instructions</button>
+                </div>
+                
                 <h4>Group name:</h4>
                 <form action="#" class="form-group">
-                    <input type="text" name="groupname" id="groupname" class="form-control input-md" placeholder="Group name" maxlength="14" required>
+                    <input type="text" name="groupname" id="groupname" class="form-control input-md" placeholder="Group name" maxlength="11" required>
                     <button id="addgroup" class="btn btn-default">Create Group</button>
                 </form>
                 <div id="groups" class="row" style="display:flex; flex-wrap: wrap;">

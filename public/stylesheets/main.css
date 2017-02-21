@@ -1,6 +1,5 @@
 html {
     height: 100%;
-    width: 100%
 }
 body {
     background-color:rgba(235, 235, 235, 1);
@@ -10,7 +9,7 @@ body {
 
 .container-fluid{
     background-color:rgba(235, 235, 235, 1);
-    padding: 40px;
+    padding: 4% 15%;
     height: 100%;
 }
 
@@ -19,11 +18,13 @@ body {
 }
 
 .member {
-    background-color:rgba(20, 20, 20, 0.2);
-    color: rgba(20, 20, 20, 0.9);
+    background-color:rgba(48, 67, 84, 1);
+    color: rgba(151, 174, 195, 1);
     border-radius: 5px;
     min-width:100px;
     margin: 5px;
+    float: left;
+    text-align: center;
 }
 
 hr {
@@ -36,6 +37,7 @@ hr {
     border: 1px solid rgba(20, 20, 20, 1);;
     border-radius: 0.5em;
     padding: 20px;
+    
 }
 
 @media(min-width: 992px) {
@@ -44,8 +46,8 @@ hr {
         border-top: 0;
         box-shadow: none;
         max-height: none;
-        padding-left: 0;
-        padding-right: 0;
+        padding:10%;
+        /*background-color: rgba(19, 71, 134, 1);*/
     }
     .navbar-collapse.collapse {
         display: block !important;
@@ -57,7 +59,7 @@ hr {
         overflow-x: visible;
     }
     .navbar {
-        max-width: 300px;
+        /*max-width: 300px;*/
         margin-right: 0;
         margin-left: 0;
     }
@@ -80,9 +82,6 @@ hr {
     }
 }
 
-.navbar {
-    padding: 5px;
-}
 
 /*.col-md-9 {
     height: 100%;
@@ -122,7 +121,6 @@ hr {
 }
 
 .friendbox {
-    border: 2px solid rgba(96, 104, 123, 1);
     border-radius: 4px;
     text-align: center;
     color: rgba(96, 104, 123, 1);
@@ -135,10 +133,56 @@ hr {
 }
 
 .besttimes {
+    background-color: rgba(188, 197, 205, 1);
+    border: 1px solid black;
     max-height: 400px;
-    overflow-y: scroll;
+    padding: 30px;
+    -webkit-box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
+    -moz-box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
+    box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
 }
 
+.displayedmembers {
+    max-height: 350px;
+    /*overflow-y: scroll;*/
+}
+/* Scrollbar */ 
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-button {
+  width: 33px;
+  height: 33px;
+}
+::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 0px none #ffffff;
+  border-radius: 27px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+  border-radius: 78px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* End Scrollbar */
 .title:hover {
     cursor: pointer;
 }
@@ -155,16 +199,6 @@ hr {
 
 }
 
-
-.col-xs-8 form {
-    width: 50%;
-    display: inline-block;
-}
-
-.col-xs-4 form {
-    width: 70%;
-    display: inline-block;
-}
 
 #friendlist li {
     font-size: 30px;
@@ -189,8 +223,8 @@ li {
     margin: 30px;
 }
 
-#titlesc {
-    font-size:  50px;
+.thetitle {
+    font-size:  40px;
     color: rgba(41, 41, 41, 1);
 }
 
@@ -200,4 +234,13 @@ li {
 
 #groupname{
     width: 20%;
+}
+
+.incgroups {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.allmembers, .onlycommon, .pairs {
+    background-color: rgba(222, 227, 232, 1);
 }

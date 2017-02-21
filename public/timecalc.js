@@ -44,28 +44,104 @@ $(document).ready(function(){
         return false;
     }
 
-    function show(result){
+    function show(all, onlycommon, pairs){
         //THIS IS WHERE THE ARRAYS ARE COMPARED!!
-        var end = finalcompare(this, result);
-        console.log("end is : ", end);
-        if(end.length > 0) {
-            $(".besttimes").html("");
-            $(".besttimes").append("<h2>This group has common times at those dates: </h2>");
-            end.forEach(function(array){
-                $(".besttimes").append(
-                    "<h3 class='best'>" + 
-                    moment().add(array[0],"hours").format('MMMM Do, YYYY h:mm A') + 
-                    " for: " + 
-                    Math.floor(array[1] - array[0]) + 
-                    " hours " +
-                    Math.floor(((array[1] - array[0]) - Math.floor(array[1] - array[0])) * 60) +
-                    " minutes "
-                )
-            });
-        } else {
-            $(".besttimes").html("<h2>This group does not have any common time yet.</h2>");
+        //console.log('this is the onlycommon:', onlycommon)
+        var end = finalcompare(this, all);
+        //console.log("end is : ", end);
+        if($('.allmembers').hasClass('active')){
+            if(end.length > 0) {
+                $(".displayedmembers").html("");
+                $(".displayedmembers").append("<div class='all'></div>")
+                $(".all").append("<h2>This group has common times at those dates: </h2>");
+                //$(".all").addClass('hidden');
+                end.forEach(function(array){
+                    $(".all").append(
+                        "<h3 class='best'>" + 
+                        moment().add(array[0],"hours").format('MMMM Do, YYYY h:mm A') + 
+                        " for: " + 
+                        Math.floor(array[1] - array[0]) + 
+                        " hours " +
+                        Math.floor(((array[1] - array[0]) - Math.floor(array[1] - array[0])) * 60) +
+                        " minutes </h3>"
+                    )
+                });
+            } else {
+                $(".displayedmembers").html("");
+                $(".displayedmembers").append("<div class='all'></div>");
+                $(".all").append("<h3>There is no common time for all the members of the group</h3>");
+            }
+        }
+        
+        if($('.onlycommon').hasClass('active')){
+            if(onlycommon.length > 0){
+                $(".displayedmembers").html("");
+                $(".displayedmembers").append("<div class='onlycom'></div>");
+                $('.onlycom').append("<h3>People with common times in this group: </h3>");
+                onlycommon.forEach(function(persons){
+                    $('.onlycom').append(makepeople(persons))
+                });
+                $('.onlycom').css({
+                    'background-color':'rgba(168, 169, 179, 0.75)',
+                    'max-height': '300px',
+                    'overflow-y': 'scroll',
+                    'padding': '5px',
+                    'border': '2px solid rgba(107, 107, 107, 1)',
+                    'border-radius': '20px'
+                });
+            } else {
+                $(".displayedmembers").html("");
+                $(".displayedmembers").append('<h3>No group members have common time with eachother</h3>');
+            }
+        }
+        
+        if($('.pairs').hasClass('active')){
+            if(pairs.length > 0){
+                $(".displayedmembers").html("");
+                $(".displayedmembers").append("<div class='onlypair'></div>");
+                $('.onlypair').append("<h3>Pairs of people with common times in this group: </h3>");
+                pairs.forEach(function(persons){
+                    $('.onlypair').append(makepeople(persons));
+                });
+                $('.onlypair').css({
+                    'background-color':'rgba(168, 169, 179, 0.75)',
+                    'max-height': '300px',
+                    'overflow-y': 'scroll',
+                    'padding': '5px',
+                    'border': '2px solid rgba(107, 107, 107, 1)',
+                    'border-radius': '20px'
+                });
+            } else {
+                $(".displayedmembers").html("");
+                $(".displayedmembers").append('<h3>There are no pairs or people with common time in this group.</h3>');
+            }
         }
     }
+    
+    function makepeople(people){
+        //console.log('peoooople',people)
+        
+        var html = ["<div class='peoplewithcom'><h3> These people:" + people[1] + " have common time in those dates: <br>"];
+        for(var i = 0; i < people[0].length; i++){
+        html.push( 
+        "<h3>"
+        + moment().add(people[0][i][0],"hours").format('MMMM Do, YYYY h:mm A') + 
+        " for: " + 
+        Math.floor(people[0][i][1] - people[0][i][0]) + 
+        " hours and " +
+        Math.floor(((people[0][i][1] - people[0][i][0]) - Math.floor(people[0][i][1] - people[0][i][0])) * 60) +
+        " minutes</h3>")
+        }
+        html.push('</div>');
+        return html.join('');
+    }
+    
+    $('.besttimes .btn').click(function(){
+        var activated = $('.active');
+        activated.removeClass('active');
+        $(this).addClass('active');
+        getgrouparrays();
+    });
 
     //all the work of my whole life happens here
 
@@ -94,10 +170,12 @@ $(document).ready(function(){
             arrayswithnames.push(newarray);
             //console.log("this is it!", newarray);
         });
-        show(onlyarrays);
+        
         var allcommontimes = comparedwithnames(arrayswithnames);
         var pairs = getonlypairs(allcommontimes);
-        console.log("all ever common times: ", allcommontimes, "only pairs are :", pairs)
+        
+        show(onlyarrays, allcommontimes, pairs);
+        //console.log("all ever common times: ", allcommontimes, "only pairs are :", pairs)
     }
 
     function getonlypairs(all){
@@ -194,7 +272,7 @@ $(document).ready(function(){
             
         })
         return ending;
-        console.log("all people with common times are:", ending);
+        //console.log("all people with common times are:", ending);
     }
 
 
@@ -245,7 +323,7 @@ $(document).ready(function(){
             url: "/delarray",
             data: {arrayid: arrayid},
             success: function(data){
-                console.log("success");
+                //console.log("success");
             },
             error: function(err){
                 console.log(err);
