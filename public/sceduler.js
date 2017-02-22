@@ -5,6 +5,7 @@
 //==============================
 
 $(document).ready(function(){
+    
 
     var mdy = new Date()
     var newdate = new Date();

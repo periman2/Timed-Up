@@ -212,7 +212,8 @@ $(document).ready(function(){
     //add friend to selected groups
 
     $(".friendname").click(function(event){
-        var friendid = $(this).parent().parent().children().html();
+        var friendid = $(this).parent().parent().find(".friend").html();
+        //console.log("fff", friendid);
         var friendname = $(this).html();
         var groupnames = [];
         $(".activated .title").each(function(){
@@ -227,12 +228,10 @@ $(document).ready(function(){
                 if($(this).html() === friendname){
                     alert("Your friend " + friendname + " already exists in the group " + groupnames[i - 1]);
                     c ++;
-                    return;
                 } else {
                     if(j > 11){
                         alert("The maximum allowed number of group members is currently 12.");
                         c ++;
-                        return;
                     }
                 }
                 //console.log($(this).html(), "groupie", i , j);
@@ -242,7 +241,7 @@ $(document).ready(function(){
             
         });
 
-        console.log("groupnames", groupnames, friendname);
+        //console.log("groupnames", groupnames, friendname);
         if(groupnames.length > 0 && c === 0) {
             $.ajax({
                 type: "POST",
