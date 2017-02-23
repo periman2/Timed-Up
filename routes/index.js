@@ -8,7 +8,7 @@ var Groups = require("../models/groups")
 var async = require("async");
 var mongoose    = require("mongoose");
 
-router.get("/", function(req, res) {
+router.get("/", isloggedin, function(req, res) {
     if(req.user !== undefined){
         Friendlist.find({authid: req.user._id}).populate("friends groups.authid groups.groupid").exec()
         .then(function(list){
@@ -55,7 +55,6 @@ router.get("/logout", function(req, res){
     req.flash("success", "Logged you out!");
     res.redirect("/");
 });
-
 
 router.post("/register", function(req, res) {
     var newUser = new User({username: req.body.username});

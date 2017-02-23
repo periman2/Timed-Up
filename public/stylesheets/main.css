@@ -1,3 +1,6 @@
+
+/*general*/
+
 html {
     height: 100%;
 }
@@ -17,6 +20,7 @@ body {
     width: 80%;
 }
 
+/*group page*/
 .member {
     background-color:rgba(48, 67, 84, 1);
     color: rgba(151, 174, 195, 1);
@@ -31,15 +35,9 @@ hr {
     border-color: black;
 }
 
-#arrays {
-    max-height: 300px;
-    overflow-y: scroll;
-    border: 1px solid rgba(20, 20, 20, 1);;
-    border-radius: 0.5em;
-    padding: 20px;
-    
-}
 
+
+/*main*/
 @media(min-width: 992px) {
     .navbar-collapse {
         height: 100%;
@@ -82,13 +80,6 @@ hr {
     }
 }
 
-
-#groups {
-    color: rgba(41, 41, 41, 1);
-    font-size: 18px;
-    /*overflow: scroll;*/
-}
-
 .hidden {
     display: none;
 }
@@ -114,6 +105,7 @@ hr {
     border-right: 1px solid rgba(96, 104, 123, 1);
 }
 
+/*group page*/
 .besttimes {
     background-color: rgba(188, 197, 205, 1);
     border: 1px solid black;
@@ -124,11 +116,13 @@ hr {
     box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
 }
 
+/*group page*/
 .displayedmembers {
     max-height: 350px;
 }
 /* Scrollbar */ 
 
+/*general*/
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -164,18 +158,19 @@ hr {
 }
 
 /* End Scrollbar */
+
+
 .title:hover {
     cursor: pointer;
 }
 
-.deletegroup:hover {
-    cursor: pointer;
-}
 
+/*groupspage*/
 .friendname:hover {
     cursor: pointer;
 }
 
+/*main*/
 #friendlist li {
     font-size: 30px;
 }
@@ -204,10 +199,6 @@ li {
     font-size:  40px;
     color: rgba(41, 41, 41, 1);
     align: center;
-}
-
-#arrays {
-    color: rgba(41, 41, 41, 1);
 }
 
 #groupname{
