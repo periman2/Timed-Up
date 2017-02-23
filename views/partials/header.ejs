@@ -25,17 +25,12 @@
             <% include navigation %>
             <div class="fl w-80-ns w-100 mw7">
                 <% if(error && error.length > 0) { %>
-                    <div class="">
-                        <div class="" role="alert">
-                            <%= error %>
-                        </div>
-
+                    <div class="bg-red absolute f4 pa2 pr5 right-0 white avenir" role="alert">
+                        <%= error %>
                     </div>
                 <% } %>
                 <% if(success && success.length > 0) { %>
-                    <div class="">
-                        <div class="" role="alert">
-                            <%= success %>
-                        </div>
+                    <div class="bg-green absolute f4 pa2 pr5 right-0 white avenir" role="alert">
+                        <%= success %>
                     </div>
                 <% } %>
