@@ -1,14 +1,14 @@
 
 
-var express     = require("express"),
-    app         = express(),
-    bodyParser  = require("body-parser"),
-    mongoose    = require("mongoose"),
-    flash        = require("connect-flash"),
+var express        = require("express"),
+    app            = express(),
+    bodyParser     = require("body-parser"),
+    mongoose       = require("mongoose"),
+    flash          = require("connect-flash"),
     methodOverride = require("method-override");
-    passport    = require("passport"),
-    User        = require("./models/user"),
-    LocalStrategy = require("passport-local");
+    passport       = require("passport"),
+    User           = require("./models/user"),
+    LocalStrategy  = require("passport-local");
 
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -16,7 +16,7 @@ indexRoutes = require("./routes/index");
 groupRoutes = require("./routes/groups");
 friendRoutes = require("./routes/friends");
 arrayRoutes = require("./routes/arrays");
-    
+
 
 mongoose.Promise = global.Promise;
 
@@ -54,7 +54,8 @@ app.use(groupRoutes);
 app.use(arrayRoutes);
 app.use(indexRoutes);
 
-mongoose.connect(process.env.DATABASEURL);
+
+mongoose.connect(process.env.DATABASEURL || "mongodb://localhost/timed-up");
 var PORT = process.env.PORT || 3000;
 
 
@@ -65,6 +66,3 @@ app.get("*", function(req, res){
 app.listen(PORT, function() {
     console.log("The Timed Up server has started");
 });
-
-
-
