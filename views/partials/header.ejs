@@ -5,7 +5,7 @@
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="/stylesheets/main.css">
@@ -14,9 +14,18 @@
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />  
-        
+        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+        <link rel="stylesheet" href="https://unpkg.com/tachyons@4.6.1/css/tachyons.min.css"/>
+
     </head>
+
+    <body class="bg-washed-blue">
+    <div class="pa4">
+        <div class="">
+            <% include navigation %>
+            <div class="fl w-80-ns w-100 mw7">
+
     <body>
     <div  class="container-fluid"> 
         <div class="row">
@@ -76,17 +85,18 @@
                 </nav>
             </div>
             <div class="col-md-8">
+
                 <% if(error && error.length > 0) { %>
-                    <div class="container">
-                        <div class="alert alert-danger" role="alert">
+                    <div class="">
+                        <div class="" role="alert">
                             <%= error %>
                         </div>
 
                     </div>
                 <% } %>
                 <% if(success && success.length > 0) { %>
-                    <div class="container">
-                        <div class="alert alert-success" role="alert">
+                    <div class="">
+                        <div class="" role="alert">
                             <%= success %>
                         </div>
                     </div>

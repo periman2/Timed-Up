@@ -1,4 +1,24 @@
 
+/*
+ * BASE
+ */
+html,
+body {
+  font-family: 'avenir next', avenir, sans-serif;
+}
+
+/*
+ * RESET STYLES
+ */
+.input-reset {
+
+}
+
+.input-reset:focus,
+.btn-reset:focus {
+  outline:0
+=======
+
 /*general*/
 
 html {
@@ -205,11 +225,14 @@ li {
     width: 20%;
 }
 
-.incgroups {
-    max-height: 300px;
-    overflow-y: auto;
+.btn-reset {
+  border: none;
+  background: none;
 }
 
-.allmembers, .onlycommon, .pairs {
-    background-color: rgba(222, 227, 232, 1);
+/*
+ * NAVIGATION
+ */
+.btn-gradient {
+  background: linear-gradient(to right, rgba(246,46,36,1) 0%, rgba(255,54,121,1) 100%);
 }

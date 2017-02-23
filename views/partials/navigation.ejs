@@ -1,0 +1,68 @@
+<div class="fl w-20-ns w-100 mw6 mr4">
+    <nav class="" role="navigation">
+        <div class="pa2 shadow-4 bg-white">
+          <!--<i class="active fa fa-eye f2 black-70 pointer dim" aria-hidden="true"></i>-->
+          <i class="hidden tc db fa fa-eye-slash f2 black-70 pointer dim" aria-hidden="true"></i>
+          <div class="navigation mt2">
+              <ul class="list center tc pl0 ma0">
+                <li>
+                  <a class="btn-gradient white f5 tc w-90 link dim br1 ba ph3 pv2 mb2 dib near-black" href="/">Home</a>
+                </li>
+              <% if(!currentUser) { %>
+                  <li>
+                    <a class="btn-gradient white f5 tc w-90 link dim br1 ba ph3 pv2 mb2 dib near-black" href="/login">Sign In</a>
+                  </li>
+                  <li>
+                    <a class="btn-gradient white f5 tc w-90 link dim br1 ba ph3 pv2 mb2 dib near-black" href="/register">Sign Up</a>
+                  </li>
+              <% } else { %>
+                  <li>
+                    <a class="btn-gradient white f5 tc w-90 link dim br1 ba ph3 pv2 mb2 dib near-black" href="/logout">Sign out</a>
+                  </li>
+                  <li class="tl w-90 center">
+                    <p class="f5 mv2 pa0"> Signed in as: <p>
+                    <p class="f4 mv2 pa0 b"><%= currentUser.username %></p>
+                  </li>
+              <% } %>
+              </ul>
+          </div>
+        </div>
+        <% if(currentUser) { %>
+        <div class="pa2 mt4 shadow-4 bg-white">
+          <ul class="list center tc pl0 ma0 mt2">
+            <li>
+              <a class="btn-gradient white f5 tc w-90 link dim br1 ba ph3 pv2 mb2 dib near-black" href="/myschedule">My Schedule</a>
+            </li>
+            <li>
+              <a class="btn-gradient white f5 tc w-90 link dim br1 ba ph3 pv2 mb2 dib near-black" href="/">My Groups</a>
+            </li>
+          </ul>
+
+          <div class="w-90 center">
+            <p class="f5 mv2 pa0">My Friendlist:<p>
+            <!-- List friends -->
+            <ul class="list center tc ma0 mt2 mb4">
+              <% list.friends.forEach(function(friend){ %>
+              <li class="ba mv2">
+                <p class="f5 tl mv1 w-70 near-black dib"><%= friend.username %></p>
+                <div class="dib grow-large hover-red black-70 pointer">
+                  <i class="fa fa-times deletelist f3 v-btm" aria-hidden="true"></i>
+                </div>
+              </li>
+              <% }) %>
+            </ul>
+          <!-- Add a new friend -->
+          <form action="/search?_method=PUT" method="POST" class="mv2" role="search">
+            <div class="measure">
+              <label for="name" class="f5 b db mb2">Add Friend <span class="normal black-60">(by username)</span></label>
+              <input name="nfriend[friendname]" class="input-reset ba b--black-20 pa2 mb2 dib w-70" type="text" aria-describedby="name-desc" maxlength="11">
+              <button type="submit" class="tr v-mid btn-reset f2 black-70 pointer dim w-20 dib">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </button>
+            </div>
+          </form>
+          </div>
+        </div>
+        <% } %>
+    </nav>
+</div>
