@@ -1,0 +1,11 @@
+#groups {
+    color: rgba(41, 41, 41, 1);
+    font-size: 18px;
+    /*overflow: scroll;*/
+}
+
+
+/*mygroupspage*/
+.deletegroup:hover {
+    cursor: pointer;
+}

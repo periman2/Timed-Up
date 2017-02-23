@@ -8,7 +8,7 @@ var Groups = require("../models/groups")
 var async = require("async");
 
 
-router.put("/search", function(req, res){
+router.put("/search", isloggedin, function(req, res){
     User.find({username: req.body.nfriend.friendname}).exec()
     .then( function(friend){
         if(friend.length > 0){
@@ -41,7 +41,7 @@ router.put("/search", function(req, res){
 });
 
 // remove from friend
-router.delete("/deletefriend", function(req, res){
+router.delete("/deletefriend", isloggedin,function(req, res){
     Friendlist.find({authid: req.user._id}).exec()
     .then(function(list){
         var newlist = list[0];
@@ -59,5 +59,14 @@ router.delete("/deletefriend", function(req, res){
         throw err;
     });
 });
+
+function isloggedin(req, res, next){
+    if(req.isAuthenticated()) {
+        return next();
+    } else {
+        req.flash("error", "You need to be logged in to do that.");
+        res.redirect("/login");
+    }
+}
 
 module.exports = router;

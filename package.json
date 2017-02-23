@@ -9,6 +9,10 @@
   },
   "author": "Periklis Arnaoutis",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/periman2/Timed-Up.git"
+  },
   "dependencies": {
     "async": "^2.1.4",
     "body-parser": "^1.16.0",
