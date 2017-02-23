@@ -1,0 +1,13 @@
+/*
+ * RESET STYLES
+ */
+.input-reset:focus,
+.btn-reset:focus {
+  outline:0
+}
+
+.btn-reset,
+.input-reset {
+  border: none;
+  background: none;
+}
