@@ -5,7 +5,7 @@
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="/stylesheets/main.css">
@@ -14,79 +14,27 @@
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />  
-        
+        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+        <link rel="stylesheet" href="https://unpkg.com/tachyons@4.6.1/css/tachyons.min.css"/>
+
     </head>
-    <body>
-    <div  class="container-fluid"> 
-        <div class="row">
-            <div class="col-md-4">
-                <nav class = "navbar navbar-default" role="navigation">
-                    <div class = "navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-exi-collapse">
-                        <span class="sr-only"> Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <p class='thetitle'><a class = "navbar-brand" href = "/">Timed-UP</a></p>
-                    </div>
-                    <div class="navbar collapse navbar-collapse navbar-exi-collapse">
-                        <ul class = "nav navbar-nav">
-                        <% if(!currentUser) { %>
-                            <li><a href = "/login">Login</a></li>
-                            <li><a href = "/register">Sign Up</a></li>
-                        <% } else { %>
-                            <li><h3> Signed in as: <strong><%= currentUser.username %></strong></h3></li>
-                            <br>
-                            <li class="times">
-                                <a href="/myscedule" class="btn btn-default btn-lg">My Schedule</a>
-                            </li>
-                            <li class="myowngroups">
-                                <a href="/" class="btn btn-default btn-lg">My Groups</a>
-                            </li>
-                            <br>
-                            <h3 class="text-center">My Friendlist</h3>
-                            <form  action="/search?_method=PUT" method="POST" class="navbar-form navbar-left" role="search">
-                                <input type="text" name="nfriend[friendname]" class="form-control input-md" placeholder="Username" maxlength="11">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default">Add Friend</button>
-                                </span>
-                            </form>
-                            <div class="myfriendlist">
-                            <% list.friends.forEach(function(friend){ %>
-                            <li class="friendbox row">
-                                <div class="col-xs-3">
-                                    <p class="hidden friend"><%= friend._id %></p>
-                                    <i class="fa fa-times deletelist" aria-hidden="true"></i>
-                                </div>
-                                <div class="col-xs-9 text-left">
-                                    <p class="friendname"><%= friend.username %></p>
-                                </div>
-                            </li>
-                            <% }) %>
-                            </div>
-                            <br>
-                            <li><a class="btn btn-default" href = "/logout">Logout</a></li>
-                            <ul class="dropdown-menu groups">
-                            </ul>
-                        <% } %>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-            <div class="col-md-8">
+    <body class="bg-washed-blue">
+    <div class="pa4">
+        <div class="">
+            <% include navigation %>
+            <div class="">
                 <% if(error && error.length > 0) { %>
-                    <div class="container">
-                        <div class="alert alert-danger" role="alert">
+                    <div class="">
+                        <div class="" role="alert">
                             <%= error %>
                         </div>
 
                     </div>
                 <% } %>
                 <% if(success && success.length > 0) { %>
-                    <div class="container">
-                        <div class="alert alert-success" role="alert">
+                    <div class="">
+                        <div class="" role="alert">
                             <%= success %>
                         </div>
                     </div>

@@ -1,0 +1,63 @@
+<div class="fl w-20 mw5 mr4">
+    <nav class="" role="navigation">
+        <div class="pa2 shadow-4 bg-white">
+          <!--<i class="active fa fa-eye f2 black-70 pointer dim" aria-hidden="true"></i>-->
+          <i class="hidden tc db fa fa-eye-slash f2 black-70 pointer dim" aria-hidden="true"></i>
+          <div class="navigation mt2">
+              <ul class="list center tc pl0 ma0">
+                <li>
+                  <a class="btn-gradient white f5 tc w-90 link dim br1 ba ph3 pv2 mb2 dib near-black" href="/">Home</a>
+                </li>
+              <% if(!currentUser) { %>
+                  <li>
+                    <a class="btn-gradient white f5 tc w-90 link dim br1 ba ph3 pv2 mb2 dib near-black" href="/login">Sign In</a>
+                  </li>
+                  <li>
+                    <a class="btn-gradient white f5 tc w-90 link dim br1 ba ph3 pv2 mb2 dib near-black" href="/register">Sign Up</a>
+                  </li>
+              <% } else { %>
+                  <li>
+                    <p class="f2 pa0"> Signed in as: <strong><%= currentUser.username %></strong></p>
+                  </li>
+                  <li>
+                    <a class="btn-gradient white f5 tc w-90 link dim br1 ba ph3 pv2 mb2 dib near-black" href="/logout">Sign Up</a>
+                  </li>
+              <% } %>
+              </ul>
+          </div>
+        </div>
+        <% if(currentUser) { %>
+        <div class="pa2 mt4 shadow-4 bg-white">
+          <ul class="list">
+            <li class="">
+                <a href="/myscedule" class="">My Schedule</a>
+            </li>
+            <li class="">
+                <a href="/" class="">My Groups</a>
+            </li>
+          </ul>
+
+            <h3 class="">My Friendlist</h3>
+            <form  action="/search?_method=PUT" method="POST" class="" role="search">
+                <input type="text" name="nfriend[friendname]" class="" placeholder="Username" maxlength="11">
+                <span class="">
+                    <button class="">Add Friend</button>
+                </span>
+            </form>
+            <ul>
+            <% list.friends.forEach(function(friend){ %>
+            <li class="">
+                <div class="col-xs-3">
+                    <p class=""><%= friend._id %></p>
+                    <i class="fa fa-times deletelist" aria-hidden="true"></i>
+                </div>
+                <div class="">
+                    <p class=""><%= friend.username %></p>
+                </div>
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+        <% } %>
+    </nav>
+</div>
