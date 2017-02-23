@@ -17,10 +17,11 @@
                   </li>
               <% } else { %>
                   <li>
-                    <p class="f2 pa0"> Signed in as: <strong><%= currentUser.username %></strong></p>
+                    <a class="btn-gradient white f5 tc w-90 link dim br1 ba ph3 pv2 mb2 dib near-black" href="/logout">Sign out</a>
                   </li>
-                  <li>
-                    <a class="btn-gradient white f5 tc w-90 link dim br1 ba ph3 pv2 mb2 dib near-black" href="/logout">Sign Up</a>
+                  <li class="tl w-90 center">
+                    <p class="f5 mv2 pa0"> Signed in as: <p>
+                    <p class="f4 mv2 pa0 b"><%= currentUser.username %></p>
                   </li>
               <% } %>
               </ul>
@@ -28,22 +29,18 @@
         </div>
         <% if(currentUser) { %>
         <div class="pa2 mt4 shadow-4 bg-white">
-          <ul class="list">
-            <li class="">
-                <a href="/myscedule" class="">My Schedule</a>
+          <ul class="list center tc pl0 ma0 mt2">
+            <li>
+              <a class="btn-gradient white f5 tc w-90 link dim br1 ba ph3 pv2 mb2 dib near-black" href="/myschedule">My Schedule</a>
             </li>
-            <li class="">
-                <a href="/" class="">My Groups</a>
+            <li>
+              <a class="btn-gradient white f5 tc w-90 link dim br1 ba ph3 pv2 mb2 dib near-black" href="/">My Groups</a>
             </li>
           </ul>
 
-            <h3 class="">My Friendlist</h3>
-            <form  action="/search?_method=PUT" method="POST" class="" role="search">
-                <input type="text" name="nfriend[friendname]" class="" placeholder="Username" maxlength="11">
-                <span class="">
-                    <button class="">Add Friend</button>
-                </span>
-            </form>
+          <div class="w-90 center">
+            <p class="f5 mv2 pa0">My Friendlist:<p>
+            <!-- List friends -->
             <ul>
             <% list.friends.forEach(function(friend){ %>
             <li class="">
@@ -57,6 +54,17 @@
             </li>
             <% }) %>
           </ul>
+          <!-- Add a new friend -->
+          <form action="/search?_method=PUT" method="POST" class="mv2" role="search">
+            <div class="measure">
+              <label for="name" class="f6 b db mb2">Add Friend <span class="normal black-60">(by username)</span></label>
+              <input name="nfriend[friendname]" class="input-reset ba b--black-20 pa2 mb2 dib w-70" type="text" aria-describedby="name-desc" maxlength="11">
+              <button type="submit" class="tr v-btm btn-reset f2 black-70 pointer dim w-20 dib">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </button>
+            </div>
+          </form>
+          </div>
         </div>
         <% } %>
     </nav>

@@ -9,3 +9,15 @@ body {
 .btn-gradient {
   background: linear-gradient(to right, rgba(246,46,36,1) 0%, rgba(255,54,121,1) 100%);
 }
+
+.input-reset {
+
+}
+.input-reset:focus {
+  outline:0
+}
+
+.btn-reset {
+  border: none;
+  background: none;
+}
