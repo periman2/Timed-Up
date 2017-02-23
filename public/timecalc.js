@@ -21,7 +21,6 @@ $(document).ready(function(){
             data: {friendid: friendid},
             success: function(result){
                 //console.log("deleted!");
-                
             }
         })
         location.reload();

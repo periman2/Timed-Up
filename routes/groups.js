@@ -9,7 +9,7 @@ var async = require("async");
 var mongoose    = require("mongoose");
 
 //delete group
-router.delete("/deletegroup", function(req, res){
+router.delete("/deletegroup", isloggedin,function(req, res){
     Groups.find({name: req.body.groupname, authid: req.user._id}).populate("groupies").exec()
     .then(function(group){
         if(group[0].groupies.length > 0){
@@ -64,7 +64,7 @@ router.delete("/deletegroup", function(req, res){
 
 //addgroupie
 
-router.post("/addgroupie", function(req, res){
+router.post("/addgroupie", isloggedin,function(req, res){
     Groups.find({authid: req.user._id, name:{$in: req.body.groupnames}}).populate("groupies").exec()
     .then(function(groups){
         async.forEachOf(groups, function(group, keys, callback){
@@ -94,7 +94,7 @@ router.post("/addgroupie", function(req, res){
 });
 
 //delete groupie
-router.post("/deletegroupie", function(req, res){
+router.post("/deletegroupie", isloggedin,function(req, res){
    var groupiename = req.body.groupiename;
    var groupname = req.body.groupname;
    console.log(groupiename);
@@ -149,7 +149,7 @@ router.post("/deletegroupie", function(req, res){
 
 //creates a group for the user
 
-router.post("/creategroup", function(req, res){
+router.post("/creategroup", isloggedin,function(req, res){
     var name = req.body.groupname;
     var authid = req.user._id;
     var groupies = [];
@@ -181,7 +181,7 @@ router.post("/creategroup", function(req, res){
 
 //get's all the groups that the user created
 
-router.get("/getmygroups", function(req, res){
+router.get("/getmygroups", isloggedin,function(req, res){
     Groups.find({authid: req.user._id}).populate("groupies").exec()
     .then(function(groups){
         console.log(groups);
@@ -190,5 +190,14 @@ router.get("/getmygroups", function(req, res){
         throw err;
     });
 });
+
+function isloggedin(req, res, next){
+    if(req.isAuthenticated()) {
+        return next();
+    } else {
+        req.flash("error", "You need to be logged in to do that.");
+        res.redirect("/login");
+    }
+}
 
 module.exports = router;

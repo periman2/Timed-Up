@@ -9,7 +9,7 @@ var async = require("async");
 
 //add arrays to friendlist
 
-router.post("/addarray", function(req, res){
+router.post("/addarray", isloggedin,function(req, res){
     Friendlist.find({authid: req.user._id}).exec()
     .then(function(list){
         var newlist = list[0];
@@ -30,7 +30,7 @@ router.post("/addarray", function(req, res){
 
 //get my arrays
 
-router.get("/getarrays", function(req, res){
+router.get("/getarrays", isloggedin,function(req, res){
     Friendlist.find({authid: req.user._id}).exec()
     .then(function(list){
         res.send(list[0].arrays);
@@ -41,7 +41,7 @@ router.get("/getarrays", function(req, res){
 
 //get group's arrays
 
-router.get("/:groupid/getgrouparrays", function(req, res){
+router.get("/:groupid/getgrouparrays", isloggedin,  function(req, res){
     var groupid = req.params.groupid;
     Groups.findById(groupid).populate("groupies").exec()
     .then(function(group){
@@ -65,7 +65,7 @@ router.get("/:groupid/getgrouparrays", function(req, res){
 });
 
 // delete arrays
-router.post("/delarray", function(req, res){
+router.post("/delarray", isloggedin,function(req, res){
     var arrayid = req.body.arrayid;
     Friendlist.find({authid: req.user._id}).exec()
     .then(function(list){
@@ -87,6 +87,15 @@ router.post("/delarray", function(req, res){
         throw err;
     })
 });
+
+function isloggedin(req, res, next){
+    if(req.isAuthenticated()) {
+        return next();
+    } else {
+        req.flash("error", "You need to be logged in to do that.");
+        res.redirect("/login");
+    }
+}
 
 
 
