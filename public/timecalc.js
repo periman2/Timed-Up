@@ -177,7 +177,7 @@ $(document).ready(function(){
         var pairs = getonlypairs(allcommontimes);
         
         show(onlyarrays, allcommontimes, pairs);
-        console.log("all ever common times: ", allcommontimes, "only pairs are :", pairs)
+        //console.log("all ever common times: ", allcommontimes, "only pairs are :", pairs)
     }
 
     function getonlypairs(all){
@@ -201,13 +201,13 @@ $(document).ready(function(){
             
             //console.log("this is the edited element", element[i])
             if(element[i + 1] !== undefined){
-                console.log("pairs:",temp, element[i + 1][0],element[i + 1][1], names);
+                //console.log("pairs:",temp, element[i + 1][0],element[i + 1][1], names);
                 temp = finalcompare(this, [temp, element[i + 1][0]]);
-                console.log("temp now is :", temp);
+                //console.log("temp now is :", temp);
                 if (temp !== undefined && temp.length > 0){
                     names.push(element[i + 1][1]);
                     comp = [temp, names.join()];
-                    console.log("nameeeeeeees", names, comp);
+                    //console.log("nameeeeeeees", names, comp);
                     finalarray.push(comp);
                 } else {
                     break;
@@ -270,7 +270,7 @@ $(document).ready(function(){
     
         var allperms = permutate(arrays);
 
-        console.log("these are the permuations: ", allperms);
+        //console.log("these are the permuations: ", allperms);
         var ending = [];
         allperms.forEach(function(element){
             var el = elementedit(element);
@@ -291,7 +291,7 @@ $(document).ready(function(){
             }
             
         })
-        console.log("all people with common times are:", ending);
+        //console.log("all people with common times are:", ending);
         return ending;
         
     }
@@ -302,7 +302,7 @@ $(document).ready(function(){
         });
         temp.push(array._id)
         temp.push(array.time);
-        console.log("important temp: ", temp);
+        //console.log("important temp: ", temp);
         return checkifexp(temp);
     }
 
@@ -312,7 +312,7 @@ $(document).ready(function(){
         var hours = array[0];
         var dateofexp = moment(time).add(hours,"hours").toISOString();
         var diff = reverse(moment().diff(dateofexp,"hours", true));
-        console.log("difference is: ", diff, 'array is: ', array);
+        //console.log("difference is: ", diff, 'array is: ', array);
         if(diff < 0){
             deletearray(array[2]);
             return false;
@@ -328,14 +328,14 @@ $(document).ready(function(){
         var temp = values.map(clarify)
 
         var arrays = temp.filter(function(el){
-            console.log("llllll",el)
+            //console.log("llllll",el)
             if (el !== false){
                 return el;
             }
         });
 
         var newarray = [arrays, username];
-        console.log("these are the values and the usernames:", newarray, values);
+        //console.log("these are the values and the usernames:", newarray, values);
         return newarray;
     }
 
