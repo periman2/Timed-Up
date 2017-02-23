@@ -163,19 +163,21 @@ $(document).ready(function(){
     function editarrays(everything){
         var onlyarrays = []
         var arrayswithnames = [];
+        //console.log("everything", everything);
         everything.forEach(function(arrays){
-            //console.log(data[0], data[1]);
+            //console.log("original array: ", arrays);
             var newarray = constractor(arrays);
+            //console.log("after constractor: ", newarray);
             onlyarrays.push(newarray[0]);
             arrayswithnames.push(newarray);
             //console.log("this is it!", newarray);
         });
-        
+        //console.log("arrays with names",arrayswithnames )
         var allcommontimes = comparedwithnames(arrayswithnames);
         var pairs = getonlypairs(allcommontimes);
         
         show(onlyarrays, allcommontimes, pairs);
-        //console.log("all ever common times: ", allcommontimes, "only pairs are :", pairs)
+        console.log("all ever common times: ", allcommontimes, "only pairs are :", pairs)
     }
 
     function getonlypairs(all){
@@ -189,24 +191,31 @@ $(document).ready(function(){
     }
 
     function elementedit(element){
+        //console.log("this is the input's element: ", element);
         var finalarray = [];
         var temp = element[0][0];
-        var compared;
-        var names = [];
+        var comp = [];
+        var names = [element[0][1]];
+        
         for(var i = 0; i < element.length; i++){
-            names.push(element[i][1]);
-            if(element[i + 1] != undefined){
-                //console.log("pairs:",temp, element[i + 1][0]);
+            
+            //console.log("this is the edited element", element[i])
+            if(element[i + 1] !== undefined){
+                console.log("pairs:",temp, element[i + 1][0],element[i + 1][1], names);
                 temp = finalcompare(this, [temp, element[i + 1][0]]);
-                if (temp != undefined && temp.length > 0){
-                    compared = [temp, names];
+                console.log("temp now is :", temp);
+                if (temp !== undefined && temp.length > 0){
+                    names.push(element[i + 1][1]);
+                    comp = [temp, names.join()];
+                    console.log("nameeeeeeees", names, comp);
+                    finalarray.push(comp);
                 } else {
                     break;
                 }
             }
         }
-
-        return compared;
+        
+        return finalarray;
     }
 
     function add(a, b){
@@ -218,7 +227,7 @@ $(document).ready(function(){
         arrays.forEach(function(element){
             if(element[1].length === array[1].length) {
                 var temp = [];
-                for(var i = 0; i < element[1].length; i ++){
+                for(var i = 0; i < array[1].length; i ++){
                     //console.log(array[1].indexOf(element[1][i]));
                     if(array[1].indexOf(element[1][i]) >= 0){
                         temp.push(1);
@@ -249,6 +258,7 @@ $(document).ready(function(){
                 ch = input.splice(i, 1)[0];
                 usedChars.push(ch);
                 if (input.length == 0) {
+                    
                     permArr.push(usedChars.slice());
                 }
                 permutate(input);
@@ -259,32 +269,40 @@ $(document).ready(function(){
         };
     
         var allperms = permutate(arrays);
+
+        console.log("these are the permuations: ", allperms);
         var ending = [];
         allperms.forEach(function(element){
             var el = elementedit(element);
+            
             if(el !== undefined && el.length > 0){
                 //console.log(el.length, el, "elementtttt");
-                var check = checkifitexists(el, ending);
-                if(check === 0){
-                    ending.push(el);
+                var check;
+                for(var k = 0; k < el.length; k++){
+                    //console.log('onlyelement', el[k][1].split(","));
+                    el[k][1] = el[k][1].split(",");
+                    console.log('elk is', el[k]);
+                    
+                    var check = checkifitexists(el[k], ending);
+                    if(check === 0){
+                            ending.push(el[k]);
+                    }
                 }
             }
             
         })
+        console.log("all people with common times are:", ending);
         return ending;
-        //console.log("all people with common times are:", ending);
+        
     }
 
-
-
-
-
     function clarify(array) {
-        temp = array.value.map(function(element){
+        var temp = array.value.map(function(element){
             return eval(element);
         });
         temp.push(array._id)
         temp.push(array.time);
+        console.log("important temp: ", temp);
         return checkifexp(temp);
     }
 
@@ -294,6 +312,7 @@ $(document).ready(function(){
         var hours = array[0];
         var dateofexp = moment(time).add(hours,"hours").toISOString();
         var diff = reverse(moment().diff(dateofexp,"hours", true));
+        console.log("difference is: ", diff, 'array is: ', array);
         if(diff < 0){
             deletearray(array[2]);
             return false;
@@ -306,14 +325,17 @@ $(document).ready(function(){
     function constractor(allarrays){
         var values = allarrays[0];
         var username = allarrays[1].username;
+        var temp = values.map(clarify)
 
-        var arrays = values.map(clarify).filter(function(el){
-            if (el){
+        var arrays = temp.filter(function(el){
+            console.log("llllll",el)
+            if (el !== false){
                 return el;
             }
         });
 
         var newarray = [arrays, username];
+        console.log("these are the values and the usernames:", newarray, values);
         return newarray;
     }
 
