@@ -1,2 +1,14 @@
+# Node files
 node_modules
+
+# Debug logs
+*.log*
+
+# Mac trash
+DS_STORE
+
+# Yarn versioning
+yarn.lock
+
+#
 nexthing.txt
