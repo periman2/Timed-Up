@@ -53,7 +53,7 @@ $(document).ready(function(){
             if(end.length > 0) {
                 $(".displayedmembers").html("");
                 $(".displayedmembers").append("<div class='all'></div>")
-                $(".all").append("<h2>This group has common times at those dates: </h2>");
+                $(".all").append("<h2><strong>This group has common times at those dates: </strong></h2>");
                 //$(".all").addClass('hidden');
                 end.forEach(function(array){
                     $(".all").append(
@@ -65,11 +65,15 @@ $(document).ready(function(){
                         Math.floor(((array[1] - array[0]) - Math.floor(array[1] - array[0])) * 60) +
                         " minutes </h3>"
                     )
+                    $('.all').css({
+                        'max-height': '300px',
+                        'overflow-y': 'auto',
+                    })
                 });
             } else {
                 $(".displayedmembers").html("");
                 $(".displayedmembers").append("<div class='all'></div>");
-                $(".all").append("<h3>There is no common time for all the members of the group</h3>");
+                $(".all").append("<h2><strong>There is no common time for all the members of the group<strong></h2>");
             }
         }
         
@@ -77,21 +81,24 @@ $(document).ready(function(){
             if(onlycommon.length > 0){
                 $(".displayedmembers").html("");
                 $(".displayedmembers").append("<div class='onlycom'></div>");
-                $('.onlycom').append("<h3>People with common times in this group: </h3>");
+                $('.onlycom').append("<h2>People with common times in this group: </h2>");
                 onlycommon.forEach(function(persons){
                     $('.onlycom').append(makepeople(persons))
                 });
                 $('.onlycom').css({
-                    'background-color':'rgba(168, 169, 179, 0.75)',
+                    'background-color':'rgba(31, 55, 76, 1)',
+                    'color':'rgba(190, 210, 228, 1)',
                     'max-height': '300px',
-                    'overflow-y': 'scroll',
+                    'overflow-y': 'auto',
                     'padding': '5px',
                     'border': '2px solid rgba(107, 107, 107, 1)',
-                    'border-radius': '20px'
+                    'border-top': 'none',
+                    'border-bottom-left-radius': '20px',
+                    'border-bottom-right-radius': '20px'
                 });
             } else {
                 $(".displayedmembers").html("");
-                $(".displayedmembers").append('<h3>No group members have common time with eachother</h3>');
+                $(".displayedmembers").append('<h2>No group members have common time with each other</h2>');
             }
         }
         
@@ -99,21 +106,24 @@ $(document).ready(function(){
             if(pairs.length > 0){
                 $(".displayedmembers").html("");
                 $(".displayedmembers").append("<div class='onlypair'></div>");
-                $('.onlypair').append("<h3>Pairs of people with common times in this group: </h3>");
+                $('.onlypair').append("<h2>Pairs of people with common times in this group: </h2>");
                 pairs.forEach(function(persons){
                     $('.onlypair').append(makepeople(persons));
                 });
                 $('.onlypair').css({
-                    'background-color':'rgba(168, 169, 179, 0.75)',
+                    'background-color':'rgba(31, 55, 76, 1)',
+                    'color':'rgba(190, 210, 228, 1)',
                     'max-height': '300px',
-                    'overflow-y': 'scroll',
+                    'overflow-y': 'auto',
                     'padding': '5px',
                     'border': '2px solid rgba(107, 107, 107, 1)',
-                    'border-radius': '20px'
+                    'border-top': 'none',
+                    'border-bottom-left-radius': '20px',
+                    'border-bottom-right-radius': '20px'
                 });
             } else {
                 $(".displayedmembers").html("");
-                $(".displayedmembers").append('<h3>There are no pairs or people with common time in this group.</h3>');
+                $(".displayedmembers").append('<h2>There are no pairs or people with common time in this group.</h2>');
             }
         }
     }
@@ -121,7 +131,7 @@ $(document).ready(function(){
     function makepeople(people){
         //console.log('peoooople',people)
         
-        var html = ["<div class='peoplewithcom'><h3> These people:" + people[1] + " have common time in those dates: <br>"];
+        var html = ["<div class='peoplewithcom'><h3><strong> These people:" + people[1] + " have common time in the dates: </strong><br>"];
         for(var i = 0; i < people[0].length; i++){
         html.push( 
         "<h3>"

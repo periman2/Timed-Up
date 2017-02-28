@@ -201,3 +201,11 @@ li {
 .allmembers, .onlycommon, .pairs {
     background-color: rgba(222, 227, 232, 1);
 }
+
+.inc {
+    background-color:rgba(188, 197, 205, 1);
+    padding: 10px;
+    -webkit-box-shadow: 0px 4px 6px 2px rgba(50, 50, 50, 0.68);
+    -moz-box-shadow:    0px 4px 6px 2px rgba(50, 50, 50, 0.68);
+    box-shadow:         0px 4px 6px 2px rgba(50, 50, 50, 0.68);
+}

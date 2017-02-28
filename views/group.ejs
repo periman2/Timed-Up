@@ -9,7 +9,7 @@
     <% var editable = true; %>
 <% } %>
 
-<h2>Welcome to group <span id="gname"><%= group.name %></span></h2><br>
+<h2><strong>Welcome to group <span id="gname"><%= group.name %></span><strong></h2><br>
 
 <h3>
     Here you can see the combined common time of all the group members<br>
@@ -17,7 +17,7 @@
 </h3>
     
 <% if (editable) { %>
-    <div id="inc">
+    <div class="inc">
         <h4>
         Since you are the creator of this group, you can add or remove group mambers from this page as well.<br><br>
             To add a member to the group simply click on his/her username from your friendlist.<br>
