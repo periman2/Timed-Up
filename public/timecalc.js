@@ -281,7 +281,7 @@ $(document).ready(function(){
                 for(var k = 0; k < el.length; k++){
                     //console.log('onlyelement', el[k][1].split(","));
                     el[k][1] = el[k][1].split(",");
-                    console.log('elk is', el[k]);
+                    //console.log('elk is', el[k]);
                     
                     var check = checkifitexists(el[k], ending);
                     if(check === 0){

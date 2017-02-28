@@ -8,7 +8,7 @@ var Groups = require("../models/groups")
 var async = require("async");
 var mongoose    = require("mongoose");
 
-router.get("/", function(req, res) {
+router.get("/", isloggedin, function(req, res) {
     if(req.user !== undefined){
         Friendlist.find({authid: req.user._id}).populate("friends groups.authid groups.groupid").exec()
         .then(function(list){
@@ -27,7 +27,7 @@ router.get('/favicon.ico', function(req, res) {
 });
 
 //go to sceduling page
-router.get("/myscedule",isloggedin,  function(req, res){
+router.get("/myschedule",isloggedin,  function(req, res){
     Friendlist.find({authid: req.user._id}).populate("friends groups.authid groups.groupid").exec()
     .then(function(list){
         res.render("scedule", {list: list[0], user: req.user, arrays: list[0].arrays});
@@ -44,18 +44,17 @@ router.get("/login", function(req, res){
 
 router.post("/login", passport.authenticate("local", 
 {
-    successRedirect: "/myscedule",
+    successRedirect: "/myschedule",
     failureRedirect: "/login"
 }) ,function(req, res){
 });
 
 //logic route logout
-router.get("/logout", function(req, res){
+router.get("/logout", isloggedin,function(req, res){
     req.logout();
     req.flash("success", "Logged you out!");
     res.redirect("/");
 });
-
 
 router.post("/register", function(req, res) {
     var newUser = new User({username: req.body.username});
@@ -71,8 +70,8 @@ router.post("/register", function(req, res) {
                     return res.redirect("/register");
                 }
                 //console.log(list);
-                req.flash("success", "Welcome to Timed-UP! Start with adding" + user.username);
-                res.redirect("/myscedule");
+                req.flash("success", "Welcome to Timed-UP " + user.username);
+                res.redirect("/myschedule");
             });
         });
     });

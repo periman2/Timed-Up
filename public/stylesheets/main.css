@@ -17,16 +17,6 @@ body {
     width: 80%;
 }
 
-.member {
-    background-color:rgba(48, 67, 84, 1);
-    color: rgba(151, 174, 195, 1);
-    border-radius: 5px;
-    min-width:100px;
-    margin: 5px;
-    float: left;
-    text-align: center;
-}
-
 hr {
     border-color: black;
 }
@@ -37,7 +27,6 @@ hr {
     border: 1px solid rgba(20, 20, 20, 1);;
     border-radius: 0.5em;
     padding: 20px;
-    
 }
 
 @media(min-width: 992px) {

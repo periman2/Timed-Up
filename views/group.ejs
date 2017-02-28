@@ -1,18 +1,43 @@
 
 
 <% include partials/header %>
+<script type="text/javascript" src="/timecalc.js"></script>
+<script type="text/javascript" src="/groupedit.js"></script>
+<link rel="stylesheet" href="/stylesheets/group.css">
 
+<% if(group.authid.equals(currentUser._id)){ %>
+    <% var editable = true; %>
+<% } %>
 
+<h2>Welcome to group <span id="gname"><%= group.name %></span></h2><br>
 
-<h2>Welcome to group <%= group.name %></h2><br>
 <h3>
-Here you can see the combined common time of all the group members<br>
+    Here you can see the combined common time of all the group members<br>
     as well as all the combinations of members with common time.
-</3>
+</h3>
+    
+<% if (editable) { %>
+    <div id="inc">
+        <h4>
+        Since you are the creator of this group, you can add or remove group mambers from this page as well.<br><br>
+            To add a member to the group simply click on his/her username from your friendlist.<br>
+            To remove a member press the "x" button next to the member's name.
+        </h4>
+    </div>
+<% } %>
 <h2>Group Members:</h2>
+
+<% if (editable) { %>
+<div id="members" class="row editable">
+<% } else { %>
 <div id="members" class="row">
+<% } %>
     <% group.groupies.forEach(function(groupie){ %>
-        <div class="member"><h3><%= groupie.username %></h3></div>
+        <% if (editable) { %>
+        <div class="member"><div class="membername"><h3><%= groupie.username %></h3></div></div>
+        <% } else { %>
+        <div class="member"><div><h3><%= groupie.username %></h3></div></div>
+        <% } %>
     <% }) %>
 </div>
 <br>
@@ -35,5 +60,4 @@ Here you can see the combined common time of all the group members<br>
 </div>
 
 
-<script type="text/javascript" src="/timecalc.js"></script>
 <% include partials/footer %>

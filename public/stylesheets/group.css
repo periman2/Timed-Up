@@ -1,0 +1,46 @@
+
+.member {
+    background-color:rgba(48, 67, 84, 1);
+    color: rgba(151, 174, 195, 1);
+    border-radius: 5px;
+    min-width:100px;
+    margin: 5px;
+    padding: 0 5px;
+    float: left;
+}
+
+.membername {
+    float: right;
+    padding-left: 20%;
+    border-left: solid 5px;
+}
+
+.delgroupie {
+    float: left;
+    margin-top: 20%;
+    margin-right: 0;
+    color:rgba(196, 54, 54, 1);
+}
+
+.delgroupie:hover {
+    cursor: pointer;
+}
+
+#inc {
+    background-color:rgba(97, 129, 152, 0.61);
+    padding: 10px;
+    border: 1px solid rgba(48, 67, 84, 1);
+    -webkit-box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
+    -moz-box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
+    box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
+}
+
+.besttimes {
+    background-color: rgba(188, 197, 205, 1);
+    border: 1px solid black;
+    max-height: 400px;
+    padding: 30px;
+    -webkit-box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
+    -moz-box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
+    box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
+}

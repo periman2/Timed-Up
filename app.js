@@ -54,7 +54,8 @@ app.use(groupRoutes);
 app.use(arrayRoutes);
 app.use(indexRoutes);
 
-mongoose.connect(process.env.DATABASEURL);
+var URL = process.env.DATABASEURL || "mongodb://localhost/timedup"
+mongoose.connect(URL);
 var PORT = process.env.PORT || 3000;
 
 

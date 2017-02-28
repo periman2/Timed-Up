@@ -98,10 +98,6 @@ $(document).ready(function(){
             }
         });
     }
-
-    
-
-    
     
 
     $("#addgroup").click(function(){
