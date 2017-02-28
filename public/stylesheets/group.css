@@ -27,20 +27,25 @@
 }
 
 #inc {
-    background-color:rgba(97, 129, 152, 0.61);
+    background-color:rgba(188, 197, 205, 1);
     padding: 10px;
-    border: 1px solid rgba(48, 67, 84, 1);
-    -webkit-box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
-    -moz-box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
-    box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
+    -webkit-box-shadow: 0px 4px 6px 2px rgba(50, 50, 50, 0.68);
+    -moz-box-shadow:    0px 4px 6px 2px rgba(50, 50, 50, 0.68);
+    box-shadow:         0px 4px 6px 2px rgba(50, 50, 50, 0.68);
 }
 
 .besttimes {
     background-color: rgba(188, 197, 205, 1);
-    border: 1px solid black;
     max-height: 400px;
     padding: 30px;
-    -webkit-box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
-    -moz-box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
-    box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
+    -webkit-box-shadow: 0px 4px 6px 2px rgba(50, 50, 50, 0.68);
+    -moz-box-shadow:    0px 4px 6px 2px rgba(50, 50, 50, 0.68);
+    box-shadow:         0px 4px 6px 2px rgba(50, 50, 50, 0.68);
 }
+}
+/*
+@media(min-width: 992px) {
+    .besttimes {
+        word-break: break-all;
+    }
+}*/

@@ -103,16 +103,6 @@ hr {
     border-right: 1px solid rgba(96, 104, 123, 1);
 }
 
-.besttimes {
-    background-color: rgba(188, 197, 205, 1);
-    border: 1px solid black;
-    max-height: 400px;
-    padding: 30px;
-    -webkit-box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
-    -moz-box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
-    box-shadow: -1px -4px 42px -13px rgba(0,0,0,0.91);
-}
-
 .displayedmembers {
     max-height: 350px;
 }

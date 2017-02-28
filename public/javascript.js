@@ -47,18 +47,17 @@ $(document).ready(function(){
             $("#" + group._id).append("<br><hr><a href='/" + group._id + "' class='btn btn-default grouppage' >Show Group Page</a>");
             //console.log(group._id, typeof group._id);
             $("#" + group._id).css({
-                "background-color": "rgba(171, 181, 191, 1)",
+                "background-color": "rgba(188, 197, 205, 1)",
                 "color": "rgba(56, 56, 56, 1)" ,
                 "min-height": "30px",
                 "max-heigth": "200px",
                 "min-width": "230px",
-                "border": "1px solid rgba(20, 20, 20, 0.3)",
                 "position": "relative",
                 "padding": "10px",
                 "margin": "5px 5px",
-                "-webkit-box-shadow":  "-1px -4px 42px -13px rgba(0,0,0,0.91)",
-                "-moz-box-shadow": "-1px -4px 42px -13px rgba(0,0,0,0.91)",
-                "box-shadow": "-1px -4px 42px -13px rgba(0,0,0,0.91);"
+                "-webkit-box-shadow": "0px 4px 6px 2px rgba(50, 50, 50, 0.68",
+                "-moz-box-shadow":    "0px 4px 6px 2px rgba(50, 50, 50, 0.68)",
+                "box-shadow":         "0px 4px 6px 2px rgba(50, 50, 50, 0.68)"
             });
             $(".title").css({
                 "font-size":"25px",
@@ -198,7 +197,7 @@ $(document).ready(function(){
         var div = $(this).parent().parent();
         //console.log(div.html())
         if(div.hasClass("activated")) {
-            div.css("background-color", "rgba(171, 181, 191, 1)");
+            div.css("background-color", "rgba(188, 197, 205, 1)");
         } else {
             div.css("background-color", "rgba(69, 232, 85, 0.6)");
         }
