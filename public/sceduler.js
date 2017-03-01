@@ -4,13 +4,55 @@
 //          SCEDULER
 //==============================
 
-$(document).ready(function(){
+$(document).ready(function() {
+    // var mdy = new Date();
+    // var newdate = new Date();
+    // var value = $('input[name="daterange"]').val();
+    // var value2 = $('input[name="daterange2"]').val();
+    // var count = 0;
 
     var mdy = new Date();
     var newdate = new Date();
-    var value = $('input[name="daterange"]').val();
-    var value2 = $('input[name="daterange2"]').val();
-    var count = 0;
+    var value ;
+    var value2 ;
+    
+    $("#myinput").flatpickr({
+        enableTime: true,
+        altInput: true,
+	    altFormat: "F j, Y h:i K",
+        minDate: new Date(),
+        maxDate: false,
+        onChange: function(dates){
+            mdy = new Date();
+            value = dates[0].toISOString();
+            consolelog();
+        }
+    });
+
+    $("#myinput2").flatpickr({
+        enableTime: true,
+        altInput: true,
+	    altFormat: "F j, Y h:i K",
+        minDate: new Date(),
+        maxDate: false,
+        onChange: function(dates){
+            mdy = new Date();
+            value2 = dates[0].toISOString();
+            consolelog()
+        }
+    });
+
+    var hoursfromnow1;
+    var hoursfromnow2;
+    var expiredarrays = [];
+
+
+    function consolelog() {
+        hoursfromnow1 = reverse(moment().diff(value,"hours", true));
+        hoursfromnow2 = reverse(moment().diff(value2,"hours", true));
+        console.log(hoursfromnow1 ,hoursfromnow2 );
+    }
+    
     // var secpassed = 0;
     // var minpassed = 0;
 
@@ -21,61 +63,6 @@ $(document).ready(function(){
     //     //console.log("clock is:",secpassed,"minpassed", Math.ceil(minpassed));
     // }
     // setInterval(liveclock, 1000);
-
-    $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
-        $(this).val(picker.startDate.format('MM/DD/YYYY h:mm A'));
-        value = $('input[name="daterange"]').val();
-        mdy = new Date();
-        console.log("current",mdy);
-        consolelog();
-        count++;
-    });
-
-    $('input[name="daterange2"]').on('apply.daterangepicker', function(ev, picker) {
-        $(this).val(picker.startDate.format('MM/DD/YYYY h:mm A'));
-        value2 = $('input[name="daterange2"]').val();
-        mdy = new Date();
-        console.log("current",value2);
-        consolelog();
-    });
-
-    $('input[name="daterange"]').daterangepicker({
-        timePicker: true,
-        autoUpdateInput: true,
-        "autoApply": true,
-        "alwaysShowCalendars": true,
-        "singleDatePicker": true,
-        timePickerIncrement: 15,
-        locale: {
-            format: 'MM/DD/YYYY h:mm A',
-            cancelLabel: 'Clear'
-        }
-    });
-
-    $('input[name="daterange2"]').daterangepicker({
-        timePicker: true,
-        autoUpdateInput: true,
-        "autoApply": true,
-        "alwaysShowCalendars": true,
-        "singleDatePicker": true,
-        timePickerIncrement: 15,
-        locale: {
-            format: 'MM/DD/YYYY h:mm A',
-            cancelLabel: 'Clear'
-        }
-    });
-
-    var hoursfromnow1;
-    var hoursfromnow2;
-    var expiredarrays = [];
-
-    function consolelog() {
-        var formated = moment(value, 'MM/DD/YYYY h:mm A');
-        hoursfromnow1 = reverse(moment().diff(formated,"hours", true));
-        var formated2 = moment(value2, 'MM/DD/YYYY h:mm A');
-        hoursfromnow2 = reverse(moment().diff(formated2,"hours", true));
-        //console.log(hoursfromnow1 ,hoursfromnow2 );
-    }
             
     function reverse(num){
         return num - 2 * num;
@@ -100,7 +87,6 @@ $(document).ready(function(){
             return false;
         }
     };
-//probleeeemmmmmmmmmmmm
 
     $("#arrays").on("click", ".btn-danger", function(){
         var arrayid = $(this).next().html();
@@ -204,15 +190,9 @@ $(document).ready(function(){
     getarrays();
     
     $("#submit").click(function(){
-        $('input[name="daterange"]').val("");
-        $('input[name="daterange2"]').val("");
         var array = makearray(hoursfromnow1,hoursfromnow2);
-        //var now = moment(mdy, 'MMMM Do, YYYY h:mm A').add(1,"minutes").toISOString();
-        if(count > 1){
-            var now = moment(mdy, 'MMMM Do, YYYY h:mm A').add(1,"minutes").toISOString()
-        } else {
-            var now = moment(mdy, 'MMMM Do, YYYY h:mm A').toISOString();
-        }
+        //var now = moment(mdy, 'MMMM Do, YYYY h:mm A').add(1,"minutes").toISOString()
+        var now = moment(mdy, 'MMMM Do, YYYY h:mm A').toISOString();
         console.log("the right 'now'", now);
         $.ajax({
             type:"POST",
