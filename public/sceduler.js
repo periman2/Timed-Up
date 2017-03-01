@@ -5,13 +5,11 @@
 //==============================
 
 $(document).ready(function(){
-    
 
     var mdy = new Date()
     var newdate = new Date();
     var value = $('input[name="daterange"]').val();
     var value2 = $('input[name="daterange2"]').val();
-
 
     $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
         $(this).val(picker.startDate.format('MM/DD/YYYY h:mm A'));
@@ -59,7 +57,6 @@ $(document).ready(function(){
     var hoursfromnow2;
     var expiredarrays = [];
 
-
     function consolelog() {
         var formated = moment(value, 'MM/DD/YYYY h:mm A');
         hoursfromnow1 = reverse(moment().diff(formated,"hours", true));
@@ -67,8 +64,6 @@ $(document).ready(function(){
         hoursfromnow2 = reverse(moment().diff(formated2,"hours", true));
         console.log(hoursfromnow1 ,hoursfromnow2 );
     }
-        
-
             
     function reverse(num){
         return num - 2 * num;

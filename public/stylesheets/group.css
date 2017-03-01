@@ -3,7 +3,7 @@
     background-color:rgba(48, 67, 84, 1);
     color: rgba(151, 174, 195, 1);
     border-radius: 5px;
-    min-width:100px;
+    min-width:150px;
     margin: 5px;
     padding: 0 5px;
     float: left;
@@ -11,14 +11,16 @@
 
 .membername {
     float: right;
-    padding-left: 20%;
-    border-left: solid 5px;
+    padding-left: 40px;
+    border-left: solid 2px rgba(39, 46, 58, 1);
+    min-width: 60px;
 }
 
 .delgroupie {
     float: left;
-    margin-top: 20%;
-    margin-right: 0;
+    
+    margin-top: 18px;
+    
     color:rgba(196, 54, 54, 1);
 }
 

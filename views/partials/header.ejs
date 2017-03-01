@@ -6,9 +6,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="/stylesheets/main.css">
+        <link rel="stylesheet" href="/stylesheets/navbar.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -20,7 +22,7 @@
     <div  class="container-fluid"> 
         <div class="row">
             <div class="col-md-4">
-                <nav class = "navbar navbar-default" role="navigation">
+                <nav class = "navbar navbar-default navbar-fixed-side" role="navigation">
                     <div class = "navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-exi-collapse">
                         <span class="sr-only"> Toggle navigation</span>
@@ -41,16 +43,16 @@
                             <li class="times">
                                 <a href="/myschedule" class="btn btn-default btn-lg">My Schedule</a>
                             </li>
+                            <br>
                             <li class="myowngroups">
                                 <a href="/" class="btn btn-default btn-lg">My Groups</a>
                             </li>
                             <br>
+                            <hr>
                             <h3 class="text-center">My Friendlist</h3>
                             <form  action="/search?_method=PUT" method="POST" class="navbar-form navbar-left" role="search">
                                 <input type="text" name="nfriend[friendname]" class="form-control input-md" placeholder="Username" maxlength="11">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default">Add Friend</button>
-                                </span>
+                                <button class="btn btn-default">Add Friend</button>
                             </form>
                             <div class="myfriendlist">
                             <% list.friends.forEach(function(friend){ %>

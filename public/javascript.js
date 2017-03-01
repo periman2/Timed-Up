@@ -41,7 +41,7 @@ $(document).ready(function(){
             });
              $("#" + group._id + " .onlynames").css({
                 "max-height": "180px",
-                "overflow-y": "scroll"
+                "overflow-y": "auto"
              })
 
             $("#" + group._id).append("<br><hr><a href='/" + group._id + "' class='btn btn-default grouppage' >Show Group Page</a>");
