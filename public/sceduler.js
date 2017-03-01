@@ -10,11 +10,22 @@ $(document).ready(function(){
     var newdate = new Date();
     var value = $('input[name="daterange"]').val();
     var value2 = $('input[name="daterange2"]').val();
+    // var secpassed = 0;
+    // var minpassed = 0;
+
+    // function liveclock(){
+    //     secpassed ++
+    //     minpassed = secpassed/60;
+    //     //.add(hourspassed,"hours");
+    //     //console.log("clock is:",secpassed,"minpassed", Math.ceil(minpassed));
+    // }
+    // setInterval(liveclock, 1000);
 
     $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
         $(this).val(picker.startDate.format('MM/DD/YYYY h:mm A'));
         value = $('input[name="daterange"]').val();
         mdy = value;
+        //console.log(mdy);
         consolelog();
     });
 
@@ -22,15 +33,17 @@ $(document).ready(function(){
         $(this).val(picker.startDate.format('MM/DD/YYYY h:mm A'));
         value2 = $('input[name="daterange2"]').val();
         mdy = value2;
+        //console.log(mdy);
         consolelog();
     });
 
     $('input[name="daterange"]').daterangepicker({
         timePicker: true,
-        autoUpdateInput: false,
+        autoUpdateInput: true,
+        "autoApply": true,
         "alwaysShowCalendars": true,
         "singleDatePicker": true,
-        timePickerIncrement: 5,
+        timePickerIncrement: 15,
         locale: {
             format: 'MM/DD/YYYY h:mm A',
             cancelLabel: 'Clear'
@@ -43,10 +56,11 @@ $(document).ready(function(){
 
     $('input[name="daterange2"]').daterangepicker({
         timePicker: true,
-        autoUpdateInput: false,
+        autoUpdateInput: true,
+        "autoApply": true,
         "alwaysShowCalendars": true,
         "singleDatePicker": true,
-        timePickerIncrement: 5,
+        timePickerIncrement: 15,
         locale: {
             format: 'MM/DD/YYYY h:mm A',
             cancelLabel: 'Clear'
@@ -62,7 +76,7 @@ $(document).ready(function(){
         hoursfromnow1 = reverse(moment().diff(formated,"hours", true));
         var formated2 = moment(value2, 'MM/DD/YYYY h:mm A');
         hoursfromnow2 = reverse(moment().diff(formated2,"hours", true));
-        console.log(hoursfromnow1 ,hoursfromnow2 );
+        //console.log(hoursfromnow1 ,hoursfromnow2 );
     }
             
     function reverse(num){
@@ -88,9 +102,10 @@ $(document).ready(function(){
             return false;
         }
     };
+//probleeeemmmmmmmmmmmm
 
-    $("#arrays").on("click", ".myarray", function(){
-        var arrayid = $(".hidden", this).html();
+    $("#arrays").on("click", ".btn-danger", function(){
+        var arrayid = $(this).next().html();
         deletearray(arrayid);
         
     });
@@ -116,7 +131,7 @@ $(document).ready(function(){
             url: "/delarray",
             data: {arrayid: arrayid},
             success: function(data){
-                console.log("success");
+                //console.log("success");
                 getarrays();
             },
             error: function(err){
@@ -134,9 +149,9 @@ $(document).ready(function(){
             var diff = reverse(moment().diff(dateofexp,"hours", true));
             var length = (eval(array.value[1]) - hours)
             if(diff < 0){
-                deletearray(array._id)
+                deletearray(array._id);
             } else {
-                console.log(dateofexp, length, hours, time);
+                //console.log(dateofexp, length, hours, time);
                 newarr.push([dateofexp, length, array._id])
             }
             
@@ -154,6 +169,7 @@ $(document).ready(function(){
         
 
         arrays.forEach(function(daydiff){
+            //console.log(moment(daydiff[0]).format('MMMM Do, YYYY h:mm A'));
             $("#arrays").append(
                 "<div class='myarray'><h3>"
                  + moment(daydiff[0]).format('MMMM Do, YYYY h:mm A') + 
@@ -162,7 +178,7 @@ $(document).ready(function(){
                  " Days, "
                  + Math.floor(24 * (daydiff[1]/24 - Math.floor(daydiff[1]/24)))
                  + " Hours and "
-                 + Math.floor(60 * (daydiff[1] - Math.floor(daydiff[1]))) +
+                 + Math.ceil(60 * (daydiff[1] - Math.floor(daydiff[1]))) +
                  " Minutes.</h3><button class='btn btn-danger' >Delete Range</button><p class='hidden'>"
                   + daydiff[2] + 
                   "</p></div><hr>"
@@ -191,13 +207,13 @@ $(document).ready(function(){
     
     $("#submit").click(function(){
         var array = makearray(hoursfromnow1,hoursfromnow2);
-        var now = moment(newdate).toISOString();
+        var now = moment(newdate, 'MMMM Do, YYYY h:mm A').add(1,"minutes").toISOString();
         $.ajax({
             type:"POST",
             url:"/addarray",
             data:{value: array, time: now},
             success: function(data){
-                console.log("done it!");
+                //console.log("done it!");
                 getarrays();
             },
             error: function(err){
