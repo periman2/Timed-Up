@@ -6,10 +6,11 @@
 
 $(document).ready(function(){
 
-    var mdy = new Date()
+    var mdy = new Date();
     var newdate = new Date();
     var value = $('input[name="daterange"]').val();
     var value2 = $('input[name="daterange2"]').val();
+    var count = 0;
     // var secpassed = 0;
     // var minpassed = 0;
 
@@ -24,16 +25,17 @@ $(document).ready(function(){
     $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
         $(this).val(picker.startDate.format('MM/DD/YYYY h:mm A'));
         value = $('input[name="daterange"]').val();
-        mdy = value;
-        //console.log(mdy);
+        mdy = new Date();
+        console.log("current",mdy);
         consolelog();
+        count++;
     });
 
     $('input[name="daterange2"]').on('apply.daterangepicker', function(ev, picker) {
         $(this).val(picker.startDate.format('MM/DD/YYYY h:mm A'));
         value2 = $('input[name="daterange2"]').val();
-        mdy = value2;
-        //console.log(mdy);
+        mdy = new Date();
+        console.log("current",value2);
         consolelog();
     });
 
@@ -49,10 +51,6 @@ $(document).ready(function(){
             cancelLabel: 'Clear'
         }
     });
-
-    $('input[name="daterange"]').on("change", function(){
-        
-    })
 
     $('input[name="daterange2"]').daterangepicker({
         timePicker: true,
@@ -206,8 +204,16 @@ $(document).ready(function(){
     getarrays();
     
     $("#submit").click(function(){
+        $('input[name="daterange"]').val("");
+        $('input[name="daterange2"]').val("");
         var array = makearray(hoursfromnow1,hoursfromnow2);
-        var now = moment(newdate, 'MMMM Do, YYYY h:mm A').add(1,"minutes").toISOString();
+        //var now = moment(mdy, 'MMMM Do, YYYY h:mm A').add(1,"minutes").toISOString();
+        if(count > 1){
+            var now = moment(mdy, 'MMMM Do, YYYY h:mm A').add(1,"minutes").toISOString()
+        } else {
+            var now = moment(mdy, 'MMMM Do, YYYY h:mm A').toISOString();
+        }
+        console.log("the right 'now'", now);
         $.ajax({
             type:"POST",
             url:"/addarray",
