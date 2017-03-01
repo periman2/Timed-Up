@@ -12,6 +12,10 @@
     background-color: rgba(51, 74, 95, 1);
 }
 
+.navbar-default .navbar-brand {
+    font-size:  40px;
+    color: rgba(141, 141, 141, 1);
+}
 
 @media(min-width: 992px) {
     .navbar-default .navbar-collapse {

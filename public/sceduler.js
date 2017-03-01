@@ -123,7 +123,6 @@ $(document).ready(function(){
                 console.log(err);
             }
         })
-
     }
 
     function convertarrays(arrays){

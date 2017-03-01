@@ -3,25 +3,23 @@
     background-color:rgba(48, 67, 84, 1);
     color: rgba(151, 174, 195, 1);
     border-radius: 5px;
-    min-width:150px;
+    min-width:60px;
     margin: 5px;
-    padding: 0 5px;
     float: left;
+    padding: 0 15px;
+    display: inline-block;
 }
 
 .membername {
-    float: right;
-    padding-left: 40px;
-    border-left: solid 2px rgba(39, 46, 58, 1);
-    min-width: 60px;
+    border-right: solid 2px rgba(39, 46, 58, 1);
+    display: inline-block;
+    padding-right: 8px;
 }
 
 .delgroupie {
-    float: left;
-    
-    margin-top: 18px;
-    
     color:rgba(196, 54, 54, 1);
+    display: inline-block;
+    padding-left: 8px;
 }
 
 .delgroupie:hover {

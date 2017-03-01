@@ -34,7 +34,7 @@
 <% } %>
     <% group.groupies.forEach(function(groupie){ %>
         <% if (editable) { %>
-        <div class="member"><div class="membername"><h3><%= groupie.username %></h3></div></div>
+        <div class="member"><div class="membername"><h3><%= groupie.username %></h3></div><i class='fa fa-times fa-2x delgroupie' aria-hidden='true'></i></div>
         <% } else { %>
         <div class="member"><div><h3><%= groupie.username %></h3></div></div>
         <% } %>

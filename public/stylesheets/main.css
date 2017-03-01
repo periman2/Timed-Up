@@ -54,9 +54,6 @@ hr {
     border-right: 1px solid rgba(96, 104, 123, 1);
 }
 
-.displayedmembers {
-    max-height: 350px;
-}
 
 .title:hover {
     cursor: pointer;
@@ -91,13 +88,6 @@ li {
 
 .formbut {
     margin: 30px;
-}
-
-
-.navbar-default .navbar-brand {
-    font-size:  40px;
-    color: rgba(41, 41, 41, 1);
-    align: center;
 }
 
 

@@ -1,19 +1,9 @@
 $(document).ready(function(){
-    var groupedit = $("#members").hasClass("editable");
-    if(groupedit){
-        var memberlist = [];
-        var members = $(".member");
-        members.each(function(i, member){
-            var string = $("<div><i class='fa fa-times fa-2x delgroupie' aria-hidden='true'></i></div>");
-            member.append(string[0]);
-            //console.log(member, memberlist);
-        });
-    }
 
     //delete groupie
     $(".delgroupie").click(function() {
         var groupname = $("#gname").html();
-        var groupiename = $(this).parent().parent().find(".membername h3").html();
+        var groupiename = $(this).parent().find(".membername h3").html();
         console.log( groupname, groupiename);
         $.ajax({
             type: "POST",
