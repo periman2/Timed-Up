@@ -1,20 +1,27 @@
 
 .navbar-default{
-    background-color:rgba(51, 74, 95, 1);
-    color:rgba(183, 194, 215, 1);
+    padding: 0;
+    margin: 0;
+    background-color:#383838;
+    height: 100%;
+    color:#212121;
     border:0 none;
-    -webkit-box-shadow: 0px 4px 6px 2px rgba(50, 50, 50, 0.68);
-    -moz-box-shadow:    0px 4px 6px 2px rgba(50, 50, 50, 0.68);
-    box-shadow:         0px 4px 6px 2px rgba(50, 50, 50, 0.68);
+    font-size: 12px !important;
 }
 
 .navbar-default .navbar-collapse {
-    background-color: rgba(51, 74, 95, 1);
+    background-color: #383838;
+    /*height: 100%;*/
+    
 }
 
 .navbar-default .navbar-brand {
     font-size:  40px;
-    color: rgba(141, 141, 141, 1);
+    color: #212121;
+}
+.myname {
+    color: #CFD8DC;
+    font-size: 20px;
 }
 
 @media(min-width: 992px) {
@@ -24,11 +31,11 @@
         box-shadow: none;
     }
     .navbar-default .navbar-collapse h3{
-        color: rgba(183, 194, 215, 1);
+        color: #CFD8DC;
         font-weight: bold;
     }
     .navbar-default .navbar-collapse .friendbox{
-        color: rgba(200, 208, 224, 1);
+        color: #212121;
     }
     .navbar-nav,
     .navbar-nav > li,
@@ -51,19 +58,44 @@
     outline: 0 none;
 }
  
-.btn-primary:active, .btn-primary.active {
-    background: #007299;
+.btn:active, .btn.active {
+    /*background: #7fb9c4;*/
+    background: #212121;
     box-shadow: none;
+    font-weight: 800!important;
 }
 
 .navbar-default .navbar-collapse .btn{
-    background: rgba(167, 180, 205, 1);
-    border: 0 none;
-    box-shadow: none;
-    color:rgba(51, 74, 95, 1);
+    /*background: #FFC107;*/
+    border-radius: 0;
+    /*border: 0 none;*/
+    /*box-shadow: none;*/
+    color:#212121;
+    font-weight: 800!important;
+    
 }
 
 .navbar-default .navbar-collapse .btn:hover {
-    background: none;
-    color: rgba(167, 180, 205, 1);
+    /*background: none;*/
+    background-color: transparent;
+    color: #FFC107;
+    font-weight: 800!important;
+}
+
+/*navigation buttons css*/
+.navbut li .btn{
+    background: #FFC107;;
+    width: 100%;
+    /*border: 4px solid #FFC107;*/
+    display: block;
+    text-align: center;
+    /*border-radius: 1em !important;*/
+    margin-left: -5%;
+    -webkit-box-shadow: 0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+    -moz-box-shadow:    0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+    box-shadow:         0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+}
+.navbut li .btn:hover {
+    background: rgba(255, 193, 5, 0.30)!important;
+    color:#212121!important;
 }

@@ -1,10 +1,438 @@
+$(document).ready(function(){
 
+    //========================
+    //GROUPEDIT FUNCTIONALITY
+    //========================
+    //========================
+    //FRIENDLIST FUNCTIONALITY
+    //========================
+    //GLOBAL VARIABLE FOR STORING AND EDITING FRIENDS
+    var globalfriends = [];
+    var globaluser = [];
+    var globalgroup;
+    
+    function keeponlyslackids(friends){
+        var nextarray = [];
+        friends.forEach(function(friend){
+            if(friend.slack !== undefined){
+                nextarray.push(friend.slack.id);
+            }   
+        });
+        return nextarray;
+    }
+    //get user data
+    function getuserdata() {
+        //console.log("I'm here now ");
+        $.ajax({
+            type:"GET",
+            url: "/getuserdata",
+            success: function(user) {
+                globaluser = user;
+                getfriendlist(user);
+                getgrouparrays();
+                showgroupmembers();
+            },
+            error: function(){
+                console.log("error happened");
+            }
+        });
+    }
+
+    function getfriendlist(user) {
+        $.ajax({
+            type:"GET",
+            url: "/getfriendlist",
+            success: function(list) {
+                //console.log(list.friends[0]);
+                var isonslack = $(".hasSclack")
+                var userdat = getuserdata;
+                var slackfriends = keeponlyslackids(list.friends);
+                //console.log("friendlist:", slackfriends, user);
+                if(user.slack !== undefined){
+                    getnewslackfriends(slackfriends, user);
+                } else {
+                    var seperatedfriends = seperatefriends(list, user);
+                    showfriendlist(seperatedfriends, user);
+                    //console.log(seperatedfriends,"here they are");
+                }
+            },
+            error: function(){
+                console.log("error happened");
+            }
+        });
+    }
+
+    //Uppdate  Slack friends and show friendlist if user has no new slackteam members it gives out the same list as before.
+    function getnewslackfriends(oldfriends, user) {
+        $.ajax({
+            type:"POST",
+            data: {slackids: oldfriends},
+            url: "/getnewslackfriends",
+            success: function(slacklist) {
+                //console.log(slacklist.friends + "updatedlist");
+                var seperatedfriends = seperatefriends(slacklist, user);
+                showfriendlist(seperatedfriends, user);
+                //console.log(seperatedfriends,"here they are slack");
+            },
+            error: function(){
+                console.log("error happened");
+            }
+        });
+    }
+
+    //MAKES TAB FUNCTIONLITY FOR THE FRIENDLIST
+    $(".friendlist").on("click", ".btn", function(){
+        var activated = $('.activenow');
+        activated.removeClass('activenow');
+        $(this).addClass('activenow');
+        showfriendlist(globalfriends, globaluser);
+    });
+
+    //SEPERATES FRIENDS INTO THE 3 NEEDED CATEGORIES
+    function seperatefriends(friendlist, user){
+        var friendsfromotherslackteams = [];
+        var friendsfrommyslackteam = [];
+        var localfriends = [];
+        var friends= friendlist.friends;
+        for(var i = 0; i < friends.length; i++){
+            if(friends[i].slack !== undefined){
+                //console.log("sdffffff", user.slack.teamid, friends[i].slack.teamid)
+                if(user.slack !== undefined){
+                    if(user.slack.teamid === friends[i].slack.teamid){
+                        friendsfrommyslackteam.push(friends[i]);
+                    } else {
+                        friendsfromotherslackteams.push(friends[i]);
+                    }
+                } else {
+                    friendsfromotherslackteams.push(friends[i]);
+                }
+                
+            } else {
+                localfriends.push(friends[i]);
+            }
+        }
+        globalfriends = [friendsfromotherslackteams, friendsfrommyslackteam, localfriends];
+        return [friendsfromotherslackteams, friendsfrommyslackteam, localfriends];
+    }
+
+    function showfriendlist(friends, user){
+        $(".myfriendlist").html("");
+
+        if($(".activenow").hasClass("allfriends")){
+            if(user.slack !== undefined){
+                if(friends[1].length > 0){
+                    $(".myfriendlist").append("<h4>Slack - " + user.slack.teamname + "</h4>");
+                    friends[1].forEach(function(friend){
+                        $(".myfriendlist").append("<li class=" + friend._id + "><img height='30'' width='30' src='" + friend.slack.avatar + "'><p>" + friend.slack.username + "</p></li><br>");
+                    });
+                }
+                if(friends[0].length > 0){
+                    $(".myfriendlist").append("<h4>Slack - other</h4>");
+                    friends[0].forEach(function(friend){
+                        $(".myfriendlist").append("<li class=" + friend._id + "><i class='fa fa-times' aria-hidden='true'></i><p>" + friend.slack.username + "</p></li><br>");
+                    });
+                }
+                if(friends[2].length > 0){
+                    $(".myfriendlist").append("<h4>Local friends</h4>");
+                    friends[2].forEach(function(friend){
+                        $(".myfriendlist").append("<li class=" + friend._id + "><i class='fa fa-times' aria-hidden='true'></i><p>" + friend.username + "</p></li><br>");
+                    });
+                }
+            } else {
+                if(friends[0].length > 0){
+                    $(".myfriendlist").append("<h4>Slack</h4>");
+                    friends[0].forEach(function(friend){
+                        $(".myfriendlist").append("<li class=" + friend._id + "><i class='fa fa-times' aria-hidden='true'></i><p>" + friend.slack.username + "</p></li><br>");
+                    });
+                }
+                if(friends[2].length > 0){
+                    $(".myfriendlist").append("<h4>Local friends</h4>");
+                    friends[2].forEach(function(friend){
+                        $(".myfriendlist").append("<li class=" + friend._id + "><i class='fa fa-times' aria-hidden='true'></i><p>" + friend.username + "</p></li><br>");
+                    });
+                }
+            }
+        }
+        
+        if($(".activenow").hasClass("slackfriends")){
+            if(user.slack !== undefined){
+                if(friends[1].length > 0){
+                    $(".myfriendlist").append("<h4>Slack - " + user.slack.teamname + "</h4>");
+                    friends[1].forEach(function(friend){
+                        $(".myfriendlist").append("<li class=" + friend._id + "><img height='30'' width='30' src='" + friend.slack.avatar + "'><p>"  + friend.slack.username + "</p></li><br>");
+                    });
+                }
+                if(friends[0].length > 0){
+                    $(".myfriendlist").append("<h4>Slack - other</h4>");
+                    friends[0].forEach(function(friend){
+                        $(".myfriendlist").append("<li class=" + friend._id + "><i class='fa fa-times' aria-hidden='true'></i><p>"  + friend.slack.username + "</p></li><br>");
+                    });
+                }
+            } else {
+                if(friends[0].length > 0){
+                    $(".myfriendlist").append("<h4>Slack</h4>");
+                    friends[0].forEach(function(friend){
+                        $(".myfriendlist").append("<li class=" + friend._id + "><i class='fa fa-times' aria-hidden='true'></i><p>" + friend.slack.username + "</p></li><br>");
+                    });
+                }
+            }
+        }
+        if($(".activenow").hasClass("localfriends")){
+            if(friends[2].length > 0){
+                $(".myfriendlist").append("<h4>Local friends</h4>");
+                friends[2].forEach(function(friend){
+                    $(".myfriendlist").append("<li class=" + friend._id + "><i class='fa fa-times' aria-hidden='true'></i><p>" + friend.username + "</p></li><br>");
+                });
+            }
+        }
+
+        //make the CSS here:
+        $(".myfriendlist img").css({
+            "border-radius":"50%"
+        })
+        $(".myfriendlist h4").css({
+            "font-weight": "bold",
+            "font-size": "20px"
+        });
+        $(".myfriendlist li").css({
+            "display":"inline-block",
+            "font-size": "18px",
+            "padding": "0 4px",
+        });
+        $(".myfriendlist li i").css({
+            "display":"inline-block",
+            "margin-left": "15px",
+            "padding-right": "5px",
+            "border-right": "4px solid rgba(100, 125, 150, 1)",
+            "cursor": "pointer"
+        });
+        $(".myfriendlist li p").css({
+            "display":"inline-block",
+            "cursor": "pointer",
+            "padding-left":"6px"
+        });
+    }
+
+    //Search functionality here:
+    $("#friendsearch").on("blur", function(){
+        $("#popupbox").fadeOut(300);
+    });
+
+    $("#friendsearch").on("input", function(){
+        var ids = [];
+        globalfriends.forEach(function(friendgroups){
+            if(friendgroups !== undefined){
+                friendgroups.forEach(function(friend){
+                    ids.push(friend._id);
+                });
+            }
+        })
+        //console.log(this.value, ids);
+        var searchvalue = this.value;
+        if(searchvalue !== "") {
+            
+            // $("#popupbox").fadeIn(100);
+            $.ajax({
+                type:"POST",
+                url: "/searchforfriend",
+                data: {value: searchvalue, ids: ids},
+                success: function(users) {
+                    //console.log("here's my good user list: ", users);
+                    popupbox(users);
+                },
+                error: function(){
+                    console.log("error happened");
+                }
+            });
+        } else {
+            $("#popupbox").fadeOut(300);
+            // $("#popupbox").fadeOut(100);
+        }
+        
+    });
+
+    function popupbox(users){   
+        if(users.length > 0){
+            $("#popupbox").html("");
+            $("#popupbox").append("<div class='searchresults'></div>");
+            users.forEach(function(user){
+                if(user.slack !== undefined){
+                    $(".searchresults").append("<li class='" + user._id + "'><i class='fa fa-plus' alt='Add User' aria-hidden='true'></i>" + "<p>" + user.slack.username + "<em> " + user.slack.teamname + "</em></p>" + "</li>")
+                } else {
+                    $(".searchresults").append("<li class='" + user._id + "'><i class='fa fa-plus' alt='Add User' aria-hidden='true'></i>" + "<p>" + user.username + "</p>" + "</li>")
+                }
+            });
+        } else {
+            $("#popupbox").html("<div class='searchresults'><h5><em>No matches were found.<br>Keep trying though, everyone deserves a friend...</em></h5></div>");
+        }
+        $(".searchresults").css({
+            "padding":"2% 10%",
+            "font-size":"20px",
+            "display":"inline-block"            
+        });
+        $(".searchresults li p").css({
+            "display":"inline-block",
+            "padding":"6px"          
+        });
+        $(".searchresults li i").css({
+            "color":"rgba(77, 179, 165, 1)",
+            "display":"inline-block",
+            "cursor":"pointer",
+            "padding":"0 10px",
+            "border-right": "3px solid rgba(57, 104, 132, 1)"
+        });
+        $(".searchresults li em").css({
+            "display":"inline-block",
+            "font-size":"9px"
+        });
+        $("#popupbox").fadeIn(300);
+    }
+
+    $("#popupbox").on("click", "i", function(){
+        var friendid = $(this).parent().attr("class");
+        //console.log(friendid);
+        $.ajax({
+            type:"POST",
+            url:"/addfriend",
+            data:{friendid: friendid},
+            success: function(result){
+                //console.log(result);
+                getuserdata();
+            },
+            error: function(){
+                console.log("error happened");
+            }
+        })
+    });
+    // setInterval(getuserdata, 5000);
+
+    //============================
+    //FRIENDLIST FUNCTIONALITY END
+    //============================
+
+    //delete groupie
+    $("#members").on("click", "i", function() {
+        var groupieid = $(this).attr("id");
+        var groupname = $("#gname").html();
+        
+        console.log( groupname, groupieid);
+        $.ajax({
+            type: "POST",
+            url: "/deletegroupie", 
+            data: {groupieid : groupieid , groupname: groupname},
+            success: function(result){
+                if(result) {
+                    // /console.log("deleted groupie!", result);
+                    showgroupmembers();
+                }
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
+        return false;
+    });
+
+    
+    function showgroupmembers(){
+        //UPDATE THE GROOP TIMES EACH TIME THE GROUP MEMBERS CHANGE
+        getgrouparrays();
+        var cururl = document.URL;
+        var name = cururl.split("/");
+        var groupid = name[name.length - 1];
+        $.ajax({
+            type: "POST",
+            url: "/getgroupmembers", 
+            data: {groupid: groupid},
+            success: function(group){
+                // /console.log("deleted groupie!", result);
+                //location.reload();
+                console.log(group);
+                $("#members").html("");
+                if(group.authid === globaluser._id){
+                    group.groupies.forEach(function(groupie){
+                        if(groupie.slack !== undefined){
+                            $("#members").append("<div class='member'><div class='membername'><h3>" + groupie.slack.username + "</h3></div><i  id='" + groupie._id + "' class='fa fa-times fa-2x delgroupie' aria-hidden='true'></i></div>")
+                        } else {
+                            $("#members").append("<div class='member'><div class='membername'><h3>" + groupie.username + "</h3></div><i  id='" + groupie._id + "' class='fa fa-times fa-2x delgroupie' aria-hidden='true'></i></div>");
+                        }
+                    })
+                } else {
+                    group.groupies.forEach(function(groupie){
+                        if(groupie.slack !== undefined){
+                            $("#members").append("<div class='member' ><h3>" + groupie.slack.username + "</h3></div>");
+                        } else {
+                            $("#members").append("<div class='member' ><h3>" + groupie.username + "</h3></div>");
+                        }
+                    })
+                }
+
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
+    }
+    //DELETE FRIEND
+    $(".myfriendlist").on("click", "li i", function() {
+        var friendid= $(this).parent().attr("class");
+        console.log("friendid: " + friendid);
+        $.ajax({
+            type: "DELETE",
+            url: "/deletefriend", 
+            data: {friendid: friendid},
+            success: function(result){
+                var seperatedfriends = seperatefriends(result, globaluser);
+                showfriendlist(seperatedfriends, globaluser);
+            }
+        })
+        return false;
+    });
+    //FRIENDLIST ACTS AS AN ADD BUTTON
+    $(".friendlist").on("click", "li p", function(){
+        var friendid = $(this).parent().attr("class");
+        var friendname = $(this).html();
+        var groupnames = [$("#gname").html()];
+        var members = $(".member");
+        var check =  true;
+        var count = 0;
+        members.each(function(i, member){
+            count ++;
+            var membname = $(member).find("h3").html();
+            //onsole.log(membname);
+            if(friendname === membname){
+                check = false;
+                return;
+            }
+        });
+        console.log(check, count);
+        if(check && (count < 13)){
+            $.ajax({
+                type: "POST",
+                url: "/addgroupie",
+                data: {friendid: friendid, groupnames:groupnames},
+                success: function(result){
+                    showgroupmembers();
+                }
+            });
+        } else {
+            if(count > 12){
+                alert("You currently can't add more than 12 people to a group.")
+            } else {
+                alert("This person already exists inside the group");
+            }
+        }
+    });
+
+     //========================
+    //GROUPEDIT FUNCTIONALITY END
+    //========================
 
 //==============================
 //          TIMECALC
 //==============================
 
-$(document).ready(function(){
+
     var cururl = document.URL;
     var name = cururl.split("/");
     var groupid = name[name.length - 1];
@@ -13,36 +441,23 @@ $(document).ready(function(){
         return num - 2 * num;
     }
 
-    $(".deletelist").click(function() {
-        var friendid= $(this).prev().html();
-        $.ajax({
-            type: "DELETE",
-            url: "/deletefriend", 
-            data: {friendid: friendid},
-            success: function(result){
-                //console.log("deleted!");
-                
-            }
-        })
-        location.reload();
-        return false;
-    });
+
 
     //get my own available times
  
-    function getmyarrays(){
-        $.ajax({
-            type: 'GET',
-            url: "/getarrays",
-            success: function(data){
-                console.log(data.length);
-            },
-            error: function(err){
-                console.log(err);
-            }
-        });
-        return false;
-    }
+    // function getmyarrays(){
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: "/getarrays",
+    //         success: function(data){
+    //             console.log(data.length);
+    //         },
+    //         error: function(err){
+    //             console.log(err);
+    //         }
+    //     });
+    //     return false;
+    // }
 
     function show(all, onlycommon, pairs){
         //THIS IS WHERE THE ARRAYS ARE COMPARED!!
@@ -53,7 +468,7 @@ $(document).ready(function(){
             if(end.length > 0) {
                 $(".displayedmembers").html("");
                 $(".displayedmembers").append("<div class='all'></div>")
-                $(".all").append("<h2><strong>This group has common times at those dates: </strong></h2>");
+                $(".all").append("<h2><strong>The whole group has common times at those dates: </strong></h2>");
                 //$(".all").addClass('hidden');
                 end.forEach(function(array){
                     $(".all").append(
@@ -73,7 +488,7 @@ $(document).ready(function(){
             } else {
                 $(".displayedmembers").html("");
                 $(".displayedmembers").append("<div class='all'></div>");
-                $(".all").append("<h2><strong>There is no common time for all the members of the group<strong></h2>");
+                $(".all").append("<h2>There is no common time for all the members of the group</h2>");
             }
         }
         
@@ -81,24 +496,23 @@ $(document).ready(function(){
             if(onlycommon.length > 0){
                 $(".displayedmembers").html("");
                 $(".displayedmembers").append("<div class='onlycom'></div>");
-                $('.onlycom').append("<h2>People with common times in this group: </h2>");
+                $('.onlycom').append("<h2><strong>People with common times in this group: </strong></h2>");
                 onlycommon.forEach(function(persons){
                     $('.onlycom').append(makepeople(persons))
                 });
                 $('.onlycom').css({
-                    'background-color':'rgba(31, 55, 76, 1)',
-                    'color':'rgba(190, 210, 228, 1)',
+                    'background-color':'transparent',
+                    'color':'#212121',
                     'max-height': '300px',
                     'overflow-y': 'auto',
                     'padding': '5px',
-                    'border': '2px solid rgba(107, 107, 107, 1)',
+                    'width': '100%',
+                    'border-bottom': '2px solid rgba(107, 107, 107, 1)',
                     'border-top': 'none',
-                    'border-bottom-left-radius': '20px',
-                    'border-bottom-right-radius': '20px'
                 });
             } else {
                 $(".displayedmembers").html("");
-                $(".displayedmembers").append('<h2>No group members have common time with each other</h2>');
+                $(".displayedmembers").append('<h2>No group members have common time with each other.</h2>');
             }
         }
         
@@ -106,20 +520,19 @@ $(document).ready(function(){
             if(pairs.length > 0){
                 $(".displayedmembers").html("");
                 $(".displayedmembers").append("<div class='onlypair'></div>");
-                $('.onlypair').append("<h2>Pairs of people with common times in this group: </h2>");
+                $('.onlypair').append("<h2><strong>Pairs of people with common times in this group: </strong></h2>");
                 pairs.forEach(function(persons){
                     $('.onlypair').append(makepeople(persons));
                 });
                 $('.onlypair').css({
-                    'background-color':'rgba(31, 55, 76, 1)',
-                    'color':'rgba(190, 210, 228, 1)',
+                    'background-color':'transparent',
+                    'color':'#212121',
                     'max-height': '300px',
                     'overflow-y': 'auto',
                     'padding': '5px',
-                    'border': '2px solid rgba(107, 107, 107, 1)',
+                    'width': '100%',
+                    'border-bottom': '2px solid rgba(107, 107, 107, 1)',
                     'border-top': 'none',
-                    'border-bottom-left-radius': '20px',
-                    'border-bottom-right-radius': '20px'
                 });
             } else {
                 $(".displayedmembers").html("");
@@ -131,7 +544,7 @@ $(document).ready(function(){
     function makepeople(people){
         //console.log('peoooople',people)
         
-        var html = ["<div class='peoplewithcom'><h3><strong> These people:" + people[1] + " have common time in the dates: </strong><br>"];
+        var html = ["<div class='peoplewithcom'><h3><strong> These people: </strong><em>" + people[1] + "</em> have common time at: <br>"];
         for(var i = 0; i < people[0].length; i++){
         html.push( 
         "<h3>"
@@ -140,7 +553,7 @@ $(document).ready(function(){
         Math.floor(people[0][i][1] - people[0][i][0]) + 
         " hours and " +
         Math.floor(((people[0][i][1] - people[0][i][0]) - Math.floor(people[0][i][1] - people[0][i][0])) * 60) +
-        " minutes</h3>")
+        " minutes, </h3>")
         }
         html.push('</div>');
         return html.join('');
@@ -177,7 +590,7 @@ $(document).ready(function(){
         everything.forEach(function(arrays){
             //console.log("original array: ", arrays);
             var newarray = constractor(arrays);
-            //console.log("after constractor: ", newarray);
+            console.log("after constractor: ", newarray);
             onlyarrays.push(newarray[0]);
             arrayswithnames.push(newarray);
             //console.log("this is it!", newarray);
@@ -334,7 +747,11 @@ $(document).ready(function(){
 
     function constractor(allarrays){
         var values = allarrays[0];
-        var username = allarrays[1].username;
+        if(allarrays[1].slack !== undefined){
+            var username = allarrays[1].slack.username;
+        } else {
+            var username = allarrays[1].username;
+        }
         var temp = values.map(clarify)
 
         var arrays = temp.filter(function(el){
@@ -416,7 +833,7 @@ $(document).ready(function(){
       }
       return solvedarray;
     }
-
+    
     // time calc combinations
-    getgrouparrays();
+    getuserdata();
 });  

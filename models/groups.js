@@ -1,8 +1,8 @@
 var mongoose = require("mongoose");
-var passportLocalMongoose = require("passport-local-mongoose");
 
 var GroupSchema = new mongoose.Schema({
     name: String,
+    type: String,
     authid: {
             type: mongoose.Schema.Types.ObjectId,
             ref:"User"

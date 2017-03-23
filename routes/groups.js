@@ -14,41 +14,36 @@ router.delete("/deletegroup", isloggedin,function(req, res){
     .then(function(group){
         if(group[0].groupies.length > 0){
             async.forEachOf(group[0].groupies, function(groupie, key, callback){
-                User.find({username: groupie.username}).exec()
-                .then(function(groupie){
-                    Friendlist.find({authid: groupie[0]._id}).exec()
-                    .then(function(list){
-                        newlist = list[0];
-                        console.log("friendlist before loop", newlist)
-                        for(var j = newlist.groups.length - 1; j >= 0; j --) {
-                            if(newlist.groups[j].groupid.equals(group[0]._id)) {
-                                newlist.groups.splice(j, 1);
-                            }
+                Friendlist.find({authid: groupie._id}).exec()
+                .then(function(list){
+                    newlist = list[0];
+                    console.log("friendlist before loop", newlist)
+                    for(var j = newlist.groups.length - 1; j >= 0; j --) {
+                        if(newlist.groups[j].groupid.equals(group[0]._id)) {
+                            newlist.groups.splice(j, 1);
                         }
-                        console.log("friendlist after loop", newlist)
-                        Friendlist.findByIdAndUpdate(newlist._id, newlist, {new: true}).exec()
-                        .then(function(updatedlist){
-                            console.log("friendlist after removal", updatedlist)
-                            Groups.findByIdAndRemove(group[0]._id).exec()
-                            .then(function(err){
-                                callback();
-                            }).catch(function(err){
-                                throw err;
-                            });
-                        }).catch(function(err){
-                            throw err;
-                        })
+                    }
+                    console.log("friendlist after loop", newlist)
+                    Friendlist.findByIdAndUpdate(newlist._id, newlist, {new: true}).exec()
+                    .then(function(updatedlist){
+                        console.log("friendlist after removal", updatedlist)
+                        callback();
                     }).catch(function(err){
                         throw err;
-                    });
+                    })
                 }).catch(function(err){
                     throw err;
-                })
+                });
             }, function(err){
                 if(err){
                     console.log(err);
                 } else {
-                    res.send("done it finaly ");
+                    Groups.findByIdAndRemove(group[0]._id).exec()
+                    .then(function(err){
+                        res.send("done it finaly ");
+                    }).catch(function(err){
+                        throw err;
+                    });
                 }
             });
         } else {
@@ -72,7 +67,7 @@ router.post("/addgroupie", isloggedin,function(req, res){
             .then(function(updatedgroup){
                 Friendlist.findOneAndUpdate({authid: req.body.friendid}, {$push: {groups: {authid: group.authid, groupid: group._id}}}).exec()
                 .then(function(updatedlist){
-                    console.log("updatedlist: ", updatedlist);
+                    //console.log("updatedlist: ", updatedlist);
                     callback();
                 }).catch(function(err){
                     throw err;
@@ -95,49 +90,37 @@ router.post("/addgroupie", isloggedin,function(req, res){
 
 //delete groupie
 router.post("/deletegroupie", isloggedin,function(req, res){
-   var groupiename = req.body.groupiename;
+   var groupieid = req.body.groupieid;
    var groupname = req.body.groupname;
-   console.log(groupiename);
+   console.log(groupieid);
    Groups.find({name: groupname, authid: req.user._id}).populate("groupies").exec()
    .then(function(group){
        newgroup = group[0];
         for(var i = newgroup.groupies.length - 1; i >= 0; i --){
-            if(newgroup.groupies[i].username === groupiename) {
-                
+            if(newgroup.groupies[i]._id.equals(groupieid)) {
                 newgroup.groupies.splice(i, 1);
             }
         }
         Groups.findByIdAndUpdate(newgroup._id, newgroup, {new: true}).exec()
         .then(function(updatedGroup){
-            //console.log(updatedGroup);
-            User.find({username: groupiename}).exec()
-            .then(function(groupie){
-                //console.log("groupie is :", groupie);
-                Friendlist.find({authid: groupie[0]._id}).exec()
-                .then(function(list){
-                    //console.log("this is the friendlist of the groupie", list[0]);
-                    //console.log("list-groups-ids", list[0].groups[0].groupid, updatedGroup._id);
-                    newlist = list[0];
-                    //console.log(newlist.groups[0].groupid);
-
-                    for(var j = newlist.groups.length - 1; j >= 0; j --) {
-                        if(newlist.groups[j].groupid.equals(updatedGroup._id)) {
-                            newlist.groups.splice(j, 1);
-                        }
+            Friendlist.find({authid: groupieid}).exec()
+            .then(function(list){
+                newlist = list[0];
+                for(var j = newlist.groups.length - 1; j >= 0; j --) {
+                    if(newlist.groups[j].groupid.equals(updatedGroup._id)) {
+                        newlist.groups.splice(j, 1);
                     }
-                    Friendlist.findByIdAndUpdate(newlist._id, newlist, {new: true}).exec()
-                    .then(function(updatedlist){
-                        //console.log("finallist", updatedlist);
-                        res.send("done it finaly ");
-                    }).catch(function(err){
-                        throw err;
-                    })
+                }
+                Friendlist.findByIdAndUpdate(newlist._id, newlist, {new: true}).exec()
+                .then(function(updatedlist){
+                    //console.log("finallist", updatedlist);
+                    res.send("done it finaly ");
                 }).catch(function(err){
                     throw err;
-                });
+                })
             }).catch(function(err){
                 throw err;
-            })
+            });
 
         }).catch(function(err){
             throw err;
@@ -151,6 +134,7 @@ router.post("/deletegroupie", isloggedin,function(req, res){
 
 router.post("/creategroup", isloggedin,function(req, res){
     var name = req.body.groupname;
+    console.log("this is the group;s name"+name);
     var authid = req.user._id;
     var groupies = [];
     var newgroup = {name: name, authid: authid, groupies:groupies}; 
@@ -163,9 +147,8 @@ router.post("/creategroup", isloggedin,function(req, res){
             Groups.create(newgroup, function(err, group){
                 if(err){
                     console.log(err);
-                    return res.redirect("/");
+                    return res.send("error with your group creations", err);
                 }
-                group.save();
                 Groups.find({authid: req.user._id}).exec()
                 .then(function(groups){
                     console.log(groups);
@@ -189,6 +172,15 @@ router.get("/getmygroups", isloggedin,function(req, res){
     }).catch(function(err){
         throw err;
     });
+});
+
+router.post("/getgroupmembers", isloggedin,function(req, res){
+    //var groupname = req.body.groupname;
+    var groupid = req.body.groupid;
+    Groups.findById(groupid).populate("groupies").exec()
+    .then(function(group){
+        res.send(group);
+    })
 });
 
 function isloggedin(req, res, next){

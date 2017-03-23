@@ -1,16 +1,16 @@
 
 
 <% include partials/header %>
+<!--<script type="text/javascript" src="/groupedit.js"></script>-->
 <script type="text/javascript" src="/timecalc.js"></script>
-<script type="text/javascript" src="/groupedit.js"></script>
 <link rel="stylesheet" href="/stylesheets/group.css">
 
 <% if(group.authid.equals(currentUser._id)){ %>
     <% var editable = true; %>
 <% } %>
 
-<h2><strong>Welcome to group <span id="gname"><%= group.name %></span><strong></h2><br>
-<div class="inc">
+<h2 class="text-center"><strong>Welcome to group <span id="gname"><%= group.name %></span><strong></h2><br>
+<!--<div class="inc">
     <h4>
         Here you can see the combined common time of all the group members<br>
         as well as all the combinations of members with common time.
@@ -24,21 +24,22 @@
     </h4>
     
 <% } %>
-</div>
-<h2>Group Members:</h2>
+</div>-->
 
+<h2>Group Members:</h2>
 <% if (editable) { %>
 <div id="members" class="row editable">
 <% } else { %>
 <div id="members" class="row">
 <% } %>
-    <% group.groupies.forEach(function(groupie){ %>
+
+    <!--<% group.groupies.forEach(function(groupie){ %>
         <% if (editable) { %>
         <div class="member"><div class="membername"><h3><%= groupie.username %></h3></div><i class='fa fa-times fa-2x delgroupie' aria-hidden='true'></i></div>
         <% } else { %>
         <div class="member"><div><h3><%= groupie.username %></h3></div></div>
         <% } %>
-    <% }) %>
+    <% }) %>-->
 </div>
 <br>
 <hr>

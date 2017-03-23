@@ -1,17 +1,49 @@
 
-<% include ./partials/header %>
 
+<head>
+    <title>Timed-Up</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="/stylesheets/login.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/login.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+</head>
+<body>
+    <div class="allforms">
+        <div class="loginform">
+            <form action="/login" method="post">
+            <label>Login</label>
+                <hr>
+                <input type = "text" name="username" placeholder="username" maxlength="20">
+                <input type = "password" name="password" placeholder="password">
+                <hr>
+                <button>LOGIN</button>
+                <h4> You don't have an account? <span id="register" class="btn btn-default">Sign Up</span> or 
+                <a href="https://slack.com/oauth/authorize?scope=identity.basic,identity.email,identity.team,identity.avatar&client_id=148707815554.153399673990&redirect_uri=http%3A%2F%2F45abebbf.ngrok.io%2Fauth%2Fslack"><img alt="Sign in with Slack" height="40" width="172" src="https://platform.slack-edge.com/img/sign_in_with_slack.png" srcset="https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x" /></a>
+                </h4>
+            </form>
+            
+        </div>
 
-<div class="container">
-    <h1> login </h1>
-    <form action="/login" method="post">
-        <input type = "text" name="username" placeholder="username" maxlength="11">
-        <input type = "password" name="password" placeholder="password">
-        <input type = "submit" value="login">
-    </form>
-</div>
-
-
-
-
-<% include ./partials/footer %>
+        <div class="signupform">
+            <form action="/register" method="post">
+            <label>Sign Up</label>
+                <hr>
+                <input type="text" name="username" placeholder="username" maxlength="20">
+                <input type="password" name="password" placeholder="password">
+                <button>REGISTER</button>
+                <hr>
+                <h4>Already have an account? <span id="login" class="btn btn-default">Login</span> or 
+                <a href="https://slack.com/oauth/authorize?scope=identity.basic,identity.email,identity.team,identity.avatar&client_id=148707815554.153399673990&redirect_uri=http%3A%2F%2F45abebbf.ngrok.io%2Fauth%2Fslack"><img alt="Sign in with Slack" height="40" width="172" src="https://platform.slack-edge.com/img/sign_in_with_slack.png" srcset="https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x" /></a>
+                </h4>
+            </form>
+        </div>
+    </div>
+</body>

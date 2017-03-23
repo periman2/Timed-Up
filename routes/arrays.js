@@ -6,6 +6,8 @@ var User = require("../models/user");
 var Friendlist = require("../models/friends");
 var Groups = require("../models/groups")
 var async = require("async");
+var moment = require('moment');
+moment().format();
 
 //add arrays to friendlist
 
@@ -87,6 +89,36 @@ router.post("/delarray", isloggedin,function(req, res){
         throw err;
     })
 });
+
+router.post("/editarray", isloggedin, function(req,res){
+    var arrayid = req.body.event.id;
+    var array = req.body.event;
+    Friendlist.find({authid: req.user._id}).exec()
+    .then(function(list){
+        var newlist = list[0];
+        for(var i = newlist.arrays.length - 1; i >= 0; i--){
+            if(newlist.arrays[i]._id.equals(arrayid)){
+                //     hoursfromnow1 = reverse(moment().diff(value,"hours", true));
+                var newvalue1 = (-1) * moment(newlist.arrays[i].time).diff(array.start, "hours", true);
+                var newvalue2 = (-1) * moment(newlist.arrays[i].time).diff(array.end, "hours", true);
+                newlist.arrays[i].value = [newvalue1, newvalue2];
+                console.log(newlist.arrays[i].value, [newvalue1, newvalue2]);
+                break;
+            }
+        }
+        Friendlist.findByIdAndUpdate(newlist._id, newlist, {new: true}).exec()
+        .then(function(updatedlist){
+            console.log("been here too");
+            
+            res.send(updatedlist.arrays);
+        }).catch(function(err){
+            throw err;
+        });
+    }).catch(function(err){
+        throw err;
+    })
+
+})
 
 function isloggedin(req, res, next){
     if(req.isAuthenticated()) {

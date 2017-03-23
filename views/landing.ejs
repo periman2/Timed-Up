@@ -2,50 +2,59 @@
 <% include partials/header %>
 <script type="text/javascript" src="/javascript.js"></script>
 
-
-
     <% if(currentUser) { %>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="head">
-                    <h3>My Groups</h3>
-                    <h4 class='instructions inc'>
-                        This is your groups page. In this page you can create remove and edit your groups 
-                        as well as view the groups other users have included you in.
-                        To start creating groups first add yourself to your friendlist and then make your first group 
-                        by choosing a group name and clicking on the "Create Group" button.<br>
-                        <br>To add a person from your friendlist to your new group just select the group(s) you want by clicking on its name
-                        (you can select multiple groups at once) and then click on the friend you want to add to the group(s). It's that easy.
-                    </h4>
-                    <button class="inst btn btn-sm btn-default">Hide Instructions</button>
-                </div>
-                
-                <h4>Group name:</h4>
-                <form action="#" class="form-group input-group">
-                    <input type="text" name="groupname" id="groupname" class="form-control input-md" placeholder="Group name" maxlength="11" required>
-                    <span class="input-group-btn">
-                    <button id="addgroup" class="btn btn-default">Create Group</button>
-                    </span>
+        <!--<div class="head">
+            <h4 class='instructions inc'>
+                This is your groups page. In this page you can create remove and edit your groups 
+                as well as view the groups other users have included you in.
+                To start creating groups first add yourself to your friendlist and then make your first group 
+                by choosing a group name and clicking on the "Create Group" button.<br>
+                <br>To add a person from your friendlist to your new group just select the group(s) you want by clicking on its name
+                (you can select multiple groups at once) and then click on the friend you want to add to the group(s). It's that easy.
+            </h4>
+            <button class="inst btn btn-sm btn-default">Hide Instructions</button>
+        </div>-->
+        <div class="maintab">
+            <!--<div class="switch">
+                <h2 class="btn btn-default active2" style="text-align: center;"><strong>My Groups</strong></h2>
+                <h2 class="btn btn-default" style="text-align: center;"><strong>Included Groups</strong></h2>
+            </div>-->
+            <div class="mtab">
+                <h2 class="text-center"><strong>My groups</strong></h3>
+                <form class="input-append" id="creategroup">
+                    <input type="text" name="groupname" id="groupname" placeholder="Group name" maxlength="20" required>
+                    <button id="addgroup" class="btn" type="submit">Create Group</button>
                 </form>
-                <div id="groups" class="row" style="display:flex; flex-wrap: wrap;">
+                <div>
+                    <div id="groups" class="row" style="display:flex;">
+                    
+                    </div>
+                </div>
+                <h3 class="text-center">You are included in the following groups:</h3>
+                <div class="incgroups inctab">
                 
+                <% if(list.groups.length > 0) { %>
+                    <% //console.log("groups" + list.groups + "endgrouppsssss") %>
+                        
+                        <% list.groups.forEach(function(group){ %>
+                        <%// console.log("slackkkk: " + JSON.stringify(group.authid.slack).length  + "enddddddd" ) %>
+                            <% if(JSON.stringify(group.authid.slack).length > 2) { %>
+                                <a class="btn btn-default" href="/<%= group.groupid._id %>"><p class="firstone"><%= group.groupid.name %> </p><p>made by </p><p><%= group.authid.slack.username %></p></a>
+                            <% }  else { %>
+                                <a class="btn btn-default" href="/<%= group.groupid._id %>"><p class="firstone"><%= group.groupid.name %> </p><p>made by </p><p><%// console.log("username: " + group.authid.username) %><%= group.authid.username %></p></a>
+                            <% } %>
+                        <% }) %>
+                    <% } %>
                 </div>
             </div>
         </div>
-        <hr>
-        <div class="incgroups">
-            <% if(list.groups.length > 0) { %>
-                <h3>You are included in the following groups:</h3>
-                <% list.groups.forEach(function(group){ %>
-                    <a class="btn btn-default" href="/<%= group.groupid._id %>"><h3 class="firstone"><%= group.groupid.name %> </h3><h4>made by </h4><h3><%= group.authid.username %></h3></a>
-                <% }) %>
-            <% } %>
-        </div>
-        <br>
-    <% } else { %>
+    </div>
+    
+    <br>
+<% } else { %>
     <h1> Please register or login</h1>
-    <% } %>
+<% } %>
     
 
 

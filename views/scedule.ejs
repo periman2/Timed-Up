@@ -1,40 +1,31 @@
 <% include partials/header %>
 <script type="text/javascript" src="/sceduler.js"></script>
 <link rel="stylesheet" href="/stylesheets/schedule.css">
-    <h1 id="titlesc">Welcome to your scheduling page, <%= user.username %></h1>
-    <br>
-    <div class='inc'>
-        <h4>
-            Here you add your free time to your Timed-Up account.<br>
-            You can add ranges of minutes, hours, days, months even years! There's no limit.<br>
-            Keep in mind that this time will be used to calculate shared time periods with group <br>
-            members which means that if it's not accurate it will lead to false results.<br>
-            <br>
-            After you do this,
-            you should add some friends and start creating groups <br>
-            in order to organize and view your common free time with them!
-        </h4>
-    </div>
-    <br>
-    <hr>
 
-    <div class="row">
-        <div class="col-xs-6">
-            <form class="form-group">
-                <label class="label">From</label>
-                <input class="form-control inp" type="text"id="myinput"name="daterange" />
-            </form>
+    <% if(currentUser.slack !== undefined){ %>
+        <% var username = currentUser.slack.username; %>
+    <% } else { %>
+        <% var username = currentUser.username; %>
+    <% } %>
+    <h2 id="titlesc" class="text-center">Welcome to your scheduling page, <%= username %></h2>
+    <br>
+    
+    <div id="schedulerDiv" class="dhx_cal_container" style="height:700px;width:100%">
+        <div class="dhx_cal_navline">
+            <div class="dhx_cal_prev_button">&nbsp;</div>
+            <div class="dhx_cal_next_button">&nbsp;</div>
+            <div class="dhx_cal_today_button"></div>
+            <div class="dhx_cal_date"></div>
+            <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+            <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+            <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
         </div>
-        <div class="col-xs-6">
-            <form class="form-group">
-                <label class="label">To</label>
-                <input class="form-control inp" type="text" id="myinput2"name="daterange2" />
-            </form>
+        <div class="dhx_cal_header">
+        </div>
+        <div class="dhx_cal_data">
         </div>
     </div>
-    <button class="btn btn-success formbut" id="submit">Submit Range</button>
-    <br>
-    <div id="arrays">
+    <div id="arrays hidden">
     </div>
 
 

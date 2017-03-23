@@ -2,31 +2,78 @@ html {
     height: 100%;
 }
 body {
-    background-color:rgba(198, 197, 206, 1);
-    color: rgba(41, 41, 41, 1);
+    background-color:rgba(214, 214, 214, 1);
+    color: #212121;
     height: 100%;
     font-family: "Montserrat";
 }
 
-.container-fluid{
-    background-color:rgba(198, 197, 206, 1);
+.mainrow{
+    /*background-color:#2196F3;*/
+    /*background: black;*/
     height: 100%;
-    padding: 0 5%;
+    /*padding: 3% 5%;*/
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+#groupname {
+    margin-left: 2%;
+    width: 60%;
+    padding: 3px;
+    height: 35px;
+    border-width: 1px;
+    font-size: 18px;
+}
+.navig {
+    height: 100%!important;
+    margin: 0!important;
+    padding: 0!important;
+    /*background: white;*/
+}
+/*Friendlist activenow class*/
+.activenow {
+    background-color: #FFFFFF !important;
+    border-radius: 0 !important;
+    border-left: 3px solid #212121 !important;
+    border-top: 2px solid #212121 !important;
+    border-right: 3px solid #212121 !important;
+    color: #212121 !important;
 }
 
 .instructions {
-    width: 80%;
+    width: 90%;
 }
 
 hr {
     border-color: black;
 }
 
+.landing {
+    background: rgba(214, 214, 214, 1);
+    padding: 20px;
+    margin-left: 0 !important;
+    height: 100%;
+    /*border-radius: 0.5em;*/
+    -webkit-box-shadow: 0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+    -moz-box-shadow:    0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+    box-shadow:         0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+}
+
 
 #groups {
-    color: rgba(41, 41, 41, 1);
+    background: rgba(79, 79, 79, 0.3);
+    margin: 2%;
+    /*max-width: 90%;*/
+    padding: 2%;
     font-size: 18px;
-    /*overflow: scroll;*/
+    overflow-x: auto;
+    height: 100%;
+    border: 2px solid rgba(79, 79, 79, 0.6);
+    border-radius: 0.4em;
+    /*border-bottom: 2px solid rgba(79, 79, 79, 1);*/
+    /*border-radius: 9px;*/
 }
 
 .hidden {
@@ -39,21 +86,9 @@ hr {
 
 .myfriendlist {
     max-height: 250px;
-    overflow-y: scroll;
+    overflow: auto;
+    padding: 5%;
 }
-
-.friendbox {
-    border-radius: 4px;
-    text-align: center;
-    color: rgba(96, 104, 123, 1);
-    font-size: 22px;
-    margin: 5px;
-}
-
-.friendbox .col-xs-3 {
-    border-right: 1px solid rgba(96, 104, 123, 1);
-}
-
 
 .title:hover {
     cursor: pointer;
@@ -63,14 +98,6 @@ hr {
     cursor: pointer;
 }
 
-.friendname:hover {
-    cursor: pointer;
-}
-
-#friendlist li {
-    font-size: 30px;
-}
-
 li {
     list-style-type: none;
 }
@@ -78,40 +105,87 @@ li {
 .label{
     font-size: 40px;
     text-align: center;
-    color: rgba(41, 41, 41, 1);
+    color:rgba(50, 50, 50, 0.9);
 }
 
-.navbar .text-center{
-    color: rgba(41, 41, 41, 1);
-    font-size: 30px
+/*MAIN TAB FUNCTIONALITY*/
+
+.maintab {
+    margin-top: 10px;
+    height: 100%;
 }
 
-.formbut {
-    margin: 30px;
+.mtab, .inctab {
+    background: rgba(214, 214, 214, 1);
 }
 
-
-#groupname{
-    width: 20%;
+.mtab form {
+    padding-top: 15px;
+    margin-left: 40px;
+    width: 50%;
 }
 
-.incgroups {
-    max-height: 300px;
+.inctab {
+    /*display: none;*/
+    /*background: rgba(79, 79, 79, 0.3);*/
+    padding: 3%;
+    margin: 2%;
+    max-height: 220px;
     overflow-y: auto;
+    border: 2px solid rgba(79, 79, 79, 0.6);
+    border-radius: 0.4em;
 }
 
-.allmembers, .onlycommon, .pairs {
-    background-color: rgba(222, 227, 232, 1);
+.inctab .btn{
+    background: transparent;
+    border: 2px solid #212121;
+    /*color: rgba(224, 224, 224, 1);*/
+    /*color: rgba(212, 212, 212, 1);*/
+    font-size: 17px;
+    margin: 5px;
+}
+
+/*MAIN TAB FUNCTIONALITY END*/
+
+.myfriendlist {
+    max-height: 230px;
+    background-color: #FFFFFF;
+    overflow-y: auto;
+    border-left:3px solid #212121;
+    border-right:3px solid #212121;
+    border-bottom:2px solid #212121;
+}
+
+.friendlist .menu {
+    padding: 0 15px;
+}
+
+/*the not active menu*/
+h5:not(.activenow) {
+    background: transparent;
+    border-bottom: 3px solid #212121;
+    color: rgba(184, 184, 184, 1) !important;
 }
 
 .inc {
-    background-color:rgba(188, 197, 205, 1);
+    background-color:rgba(214, 214, 214, 1);
     padding: 10px;
-    -webkit-box-shadow: 0px 4px 6px 2px rgba(50, 50, 50, 0.68);
-    -moz-box-shadow:    0px 4px 6px 2px rgba(50, 50, 50, 0.68);
-    box-shadow:         0px 4px 6px 2px rgba(50, 50, 50, 0.68);
+    -webkit-box-shadow: 0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+    -moz-box-shadow:    0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+    box-shadow:         0px 3px 11px 0px rgba(50, 50, 50, 0.52);
 }
 
+#popupbox {
+    position:absolute;
+    width: 90%;
+    min-height: 60px;
+    background: rgba(241, 249, 248, 1);
+    z-index: 9999;
+    -webkit-box-shadow: 0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+    -moz-box-shadow:    0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+    box-shadow:         0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+    display: none;
+}
 /*=========================*/
 /*        Scrollbar        */ 
 /*=========================*/
