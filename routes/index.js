@@ -14,6 +14,17 @@ var SlackStrategy = require('passport-slack').Strategy
 //===========================
 var websiteurl = "https://timedupchingu.herokuapp.com/";
 
+router.get("/slack/botauth", function(req, res){
+    var data = {form: {
+        client_id: process.env.SLACK_CLIENT_ID_OFBOT,
+        client_secret: process.env.SLACK_CLIENT_SECRET_OFBOT,
+        code: req.query.code
+    }};
+    request.post('https://slack.com/api/oauth.access', data, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+    }
+});
+
 router.post("/timedup-help", function(req, res){
     if(req.body.token === process.env.SLACK_BOT_TOKEN){
         let data = {
