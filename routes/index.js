@@ -22,27 +22,11 @@ router.get("/slack/botauth", function(req, res){
     }};
     request.post('https://slack.com/api/oauth.access', data, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            
+            res.redirect("/");
         }
     });
 });
 
-router.post("/timedup-group", function(req, res){
-    if(req.body.channel_name !== "directmessage"){
-        User.find({"slack.id":req.body.user_id, "slack.teamid":req.body.team_id}, function(err, slackuser){
-            console.log("this is the body", req.body);
-            if(slackuser[0]){
-                //logic here
-            } else {
-            let data = {
-            text: "In order to use this bot you need to first sign in to the Timed-UP application using slack.\n You can find it here: <" + websiteurl +">"};
-            res.json(data);
-            }
-        });
-    } else {
-        res.json({text: "This bot won't work for direct messages. You'll have to be in a channel."});
-    }
-});
 
 router.post("/timedup-help", function(req, res){
     if(req.body.token === process.env.SLACK_BOT_TOKEN){
