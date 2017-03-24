@@ -85,7 +85,7 @@ router.post("/timedup-makegroup", function(req, res){
                     console.log("this is the body", req.body);
                     if(slackuser[0]){
                         request.post('https://slack.com/api/channels.info', {form: {token: process.env.SLACK_OAUTH_TOKEN, channel: req.body.channel_id}}, function (error, response, body) {
-                            console.log(response.statusCode, JSON.parse(body), "inside channel now");
+                            console.log(response.statusCode, JSON.parse(body) + "inside channel now" + process.env.SLACK_OAUTH_TOKEN);
                             if (!error && response.statusCode == 200 && JSON.parse(body).ok) {
                                 console.log("haha " + JSON.parse(body));
                                 let channelmembers = JSON.parse(body).channel.members;
