@@ -8,7 +8,8 @@ var Groups = require("../models/groups")
 var async = require("async");
 var mongoose    = require("mongoose");
 var request = require("request");
-var SlackStrategy = require('passport-slack').Strategy
+var SlackStrategy = require('passport-slack').Strategy;
+var Team = require("../models/teams");
 //===========================
 //ROUTES FOR TIMED-UP BOT
 //===========================
@@ -20,9 +21,27 @@ router.get("/slack/botauth", function(req, res){
         client_secret: process.env.SLACK_CLIENT_SECRET_OFBOT,
         code: req.query.code
     }};
+    var token = JSON.parse(body).access_token;
     request.post('https://slack.com/api/oauth.access', data, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            res.redirect("/");
+            request.post('https://slack.com/api/team.info', {form: {token: token}}, function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    let teamid = JSON.parse(body).team.id;
+                    let teamname = JSON.parse(body).team.id;
+                    Team.find({name: teamname, id: teamid}).exec()
+                    .then(function(foundteam){
+                        if(foundteam.length > 0 && foundtam){
+                            return send("Another person from the team already added the app.");
+                        }
+                        Team.create({name: teamname, id: teamid, token: token}, function(err, newteam){
+                            console.log("this is a new team " + newteam);
+                            res.redirect("/")
+                        });
+                    }).catch(function(err){
+                        throw err;
+                    });
+                }
+            });
         }
     });
 });
@@ -84,74 +103,78 @@ router.post("/timedup-makegroup", function(req, res){
                 User.find({"slack.id":req.body.user_id, "slack.teamid":req.body.team_id}, function(err, slackuser){
                     console.log("this is the body", req.body);
                     if(slackuser[0]){
-                        request.post('https://slack.com/api/channels.info', {form: {token: process.env.SLACK_OAUTH_TOKEN, channel: req.body.channel_id}}, function (error, response, body) {
-                            console.log(response.statusCode, JSON.parse(body) + "inside channel now" + process.env.SLACK_OAUTH_TOKEN);
-                            if (!error && response.statusCode == 200 && JSON.parse(body).ok) {
-                                console.log("haha " + JSON.parse(body));
-                                let channelmembers = JSON.parse(body).channel.members;
-                                //console.log("members are: " + channelmembers);
-                                if(channelmembers.length < 12){
-                                    // res.json({text: "Cool!"});
-                                    Groups.find({type: "Slack", name: req.body.channel_name, authid: slackuser[0]._id}).exec()
-                                    .then(function(groupfound){
-                                        if(groupfound !== undefined && groupfound.length > 0){
-                                            //console.log("groupfound: " + groupfound);
-                                            res.json({text: "You already created a Timed-UP group for this channel in your account.\n To get the group information use the /timedup-groupinfo command.\n This is your group's page: <"+ websiteurl + groupfound[0]._id + ">"});
-                                        } else {
-                                            var newgroup = {type: "Slack", name: req.body.channel_name, authid: slackuser[0]._id, groupies: []}
-                                            Groups.create(newgroup, function(err, group){
-                                                User.find({"slack.teamid": req.body.team_id, "slack.id":{$in: channelmembers}}).exec()
-                                                .then(function(foundusers){
-                                                    // res.json({text: "Cool!"});
-                                                    if(foundusers.length > 0){
-                                                        //console.log("these are the found users", foundusers);
-                                                        var ids = foundusers.map(function(el){return el._id});
-                                                        Groups.findByIdAndUpdate(group._id, {$push: {groupies: { $each: ids}}}, {new: true}).exec()
-                                                        .then(function(editedgroup){
-                                                            async.forEachOf(foundusers, function(thisuser, key, callback){
-                                                                var newgroup = {authid: slackuser[0]._id, groupid: editedgroup._id};
-                                                                Friendlist.findOneAndUpdate({authid: thisuser._id}, {$push: {groups: newgroup}}, {new: true}).exec()
-                                                                .then(function(list){
-                                                                    //console.log("list is now :" + list);
-                                                                    callback();
-                                                                }).catch(function(err){
-                                                                    throw err;
+                        Team.find({id: req.body.team_id}).exec()
+                        .then(function(team){
+                            console.log("this is the team : " + team + "and this is the token " + team[0].token);
+                            request.post('https://slack.com/api/channels.info', {form: {token: team[0].token, channel: req.body.channel_id}}, function (error, response, body) {
+                                console.log(response.statusCode, JSON.parse(body) + "inside channel now" + process.env.SLACK_OAUTH_TOKEN);
+                                if (!error && response.statusCode == 200 && JSON.parse(body).ok) {
+                                    console.log("haha " + JSON.parse(body));
+                                    let channelmembers = JSON.parse(body).channel.members;
+                                    //console.log("members are: " + channelmembers);
+                                    if(channelmembers.length < 12){
+                                        // res.json({text: "Cool!"});
+                                        Groups.find({type: "Slack", name: req.body.channel_name, authid: slackuser[0]._id}).exec()
+                                        .then(function(groupfound){
+                                            if(groupfound !== undefined && groupfound.length > 0){
+                                                //console.log("groupfound: " + groupfound);
+                                                res.json({text: "You already created a Timed-UP group for this channel in your account.\n To get the group information use the /timedup-groupinfo command.\n This is your group's page: <"+ websiteurl + groupfound[0]._id + ">"});
+                                            } else {
+                                                var newgroup = {type: "Slack", name: req.body.channel_name, authid: slackuser[0]._id, groupies: []}
+                                                Groups.create(newgroup, function(err, group){
+                                                    User.find({"slack.teamid": req.body.team_id, "slack.id":{$in: channelmembers}}).exec()
+                                                    .then(function(foundusers){
+                                                        // res.json({text: "Cool!"});
+                                                        if(foundusers.length > 0){
+                                                            //console.log("these are the found users", foundusers);
+                                                            var ids = foundusers.map(function(el){return el._id});
+                                                            Groups.findByIdAndUpdate(group._id, {$push: {groupies: { $each: ids}}}, {new: true}).exec()
+                                                            .then(function(editedgroup){
+                                                                async.forEachOf(foundusers, function(thisuser, key, callback){
+                                                                    var newgroup = {authid: slackuser[0]._id, groupid: editedgroup._id};
+                                                                    Friendlist.findOneAndUpdate({authid: thisuser._id}, {$push: {groups: newgroup}}, {new: true}).exec()
+                                                                    .then(function(list){
+                                                                        //console.log("list is now :" + list);
+                                                                        callback();
+                                                                    }).catch(function(err){
+                                                                        throw err;
+                                                                    })
+                                                                }, function(err){
+                                                                    if(err){
+                                                                        return console.log(err);
+                                                                    }
+                                                                    console.log(editedgroup);
+                                                                    var usernames = foundusers.map(function(el){return el.slack.username + " "})
+                                                                    res.json({
+                                                                        text: "A group was successfully created in the " + slackuser[0].slack.username 
+                                                                        + "'s timed up account containing those members: \n" 
+                                                                        + usernames +  ".\n You can view and edit it here: <" + websiteurl
+                                                                        + editedgroup._id + ">"
+                                                                    });
                                                                 })
-                                                            }, function(err){
-                                                                if(err){
-                                                                    return console.log(err);
-                                                                }
-                                                                console.log(editedgroup);
-                                                                var usernames = foundusers.map(function(el){return el.slack.username + " "})
-                                                                res.json({
-                                                                    text: "A group was successfully created in the " + slackuser[0].slack.username 
-                                                                    + "'s timed up account containing those members: \n" 
-                                                                    + usernames +  ".\n You can view and edit it here: <" + websiteurl
-                                                                    + editedgroup._id + ">"
-                                                                });
+                                                                
+                                                            }).catch(function(err){
+                                                                throw err;
                                                             })
-                                                            
-                                                        }).catch(function(err){
-                                                            throw err;
-                                                        })
-                                                    } else {
-                                                        console.log("something bad happened");
-                                                        res.json({text: "Something went wrong please try again and make sure this channel has less than 12 members."});
-                                                    }
-                                                }).catch(function(err){
-                                                    throw err;
-                                                })
-                                            });
-                                        }
-                                    })
-                                    
+                                                        } else {
+                                                            console.log("something bad happened");
+                                                            res.json({text: "Something went wrong please try again and make sure this channel has less than 12 members."});
+                                                        }
+                                                    }).catch(function(err){
+                                                        throw err;
+                                                    })
+                                                });
+                                            }
+                                        })
+                                        
+                                    } else {
+                                        res.json({text: "Only channels with 12 or less members can create groups automatically."});
+                                    }
+                                    //res.json({text: "found them thank you for your info"});
                                 } else {
-                                    res.json({text: "Only channels with 12 or less members can create groups automatically."});
+                                    res.json({text: "Something went wrong with you request."});
                                 }
-                                //res.json({text: "found them thank you for your info"});
-                            } else {
-                                res.json({text: "Something went wrong with you request."});
-                            }
+                            });
                         });
                     } else {
                         let data = {
@@ -163,75 +186,78 @@ router.post("/timedup-makegroup", function(req, res){
                 User.find({"slack.id":req.body.user_id, "slack.teamid":req.body.team_id}, function(err, slackuser){
                     console.log("this is the body", req.body);
                     if(slackuser[0]){
-                        request.post('https://slack.com/api/groups.info', {form: {token: process.env.SLACK_OAUTH_TOKEN, channel: req.body.channel_id}}, function (error, response, body) {
-                            console.log(response.statusCode, JSON.parse(body) + "this is inside the groups now" + process.env.SLACK_OAUTH_TOKEN);
-                            if (!error && response.statusCode == 200 && JSON.parse(body).ok) {
-                                console.log("haha " + JSON.parse(body));
-                                let channelmembers = JSON.parse(body).group.members;
-                                let channelname = JSON.parse(body).group.name;
-                                //console.log("members are: " + channelmembers);
-                                if(channelmembers.length < 12){
-                                    // res.json({text: "Cool!"});
-                                    Groups.find({type: "Slack", name: channelname, authid: slackuser[0]._id}).exec()
-                                    .then(function(groupfound){
-                                        if(groupfound !== undefined && groupfound.length > 0){
-                                            //console.log("groupfound: " + groupfound);
-                                            res.json({text: "You already created a Timed-UP group for this channel in your account.\n To get the group information use the /timedup-groupinfo command.\n This is your group's page: <"+ websiteurl + groupfound[0]._id + ">"});
-                                        } else {
-                                            var newgroup = {type: "Slack", name: channelname, authid: slackuser[0]._id, groupies: []}
-                                            Groups.create(newgroup, function(err, group){
-                                                User.find({"slack.teamid": req.body.team_id, "slack.id":{$in: channelmembers}}).exec()
-                                                .then(function(foundusers){
-                                                    // res.json({text: "Cool!"});
-                                                    if(foundusers.length > 0){
-                                                        //console.log("these are the found users", foundusers);
-                                                        var ids = foundusers.map(function(el){return el._id});
-                                                        Groups.findByIdAndUpdate(group._id, {$push: {groupies: { $each: ids}}}, {new: true}).exec()
-                                                        .then(function(editedgroup){
-                                                            async.forEachOf(foundusers, function(thisuser, key, callback){
-                                                                var newgroup = {authid: slackuser[0]._id, groupid: editedgroup._id};
-                                                                Friendlist.findOneAndUpdate({authid: thisuser._id}, {$push: {groups: newgroup}}, {new: true}).exec()
-                                                                .then(function(list){
-                                                                    //console.log("list is now :" + list);
-                                                                    callback();
-                                                                }).catch(function(err){
-                                                                    throw err;
+                        Team.find({id: req.body.team_id}).exec()
+                        .then(function(team){
+                            request.post('https://slack.com/api/groups.info', {form: {token: team[0].token, channel: req.body.channel_id}}, function (error, response, body) {
+                                console.log(response.statusCode, JSON.parse(body) + "this is inside the groups now" + process.env.SLACK_OAUTH_TOKEN);
+                                if (!error && response.statusCode == 200 && JSON.parse(body).ok) {
+                                    console.log("haha " + JSON.parse(body));
+                                    let channelmembers = JSON.parse(body).group.members;
+                                    let channelname = JSON.parse(body).group.name;
+                                    //console.log("members are: " + channelmembers);
+                                    if(channelmembers.length < 12){
+                                        // res.json({text: "Cool!"});
+                                        Groups.find({type: "Slack", name: channelname, authid: slackuser[0]._id}).exec()
+                                        .then(function(groupfound){
+                                            if(groupfound !== undefined && groupfound.length > 0){
+                                                //console.log("groupfound: " + groupfound);
+                                                res.json({text: "You already created a Timed-UP group for this channel in your account.\n To get the group information use the /timedup-groupinfo command.\n This is your group's page: <"+ websiteurl + groupfound[0]._id + ">"});
+                                            } else {
+                                                var newgroup = {type: "Slack", name: channelname, authid: slackuser[0]._id, groupies: []}
+                                                Groups.create(newgroup, function(err, group){
+                                                    User.find({"slack.teamid": req.body.team_id, "slack.id":{$in: channelmembers}}).exec()
+                                                    .then(function(foundusers){
+                                                        // res.json({text: "Cool!"});
+                                                        if(foundusers.length > 0){
+                                                            //console.log("these are the found users", foundusers);
+                                                            var ids = foundusers.map(function(el){return el._id});
+                                                            Groups.findByIdAndUpdate(group._id, {$push: {groupies: { $each: ids}}}, {new: true}).exec()
+                                                            .then(function(editedgroup){
+                                                                async.forEachOf(foundusers, function(thisuser, key, callback){
+                                                                    var newgroup = {authid: slackuser[0]._id, groupid: editedgroup._id};
+                                                                    Friendlist.findOneAndUpdate({authid: thisuser._id}, {$push: {groups: newgroup}}, {new: true}).exec()
+                                                                    .then(function(list){
+                                                                        //console.log("list is now :" + list);
+                                                                        callback();
+                                                                    }).catch(function(err){
+                                                                        throw err;
+                                                                    })
+                                                                }, function(err){
+                                                                    if(err){
+                                                                        return console.log(err);
+                                                                    }
+                                                                    console.log(editedgroup);
+                                                                    var usernames = foundusers.map(function(el){return el.slack.username + " "})
+                                                                    res.json({
+                                                                        text: "A group was successfully created in the " + slackuser[0].slack.username 
+                                                                        + "'s timed up account containing those members: \n" 
+                                                                        + usernames +  ".\n You can view and edit it here: <" + websiteurl
+                                                                        + editedgroup._id + ">"
+                                                                    });
                                                                 })
-                                                            }, function(err){
-                                                                if(err){
-                                                                    return console.log(err);
-                                                                }
-                                                                console.log(editedgroup);
-                                                                var usernames = foundusers.map(function(el){return el.slack.username + " "})
-                                                                res.json({
-                                                                    text: "A group was successfully created in the " + slackuser[0].slack.username 
-                                                                    + "'s timed up account containing those members: \n" 
-                                                                    + usernames +  ".\n You can view and edit it here: <" + websiteurl
-                                                                    + editedgroup._id + ">"
-                                                                });
+                                                                
+                                                            }).catch(function(err){
+                                                                throw err;
                                                             })
-                                                            
-                                                        }).catch(function(err){
-                                                            throw err;
-                                                        })
-                                                    } else {
-                                                        console.log("something bad happened");
-                                                        res.json({text: "Something went wrong please try again and make sure this channel has less than 12 members."});
-                                                    }
-                                                }).catch(function(err){
-                                                    throw err;
-                                                })
-                                            });
-                                        }
-                                    })
-                                    
+                                                        } else {
+                                                            console.log("something bad happened");
+                                                            res.json({text: "Something went wrong please try again and make sure this channel has less than 12 members."});
+                                                        }
+                                                    }).catch(function(err){
+                                                        throw err;
+                                                    })
+                                                });
+                                            }
+                                        })
+                                        
+                                    } else {
+                                        res.json({text: "Only channels with 12 or less members can create groups automatically."});
+                                    }
+                                    //res.json({text: "found them thank you for your info"});
                                 } else {
-                                    res.json({text: "Only channels with 12 or less members can create groups automatically."});
+                                    res.json({text: "Something went wrong with you request. Make sure this channel is public."});
                                 }
-                                //res.json({text: "found them thank you for your info"});
-                            } else {
-                                res.json({text: "Something went wrong with you request. Make sure this channel is public."});
-                            }
+                            });
                         });
                     } else {
                         let data = {
