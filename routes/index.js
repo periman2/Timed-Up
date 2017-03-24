@@ -21,10 +21,13 @@ router.get("/slack/botauth", function(req, res){
         client_secret: process.env.SLACK_CLIENT_SECRET_OFBOT,
         code: req.query.code
     }};
-    var token = JSON.parse(body).access_token;
+    
     request.post('https://slack.com/api/oauth.access', data, function (error, response, body) {
         if (!error && response.statusCode == 200) {
+            var token = JSON.parse(body).access_token;
+            console.log("success with that" + JSON.parse(body));
             request.post('https://slack.com/api/team.info', {form: {token: token}}, function (error, response, body) {
+                console.log("success with that too" + JSON.parse(body));
                 if (!error && response.statusCode == 200) {
                     var teamid = JSON.parse(body).team.id;
                     var teamname = JSON.parse(body).team.name;
