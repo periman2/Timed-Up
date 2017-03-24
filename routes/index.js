@@ -183,17 +183,18 @@ router.post("/timedup-makegroup", function(req, res){
                             console.log(response.statusCode, JSON.parse(body));
                             if (!error && response.statusCode == 200 && JSON.parse(body).ok) {
                                 console.log("haha " + JSON.parse(body));
-                                let channelmembers = JSON.parse(body).channel.members;
+                                let channelmembers = JSON.parse(body).group.members;
+                                let channelname = JSON.parse(body).group.name;
                                 //console.log("members are: " + channelmembers);
                                 if(channelmembers.length < 12){
                                     // res.json({text: "Cool!"});
-                                    Groups.find({type: "Slack", name: req.body.channel_name, authid: slackuser[0]._id}).exec()
+                                    Groups.find({type: "Slack", name: req.body.channelname, authid: slackuser[0]._id}).exec()
                                     .then(function(groupfound){
                                         if(groupfound !== undefined && groupfound.length > 0){
                                             //console.log("groupfound: " + groupfound);
                                             res.json({text: "You already created a Timed-UP group for this channel in your account.\n To get the group information use the /timedup-groupinfo command.\n This is your group's page: <"+ websiteurl + groupfound[0]._id + ">"});
                                         } else {
-                                            var newgroup = {type: "Slack", name: req.body.channel_name, authid: slackuser[0]._id, groupies: []}
+                                            var newgroup = {type: "Slack", name: channelname, authid: slackuser[0]._id, groupies: []}
                                             Groups.create(newgroup, function(err, group){
                                                 User.find({"slack.teamid": req.body.team_id, "slack.id":{$in: channelmembers}}).exec()
                                                 .then(function(foundusers){
@@ -261,7 +262,6 @@ router.post("/timedup-makegroup", function(req, res){
     } else {
         res.json({text: "YOU ARE NOT VERIRFIED TO DO THAT. \nSIGN IN TO A TEAM AND THE TIMED-UP APP FIRST."});
     }
-    
 });
 
 
