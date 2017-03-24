@@ -172,7 +172,7 @@ router.post("/timedup-makegroup", function(req, res){
                                 //console.log("members are: " + channelmembers);
                                 if(channelmembers.length < 12){
                                     // res.json({text: "Cool!"});
-                                    Groups.find({type: "Slack", name: req.body.channelname, authid: slackuser[0]._id}).exec()
+                                    Groups.find({type: "Slack", name: channelname, authid: slackuser[0]._id}).exec()
                                     .then(function(groupfound){
                                         if(groupfound !== undefined && groupfound.length > 0){
                                             //console.log("groupfound: " + groupfound);
