@@ -21,13 +21,13 @@ router.get("/slack/botauth", function(req, res){
         client_secret: process.env.SLACK_CLIENT_SECRET_OFBOT,
         code: req.query.code
     }};
-    let token = JSON.parse(body).access_token;
+    var token = JSON.parse(body).access_token;
     request.post('https://slack.com/api/oauth.access', data, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             request.post('https://slack.com/api/team.info', {form: {token: token}}, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
-                    let teamid = JSON.parse(body).team.id;
-                    let teamname = JSON.parse(body).team.id;
+                    var teamid = JSON.parse(body).team.id;
+                    var teamname = JSON.parse(body).team.name;
                     Team.find({name: teamname, id: teamid}, function(err, foundteam){
                         if(foundteam.length > 0 && foundtam){
                             return send("Another person from the team already added the app.");
@@ -38,7 +38,7 @@ router.get("/slack/botauth", function(req, res){
                         });
                     })
                 } else {
-                    return send("error happend with ")
+                    return send("error happend with the server")
                 }
             });
         }
