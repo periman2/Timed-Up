@@ -2,7 +2,26 @@
 
 body {
     background-color: #D6D6D6;
-    font-family: Montserrat;
+    font-family: "Montserrat";
+}
+
+.mylogo svg{
+    position: relative;
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mylogo {
+    background: dimgray;
+    position: relative;
+    width: 700px;
+    margin-left: -350px;
+    padding: 30px;
+    height: 300px;
+    position: absolute;
+    left: 50%;
+    top: -20px;
 }
 
 .allforms {

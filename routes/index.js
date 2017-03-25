@@ -48,7 +48,6 @@ router.get("/slack/botauth", function(req, res){
     });
 });
 
-
 router.post("/timedup-help", function(req, res){
     if(req.body.token === process.env.SLACK_BOT_TOKEN){
         let data = {
@@ -275,7 +274,6 @@ router.post("/timedup-makegroup", function(req, res){
         res.json({text: "YOU ARE NOT VERIRFIED TO DO THAT. \nSIGN IN TO A TEAM AND THE TIMED-UP APP FIRST."});
     }
 });
-
 
 
 //===========================
