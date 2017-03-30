@@ -2,7 +2,7 @@
 <script type="text/javascript" src="/sceduler.js"></script>
 <link rel="stylesheet" href="/stylesheets/schedule.css">
 
-    <% if(currentUser.slack !== undefined){ %>
+    <% if(currentUser.slack.username !== undefined){ %>
         <% var username = currentUser.slack.username; %>
     <% } else { %>
         <% var username = currentUser.username; %>

@@ -47,7 +47,7 @@ router.get("/:groupid/getgrouparrays", isloggedin,  function(req, res){
     var groupid = req.params.groupid;
     Groups.findById(groupid).populate("groupies").exec()
     .then(function(group){
-        console.log("the groupies is:",group.groupies);
+        // console.log("the groupies is:",group.groupies);
         var arrays = [];
         async.forEachOf(group.groupies, function(groupie, key ,callback){
             Friendlist.find({authid: groupie._id}).exec()

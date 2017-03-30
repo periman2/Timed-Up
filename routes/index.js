@@ -60,37 +60,50 @@ router.post("/timedup-help", function(req, res){
 
 router.post("/timedup-groupinfo", function(req, res){
     if(req.body.token === process.env.SLACK_BOT_TOKEN){
-        User.find({"slack.id":req.body.user_id, "slack.teamid":req.body.team_id}, function(err, slackuser){
-            //console.log("this is the body", req.body, slackuser[0]);
-            if(slackuser[0]){
-                request.post('https://slack.com/api/channels.info', {form: {token: process.env.SLACK_OAUTH_TOKEN, channel: req.body.channel_id}}, function (error, response, body) {
-                    if (!error && response.statusCode == 200) {
-                            Groups.find({type: "Slack", name: req.body.channel_name, authid: slackuser[0]._id}).populate("groupies").exec()
-                            .then(function(groupfound){
-                                if(groupfound !== undefined && groupfound.length > 0){
-                                    //console.log(groupfound[0] + "thisis the groupfound");
-                                    var usernames = groupfound[0].groupies.map(function(el){return el.slack.username});
-                                    res.json({
-                                        text: "Group information:\n Name: " + groupfound[0].name + "\n members: " + usernames + "\n group page: <" + websiteurl + groupfound[0]._id + ">" 
-                                    });
+        if(req.body.channel_name !== "directmessage"){
+            if(req.body.channel_name !== "privategroup") {
+                User.find({"slack.id":req.body.user_id, "slack.teamid":req.body.team_id}, function(err, slackuser){
+                    //console.log("this is the body", req.body, slackuser[0]);
+                    if(slackuser[0]){
+                        Team.find({id: req.body.team_id}).exec()
+                        .then(function(team){
+                            request.post('https://slack.com/api/channels.info', {form: {token: team[0].token, channel: req.body.channel_id}}, function (error, response, body) {
+                                if (!error && response.statusCode == 200) {
+                                    Groups.find({type: "Slack", name: req.body.channel_name, authid: slackuser[0]._id}).populate("groupies").exec()
+                                    .then(function(groupfound){
+                                        if(groupfound !== undefined && groupfound.length > 0){
+                                            //console.log(groupfound[0] + "thisis the groupfound");
+                                            var usernames = groupfound[0].groupies.map(function(el){return el.slack.username});
+                                            res.json({
+                                                text: "Group information:\n Name: " + groupfound[0].name + "\n members: " + usernames + "\n group page: <" + websiteurl + groupfound[0]._id + ">" 
+                                            });
+                                        } else {
+                                            let data = {
+                                            text: "You haven't created a group using this channel.\n You can do that by typing the command: /timedup-makegroup. \nIf you want to learn more about the bot's functionality type /timedup-help.\n You can find the Timed-UP web app here: <" + websiteurl +">"};
+                                            res.json(data);
+                                        }
+                                    }).catch(function(err){
+                                        throw err;
+                                    })
                                 } else {
-                                    let data = {
-                                    text: "You haven't created a group using this channel.\n You can do that by typing the command: /timedup-makegroup. \nIf you want to learn more about the bot's functionality type /timedup-help.\n You can find the Timed-UP web app here: <" + websiteurl +">"};
-                                    res.json(data);
+                                    res.json({text: "failed big time!"});
                                 }
-                            }).catch(function(err){
-                                throw err;
-                            })
-                        } else {
-                            res.json({text: "failed big time!"});
-                        }
-                    });
+                            });
+                        }).catch(function(err){
+                            throw err;
+                        });
+                    } else {
+                        let data = {
+                        text: "In order to use this bot you need to first sign in to the Timed-UP application using slack. \nYou can find it here: <" + websiteurl +">"};
+                        res.json(data);
+                    }
+                });
             } else {
-                let data = {
-                text: "In order to use this bot you need to first sign in to the Timed-UP application using slack. \nYou can find it here: <" + websiteurl +">"};
-                res.json(data);
+
             }
-        });
+        } else {
+
+        }
     } else {
         res.json({text: "YOU ARE NOT VERIRFIED TO DO THAT. SIGN IN TO A TEAM AND THE TIMED-UP APP FIRST."});
     }
@@ -113,7 +126,7 @@ router.post("/timedup-makegroup", function(req, res){
                                     console.log("haha " + JSON.parse(body));
                                     let channelmembers = JSON.parse(body).channel.members;
                                     //console.log("members are: " + channelmembers);
-                                    if(channelmembers.length < 12){
+                                    if(channelmembers.length < 150){
                                         // res.json({text: "Cool!"});
                                         Groups.find({type: "Slack", name: req.body.channel_name, authid: slackuser[0]._id}).exec()
                                         .then(function(groupfound){
@@ -159,7 +172,7 @@ router.post("/timedup-makegroup", function(req, res){
                                                             })
                                                         } else {
                                                             console.log("something bad happened");
-                                                            res.json({text: "Something went wrong please try again and make sure this channel has less than 12 members."});
+                                                            res.json({text: "Something went wrong please try again and make sure this channel has less than 150 members."});
                                                         }
                                                     }).catch(function(err){
                                                         throw err;
@@ -275,7 +288,6 @@ router.post("/timedup-makegroup", function(req, res){
     }
 });
 
-
 //===========================
 //ROUTES FOR TIMED-UP BOT END
 //===========================
@@ -352,7 +364,7 @@ router.post("/register", function(req, res) {
             Friendlist.create(newlist, function(err, list){
                 if(err){
                     console.log(err);
-                    return res.redirect("/register");
+                    return res.redirect("/login");
                 }
                 //console.log(list);
                 req.flash("success", "Welcome to Timed-UP " + user.username);
@@ -373,7 +385,7 @@ router.post("/registerslack", function(req, res){
 router.get("/:groupid", isloggedin,function(req, res){
     groupid = req.params.groupid;
     //console.log(groupid, typeof groupid);
-    Groups.findById(groupid).populate("groupies").exec()
+    Groups.findById(groupid).populate("authid").exec()
     .then(function(group){
         Friendlist.find({authid: req.user._id}).populate("friends groups.authid groups.groupid").exec()
         .then(function(list){

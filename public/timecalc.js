@@ -267,7 +267,7 @@ $(document).ready(function(){
         }
         $(".searchresults").css({
             "padding":"2% 10%",
-            "font-size":"20px",
+            "font-size":"15px",
             "display":"inline-block"            
         });
         $(".searchresults li p").css({
@@ -278,12 +278,12 @@ $(document).ready(function(){
             "color":"rgba(77, 179, 165, 1)",
             "display":"inline-block",
             "cursor":"pointer",
-            "padding":"0 10px",
+            "padding":"0 6px",
             "border-right": "3px solid rgba(57, 104, 132, 1)"
         });
         $(".searchresults li em").css({
             "display":"inline-block",
-            "font-size":"9px"
+            "font-size":"8px"
         });
         $("#popupbox").fadeIn(300);
     }
@@ -304,7 +304,6 @@ $(document).ready(function(){
             }
         })
     });
-    // setInterval(getuserdata, 5000);
 
     //============================
     //FRIENDLIST FUNCTIONALITY END
@@ -332,7 +331,6 @@ $(document).ready(function(){
         });
         return false;
     });
-
     
     function showgroupmembers(){
         //UPDATE THE GROOP TIMES EACH TIME THE GROUP MEMBERS CHANGE
@@ -351,22 +349,29 @@ $(document).ready(function(){
                 $("#members").html("");
                 if(group.authid === globaluser._id){
                     group.groupies.forEach(function(groupie){
-                        if(groupie.slack !== undefined){
-                            $("#members").append("<div class='member'><div class='membername'><h3>" + groupie.slack.username + "</h3></div><i  id='" + groupie._id + "' class='fa fa-times fa-2x delgroupie' aria-hidden='true'></i></div>")
+                        if(groupie._id === globaluser._id){
+                            if(groupie.slack !== undefined){
+                                $("#members").append("<div class='member'><h4>" + groupie.slack.username + "</h4></div>")
+                            } else {
+                                $("#members").append("<div class='member'><h4>" + groupie.username + "</h4></div>");
+                            }
                         } else {
-                            $("#members").append("<div class='member'><div class='membername'><h3>" + groupie.username + "</h3></div><i  id='" + groupie._id + "' class='fa fa-times fa-2x delgroupie' aria-hidden='true'></i></div>");
+                            if(groupie.slack !== undefined){
+                                $("#members").append("<div class='member'><div class='membername'><h4>" + groupie.slack.username + "</h4></div><i  id='" + groupie._id + "' class='fa fa-times delgroupie' aria-hidden='true'></i></div>")
+                            } else {
+                                $("#members").append("<div class='member'><div class='membername'><h4>" + groupie.username + "</h4></div><i  id='" + groupie._id + "' class='fa fa-times delgroupie' aria-hidden='true'></i></div>");
+                            }
                         }
                     })
                 } else {
                     group.groupies.forEach(function(groupie){
                         if(groupie.slack !== undefined){
-                            $("#members").append("<div class='member' ><h3>" + groupie.slack.username + "</h3></div>");
+                            $("#members").append("<div class='member' ><h4>" + groupie.slack.username + "</h4></div>");
                         } else {
-                            $("#members").append("<div class='member' ><h3>" + groupie.username + "</h3></div>");
+                            $("#members").append("<div class='member' ><h4>" + groupie.username + "</h4></div>");
                         }
                     })
                 }
-
             },
             error: function(err){
                 console.log(err);
@@ -391,6 +396,9 @@ $(document).ready(function(){
     //FRIENDLIST ACTS AS AN ADD BUTTON
     $(".friendlist").on("click", "li p", function(){
         var friendid = $(this).parent().attr("class");
+        if(friendid === globaluser._id){
+            return false;
+        }
         var friendname = $(this).html();
         var groupnames = [$("#gname").html()];
         var members = $(".member");
@@ -406,7 +414,7 @@ $(document).ready(function(){
             }
         });
         console.log(check, count);
-        if(check && (count < 13)){
+        if(check && (count < 150)){
             $.ajax({
                 type: "POST",
                 url: "/addgroupie",
@@ -416,8 +424,8 @@ $(document).ready(function(){
                 }
             });
         } else {
-            if(count > 12){
-                alert("You currently can't add more than 12 people to a group.")
+            if(count > 150){
+                alert("You currently can't add more than 150 people to a group.")
             } else {
                 alert("This person already exists inside the group");
             }
@@ -445,19 +453,19 @@ $(document).ready(function(){
 
     //get my own available times
  
-    // function getmyarrays(){
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: "/getarrays",
-    //         success: function(data){
-    //             console.log(data.length);
-    //         },
-    //         error: function(err){
-    //             console.log(err);
-    //         }
-    //     });
-    //     return false;
-    // }
+    function getmyarrays(){
+        $.ajax({
+            type: 'GET',
+            url: "/getarrays",
+            success: function(data){
+                console.log(data.length);
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
+        return false;
+    }
 
     function show(all, onlycommon, pairs){
         //THIS IS WHERE THE ARRAYS ARE COMPARED!!
@@ -579,28 +587,233 @@ $(document).ready(function(){
             error: function(err){
                 console.log(err);
             }
-        })
+        });
+    }
+
+    var loadedarrays = true;
+
+    function editarrays(everything){
+        globalarrays = everything;
+        var onlyarrays = []
+        var arrayswithnames = [];
+        everything.forEach(function(arrays){
+            var newarray = constractor(arrays);
+            arrayswithnames.push(newarray);
+            onlyarrays.push(newarray[0]);
+            //console.log("this is it!", newarray);
+        });
+        
+        var allgrouptime = finalcompare(this, onlyarrays);
+        var bestindex = findthebest(allgrouptime);
+        var seperated = seperatemyself(arrayswithnames);
+        var me = seperated[0];
+        var group = seperated[1];        
+        if(me[0].length > 0){
+            if(loadedarrays){
+                $(".mycomfriends").html("");
+                var compared = generalcompare(me[0], group);
+                showcommontimefriends(compared);
+            }
+        } else {
+            $(".mycomfriends").html("");
+            $(".mycomfriends").append("<p><em>You don't have any free time listed in your calendar.</em></p>");
+        }
+        var checkedpeople = getchecked(group);
+        if(checkedpeople){
+            //console.log("checkedpeople", checkedpeople);
+            var calced = calcchecked(me, checkedpeople[0]);
+            var bestplace = findthebest(calced);
+            var names = checkedpeople[1];
+            // console.log(names)
+            //console.log(calced,"this is the calced time")
+            if(calced){
+                showchecked(calced, bestplace, names);
+            } else {
+                $(".meandselected").html("");
+                $(".meandselected").append("<h4><em>You don't have common time with the selected people.</em></h4>");
+            }
+            
+        } else {
+            $(".meandselected").html("");
+            $(".meandselected").append("<h4><em>You first need to select people with common time.</em></h4>")
+        }
+        // SHOWS ALL THE COMMON TIME OF THE GROUP
+        showthegeneral(allgrouptime, bestindex);
+
+        //=========================================
+        //THESE ARE IMPORTANT FOR THE MANAGER MODE
+        //=========================================
+        // var allcommontimes = comparedwithnames(arrayswithnames);
+        // var pairs = getonlypairs(allcommontimes);
+        // show(onlyarrays, allcommontimes, pairs);
+        //console.log("all ever common times: ", allcommontimes, "only pairs are :", pairs)
+    }
+    
+    var listofcheckedpeople = [];
+
+    function showchecked(result, bestindex, names){
+        $(".meandselected").html("");
+        if(result.length > 0){
+            result.forEach(function(time, index){
+                if(index === bestindex){
+                    $(".meandselected").prepend(
+                        "<p class='best' style='color:#2fa265;'>Best: " + 
+                        moment().add(time[0],"hours").format('MMMM Do, YYYY h:mm A') + 
+                        " for: " + 
+                        Math.floor(time[1] - time[0]) + 
+                        " hours " +
+                        Math.floor(((time[1] - time[0]) - Math.floor(time[1] - time[0])) * 60) +
+                        " minutes </p>"
+                    );
+                } else {
+                    $(".meandselected").append(
+                        "<p class='best'>" + 
+                        moment().add(time[0],"hours").format('MMMM Do, YYYY h:mm A') + 
+                        " for: " + 
+                        Math.floor(time[1] - time[0]) + 
+                        " hours " +
+                        Math.floor(((time[1] - time[0]) - Math.floor(time[1] - time[0])) * 60) +
+                        " minutes </p>"
+                    );
+                }
+            });
+            $(".meandselected").prepend("<h4>This is your common time with: <strong><em>" + names + "</em></strong>");
+        } else {
+            $(".meandselected").append("<em>You first need to select members.</em>");
+        }
+    }
+
+    function calcchecked(me, checked){
+        var all = [me[0][0]].concat(checked);
+        var calculate = finalcompare(this, all);
+        //console.log("that's all :", calculate);
+        if(calculate !== undefined && calculate.length > 0){
+            return calculate;
+        } else {
+            return false;
+        }
+        
+    }
+
+    function showcommontimefriends(commontimefriends) {
+        loadedarrays = false;
+        if(commontimefriends){
+            commontimefriends.forEach(function(friend){
+                html = "<div class='comontimer" +
+                 "'><input class='" + friend[2] + "' type='checkbox' value=''><label>" +
+                friend[1]
+                + "</label></div>"
+                $(".mycomfriends").append(html);
+            });
+            
+        } else {
+            $(".mycomfriends").append("<p><em>You don't have common time with any group member yet. Try adding more free time to your calendar.</em></p>")
+        }   
+    }
+
+    $(".mycomfriends").on("click", "input", function(){
+        if(this.checked){
+            //show the common times if they exist of this person to the checked person
+            var thisid = $(this).attr("class");
+            listofcheckedpeople.push(thisid);
+        } else {
+            var thisid= $(this).attr("class");
+            var index = listofcheckedpeople.indexOf(thisid);
+            listofcheckedpeople.splice(index, 1);
+        }
+        getgrouparrays();
+    });
+
+    function getchecked(group){
+        var checked = [];
+        var names = [];
+        var ids = group.map(function(el){
+            return el[2];
+        });
+        // console.log("ids: ", ids);
+        if(listofcheckedpeople.length > 0){
+            listofcheckedpeople.forEach(function(id, index){
+                // if(id === group[index][2]){
+                //     checked.push(group[index]);
+                // }
+                checked.push(group[ids.indexOf(id)][0]);
+                names.push(group[ids.indexOf(id)][1]);
+            });
+            return [checked, names];
+        } else {
+            return false;
+        }
+    }
+
+    function findthebest(array){
+        var best = 0;
+        var bestindex;
+        array.forEach(function(element, index){
+            var diff = element[1] - element[0];
+            
+            if(diff > best){
+                best = diff;
+                bestindex = index;
+            }
+        });
+        return bestindex;
+    }
+
+    function showthegeneral(result, bestindex){
+        $(".mycomtimes").html("");
+        if(result.length > 0){
+            result.forEach(function(time, index){
+                if(index === bestindex){
+                    $(".mycomtimes").prepend(
+                        "<p class='best' style='color:#2fa265;'>Best: " + 
+                        moment().add(time[0],"hours").format('MMMM Do, YYYY h:mm A') + 
+                        " for: " + 
+                        Math.floor(time[1] - time[0]) + 
+                        " hours " +
+                        Math.floor(((time[1] - time[0]) - Math.floor(time[1] - time[0])) * 60) +
+                        " minutes </p>"
+                    );
+                } else {
+                    $(".mycomtimes").append(
+                        "<p class='best'>" + 
+                        moment().add(time[0],"hours").format('MMMM Do, YYYY h:mm A') + 
+                        " for: " + 
+                        Math.floor(time[1] - time[0]) + 
+                        " hours " +
+                        Math.floor(((time[1] - time[0]) - Math.floor(time[1] - time[0])) * 60) +
+                        " minutes </p>"
+                    );
+                }
+                
+            });
+        } else {
+            $(".mycomtimes").append("<em>There is no common time between all the group members.</em>");
+        }
+        
+    }
+
+    function generalcompare(me, others) {
+        var mycommontimes = [];
+        others.forEach(function(person){
+            var temp = finalcompare(this, [person[0], me[0]]);
+            if(temp.length > 0 && temp !== undefined){
+                mycommontimes.push([temp, person[1], person[2]]);
+            }
+        });
+        if(mycommontimes.length > 0){
+            return mycommontimes;
+        }
         return false;
     }
 
-    function editarrays(everything){
-        var onlyarrays = []
-        var arrayswithnames = [];
-        //console.log("everything", everything);
-        everything.forEach(function(arrays){
-            //console.log("original array: ", arrays);
-            var newarray = constractor(arrays);
-            console.log("after constractor: ", newarray);
-            onlyarrays.push(newarray[0]);
-            arrayswithnames.push(newarray);
-            //console.log("this is it!", newarray);
+    function seperatemyself(allgroupies) {
+        var me;
+        allgroupies.forEach(function(groupie, index){
+            if(groupie[2] === globaluser._id){
+                me = allgroupies.splice(index, 1);
+            }
         });
-        //console.log("arrays with names",arrayswithnames )
-        var allcommontimes = comparedwithnames(arrayswithnames);
-        var pairs = getonlypairs(allcommontimes);
-        
-        show(onlyarrays, allcommontimes, pairs);
-        //console.log("all ever common times: ", allcommontimes, "only pairs are :", pairs)
+        return [me, allgroupies];
     }
 
     function getonlypairs(all){
@@ -761,7 +974,7 @@ $(document).ready(function(){
             }
         });
 
-        var newarray = [arrays, username];
+        var newarray = [arrays, username, allarrays[1]._id];
         //console.log("these are the values and the usernames:", newarray, values);
         return newarray;
     }

@@ -5,30 +5,57 @@
 <script type="text/javascript" src="/timecalc.js"></script>
 <link rel="stylesheet" href="/stylesheets/group.css">
 
-<% if(group.authid.equals(currentUser._id)){ %>
+<% if(group.authid._id.equals(currentUser._id)){ %>
     <% var editable = true; %>
 <% } %>
 
-<h2 class="text-center"><strong>Welcome to group <span id="gname"><%= group.name %></span><strong></h2><br>
-
-<h2>Group Members:</h2>
-<% if (editable) { %>
-<div id="members" class="row editable">
+<% if(group.authid.slack !== undefined && group.authid.slack !== null){ %>
+    <% var username = group.authid.slack.username; %>
 <% } else { %>
-<div id="members" class="row">
+    <% var username = group.authid.username; %>
 <% } %>
 
-    <!--<% group.groupies.forEach(function(groupie){ %>
-        <% if (editable) { %>
-        <div class="member"><div class="membername"><h3><%= groupie.username %></h3></div><i class='fa fa-times fa-2x delgroupie' aria-hidden='true'></i></div>
-        <% } else { %>
-        <div class="member"><div><h3><%= groupie.username %></h3></div></div>
-        <% } %>
-    <% }) %>-->
+<h2 class="text-center"><strong>Welcome to group <span id="gname"><%= group.name %></span><strong></h2><br>
+<% if(group.authid.slack.username !== undefined) { %>
+    <h4 class="text-center">Made by <em><%= group.authid.slack.username; %></em></h4>
+<% } else { %>
+    <h4 class="text-center">Made by <em><%= group.authid.username; %></em></h4>
+<% } %>
+
+<div class="allgroup">
+    <h3 class="text-center">ALL GROUP MEMBERS<h3>
+    <% if (editable) { %>
+    <div id="members" class="row editable">
+    <% } else { %>
+    <div id="members" class="row">
+    <% } %>
+    </div>
+    <h3 class="text-center">TIME COORDINATOR<h3>
+    <div class="timecoordinator">
+        <div class="row">
+            <div class="col-xs-12">
+                <h4><strong>Meeting times for the whole group</strong></h4>
+                <div class="mycomtimes">
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <h4 class="text-center"><strong>You have common time with: </strong></h4>
+                <div class="mycomfriends">
+                </div>
+            </div>
+            <div class="col-xs-8">
+                <h4 class="text-center"><strong>Selected common times</strong></h4>
+                <div class="meandselected">
+                </div>
+            </div>
+        </div>
+        
+    </div>
 </div>
-<br>
-<hr>
-<div class="besttimes">
+
+<!--<br>
+<hr>-->
+<div class="besttimes hidden">
     <div class='row'>
         <div class='allmembers col-xs-4 btn btn-default active'>
             <h3>All Members</h3>

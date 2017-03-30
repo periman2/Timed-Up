@@ -136,7 +136,7 @@ router.post("/creategroup", isloggedin,function(req, res){
     var name = req.body.groupname;
     console.log("this is the group;s name"+name);
     var authid = req.user._id;
-    var groupies = [];
+    var groupies = [req.user._id];
     var newgroup = {name: name, authid: authid, groupies:groupies}; 
     Groups.find({name: name, authid: authid}).exec()
     .then(function(groups){

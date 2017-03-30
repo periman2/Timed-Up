@@ -395,17 +395,6 @@ $(document).ready(function() {
     return !(drag_mode=="create" && this._mode == "month");
     });
     var ev = scheduler.getEvents();
-    
-    // var secpassed = 0;
-    // var minpassed = 0;
-
-    // function liveclock(){
-    //     secpassed ++
-    //     minpassed = secpassed/60;
-    //     //.add(hourspassed,"hours");
-    //     //console.log("clock is:",secpassed,"minpassed", Math.ceil(minpassed));
-    // }
-    // setInterval(liveclock, 1000);
             
     function reverse(num){
         return (-1) *  num;

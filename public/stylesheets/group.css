@@ -2,17 +2,67 @@
 #members {
     margin: 2%;
     padding: 2%;
+    max-height: 150px;
+    overflow-y: auto;
+    border-top: 2px solid rgba(50, 50, 50, 0.4);
+    border-bottom: 2px solid rgba(50, 50, 50, 0.4);
     /*border: 2px solid rgba(79, 79, 79, 0.6);*/
 }
 .member {
     background-color:#FFFFFF;
     color: #212121;
-    border-radius: 0.3em;
-    min-width:60px;
-    margin: 5px;
-    padding: 0 15px;
+    border-radius: 0.2em;
+    min-width:5px;
+    margin-right: 5px;
+    padding: 0 5px;
     display: inline-block;
     border: 3px solid #212121;
+}
+
+.col-xs-12 h4 {
+    margin-left: 5%;
+}
+
+.mycomfriends {
+    font-size: 17px;
+    padding: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 13px;
+}
+.mycomfriends input {
+    display: inline-block;
+    margin-left: 6%;
+}
+
+.meandselected {
+    font-size: 17px;
+    border-left: 2px solid rgba(50, 50, 50, 0.4);
+    padding: 10px;
+    height: 170px;
+    overflow-y: auto;
+}
+
+.mycomtimes {    font-size: 17px;
+    padding: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 13px;
+    border-top: 2px solid rgba(50, 50, 50, 0.4);
+    border-bottom: 2px solid rgba(50, 50, 50, 0.4);
+    max-height: 300px;
+}
+
+.mycomtimes p {
+    margin-left: 4%;
+}
+
+.allgroup{
+    background: #D6D6D6;
+    padding: 20px;
+    border-radius: 1em;
+    border: 3px solid rgba(53, 20, 3, 0.5);
+    height: 80%;
 }
 
 .membername {
@@ -55,4 +105,12 @@
 .active:hover  {
     background-color: #212121!important;
     color: #e7e7e7 !important;
+}
+
+.comontimer label{
+    margin-left: 9px;
+}
+.comontimer input{
+    width: 18px;
+    height: 18px;
 }

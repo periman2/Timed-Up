@@ -9,16 +9,17 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="/login.js"></script>
+    <script type="text/javascript" src="/loginlogo.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/login.css">
+    <link rel="stylesheet" href="/stylesheets/svglogo.css">
 </head>
 <body>
     <div class="allforms">
-        <div class="mylogo hidden">
-        <% include svglog.svg%>
+        <div class="mylogo">
+        <% include staticsvg.svg%>
         </div>
         <div class="loginform">
             <form action="/login" method="post">
@@ -32,7 +33,6 @@
                 <a href="https://slack.com/oauth/authorize?scope=identity.basic,identity.email,identity.team,identity.avatar&client_id=148707815554.153399673990&redirect_uri=https%3A%2F%2Ftimedupchingu.herokuapp.com%2Fauth%2Fslack"><img alt="Sign in with Slack" height="40" width="172" src="https://platform.slack-edge.com/img/sign_in_with_slack.png" srcset="https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x" /></a>
                 </h4>
             </form>
-            
         </div>
 
         <div class="signupform">

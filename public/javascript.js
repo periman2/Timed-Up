@@ -3,7 +3,7 @@ $(document).ready(function(){
 
     var groupcount = 0;
 
-    getgroups();
+    
     //========================
     //FRIENDLIST FUNCTIONALITY
     //========================
@@ -29,6 +29,7 @@ $(document).ready(function(){
             success: function(user) {
                 globaluser = user;
                 getfriendlist(user)
+                getgroups();
             },
             error: function(){
                 console.log("error happened");
@@ -350,15 +351,28 @@ $(document).ready(function(){
             });
 
             group.groupies.forEach(function(groupie){
-                if(groupie.slack !== undefined){
-                    $("#" + group._id + " .onlynames").append("<li class='groupie'style='clear:both;' id='" + groupie._id + "'><i style='float:left;' class='fa fa-times deletegroupie' aria-hidden='true'></i><p style='float:left;'>"
-                    + groupie.slack.username +
-                    "</p>");
+                if(groupie._id === globaluser._id){
+                    if(groupie.slack !== undefined){
+                        $("#" + group._id + " .onlynames").append("<li class='groupie'style='clear:both;' id='" + groupie._id + "'><p style='float:left;'>"
+                        + groupie.slack.username +
+                        "</p>");
+                    } else {
+                        $("#" + group._id + " .onlynames").append("<li class='groupie'style='clear:both;' id='" + groupie._id + "''><p style='float:left;'>"
+                        + groupie.username +
+                        "</p>");
+                    }
                 } else {
-                    $("#" + group._id + " .onlynames").append("<li class='groupie'style='clear:both;' id='" + groupie._id + "''><i style='float:left;' class='fa fa-times deletegroupie' aria-hidden='true'></i><p style='float:left;'>"
-                    + groupie.username +
-                    "</p>");
+                    if(groupie.slack !== undefined){
+                        $("#" + group._id + " .onlynames").append("<li class='groupie'style='clear:both;' id='" + groupie._id + "'><i style='float:left;' class='fa fa-times deletegroupie' aria-hidden='true'></i><p style='float:left;'>"
+                        + groupie.slack.username +
+                        "</p>");
+                    } else {
+                        $("#" + group._id + " .onlynames").append("<li class='groupie'style='clear:both;' id='" + groupie._id + "''><i style='float:left;' class='fa fa-times deletegroupie' aria-hidden='true'></i><p style='float:left;'>"
+                        + groupie.username +
+                        "</p>");
+                    }
                 }
+                
             });
              $("#" + group._id + " .onlynames").css({
                 "max-height": "180px",
@@ -370,10 +384,11 @@ $(document).ready(function(){
             $("#" + group._id).css({
                 "background-color": "rgba(243, 116, 53, 1)",
                 "color": "rgba(41, 41, 41, 1)" ,
-                "height": "350px",
+                "height": "90%",
                 "min-width": "230px",
                 "padding": "10px",
                 "margin": "5px 5px",
+                "font-size": "15px",
                 "-webkit-box-shadow": "0px 3px 11px 0px rgba(50, 50, 50, 0.52)",
                 "-moz-box-shadow":    "0px 3px 11px 0px rgba(50, 50, 50, 0.52)",
                 "box-shadow":         "0px 3px 11px 0px rgba(50, 50, 50, 0.52)"
@@ -422,8 +437,8 @@ $(document).ready(function(){
         if($("#groupname").val() !== "") {
             var name = $("#groupname").val();
 
-            if(groupcount >= 13){
-                alert("You cannot create more than 12 groups")
+            if(groupcount >= 50){
+                alert("You cannot create more than 50 groups");
             } else {
                 $.ajax({
                     type: "POST",
@@ -526,6 +541,9 @@ $(document).ready(function(){
 
     $(".friendlist").on("click", "li p", function(){
         var friendid = $(this).parent().attr("class");
+        if(friendid === globaluser._id){
+            return false;
+        }
         //console.log("fff", friendid);
         var friendname = $(this).html();
         var groupnames = [];
@@ -542,8 +560,8 @@ $(document).ready(function(){
                     alert("Your friend " + friendname + " already exists in the group " + groupnames[i - 1]);
                     c ++;
                 } else {
-                    if(j > 11){
-                        alert("The maximum allowed number of group members is currently 12.");
+                    if(j > 150){
+                        alert("The maximum allowed number of group members is currently 150.");
                         c ++;
                     }
                 }

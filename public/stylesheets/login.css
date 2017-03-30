@@ -1,36 +1,43 @@
 
+html {height: 100%}
 
 body {
+    height: 100%;
     background-color: #D6D6D6;
     font-family: "Montserrat";
+    background: -moz-radial-gradient(center, ellipse cover, rgba(214,214,214,1) 0%, rgba(168,168,168,1) 100%); /* ff3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(214,214,214,1)), color-stop(100%, rgba(168,168,168,1))); /* safari4+,chrome */
+    background:-webkit-radial-gradient(center, ellipse cover, rgba(214,214,214,1) 0%, rgba(168,168,168,1) 100%); /* safari5.1+,chrome10+ */
+    background: -o-radial-gradient(center, ellipse cover, rgba(214,214,214,1) 0%, rgba(168,168,168,1) 100%); /* opera 11.10+ */
+    background: -ms-radial-gradient(center, ellipse cover, rgba(214,214,214,1) 0%, rgba(168,168,168,1) 100%); /* ie10+ */
+    background:radial-gradient(ellipse at center, rgba(214,214,214,1) 0%, rgba(168,168,168,1) 100%); /* w3c */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#D6D6D6', endColorstr='#A8A8A8',GradientType=1 ); /* ie6-9 */
 }
 
 .mylogo svg{
-    position: relative;
+    position: absolute;
+    top: 0;
+    /*left: 20%;*/
     display:block;
     margin-left: auto;
     margin-right: auto;
 }
 
 .mylogo {
-    background: dimgray;
+    /*background: dimgray;*/
     position: relative;
-    width: 700px;
-    margin-left: -350px;
-    padding: 30px;
-    height: 300px;
-    position: absolute;
+    width: 100%;
+    /*margin-left: -350px;*/
+    padding: 10px;
+    height: 40%;
+    /*position: absolute;*/
     left: 50%;
-    top: -20px;
 }
 
 .allforms {
     text-align: center;
     /*display: block;*/
     width: 50%;
-    /*margin-right: auto;
-    margin-left: auto;*/
-    margin-top: 15vw;
 }
 
 .allforms form {
@@ -81,7 +88,7 @@ body {
     font-weight: bold;
 }
 
-.signupform {
+.signupform, .loginform {
     display: none;
 }
 

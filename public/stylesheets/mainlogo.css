@@ -1,0 +1,121 @@
+
+#mainlogo {
+    /*background: white;*/
+    padding: 5px;
+}
+#mainlogo:hover{
+  cursor: pointer;
+}
+.clock {
+    -ms-transform: translate(80px, -10px);
+    -webkit-transform: translate(80px, -10px);
+    transform: translate(80px, -10px);
+}
+
+.let {
+    display: none;
+    fill: rgba(243, 116, 53, 1);
+}
+
+.onhover {
+    animation: hover 3s;
+}
+
+.onhoverbig {
+    animation: hoverbig 3s;
+}
+
+.onhovercenter {
+    animation: centered 3s;
+}
+
+.onhoveroff {
+    animation: hoveroff 3s;
+}
+
+.onhoveroffbig {
+    animation: hoveroffbig 3s;
+}
+
+.onhoveroffcenter {
+    animation: centeroff 3s;
+}
+
+.smcursor, .bigcursor {
+    fill: rgba(243, 116, 53, 1);
+    stroke-width: 1px;
+    stroke: #383838;
+}
+
+.center {
+    fill: transparent;
+    stroke-width: 2;
+    stroke: #CFD8DC; 
+}
+
+@keyframes centered {
+    to {
+    -ms-transform: translate(0, 0);
+    -ms-transform-origin: 61.2px 31.2px;
+    -webkit-transform: translate(0, 0);
+    -webkit-transform-origin: 61.2px 31.2px;
+    transform: translate(0, 0);
+    transform-origin: 61.2px 31.2px;
+  }
+}
+@keyframes centeroff {
+  100% {
+    -ms-transform: translate(80px, -10px);
+    -ms-transform-origin: 61.2px 31.2px;
+    -webkit-transform: translate(80px, -10px);
+    -webkit-transform-origin: 61.2px 31.2px;
+    transform: translate(80px, -10px);
+    transform-origin: 61.2px 31.2px;
+  }
+}
+
+@keyframes hoverbig {
+    to {
+    -ms-transform: translate(0, 0) rotate(3600deg);
+    -ms-transform-origin: 61.2px 31.2px;
+    -webkit-transform: translate(0, 0) rotate(3600deg);
+    -webkit-transform-origin: 61.2px 31.2px;
+    transform: translate(0, 0) rotate(3600deg);
+    transform-origin: 61.2px 31.2px;
+  }
+}
+
+@keyframes hover {
+  to {
+    -ms-transform: translate(0, 0) rotate(720deg);
+    -ms-transform-origin: 61.2px 31.2px;
+    -webkit-transform:translate(0, 0) rotate(720deg);
+    -webkit-transform-origin: 61.2px 31.2px;
+    transform:translate(0, 0) rotate(720deg);
+    transform-origin: 61.2px 31.2px;
+  }
+}
+
+@keyframes hoveroff {
+  100% {
+    -ms-transform: translate(80px, -10px) rotate(-640deg);
+    -ms-transform-origin: 61.2px 31.2px;
+    -webkit-transform: translate(80px, -10px) rotate(-640deg);
+    -webkit-transform-origin: 61.2px 31.2px;
+    transform: translate(80px, -10px) rotate(-640deg);
+    transform-origin: 61.2px 31.2px;
+  }
+}
+
+@keyframes hoveroffbig {
+  100% {
+    -ms-transform: translate(80px, -10px) rotate(-3780deg);
+    -ms-transform-origin: 61.2px 31.2px;
+    -webkit-transform: translate(80px, -10px) rotate(-3780deg);
+    -webkit-transform-origin: 61.2px 31.2px;
+    transform: translate(80px, -10px) rotate(-3780deg);
+    transform-origin: 61.2px 31.2px;
+  }
+}
+
+

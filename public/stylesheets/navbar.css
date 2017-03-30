@@ -6,7 +6,7 @@
     height: 100%;
     color:#212121;
     border:0 none;
-    font-size: 12px !important;
+    font-size: 14px !important;
 }
 
 .navbar-default .navbar-collapse {
@@ -15,13 +15,9 @@
     
 }
 
-.navbar-default .navbar-brand {
-    font-size:  40px;
-    color: #212121;
-}
 .myname {
     color: #CFD8DC;
-    font-size: 20px;
+    /*font-size: 20px;*/
 }
 
 @media(min-width: 992px) {

@@ -11,17 +11,19 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="/stylesheets/navbar.css">
         <link rel="stylesheet" href="/stylesheets/main.css">
+        <link rel="stylesheet" href="/stylesheets/mainlogo.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+        <!--<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>-->
         <script src="/dhtmlxScheduler_v4.4.0/codebase/dhtmlxscheduler.js" type="text/javascript" charset="utf-8"></script>
         <script src="/dhtmlxScheduler_v4.4.0/codebase/ext/dhtmlxscheduler_limit.js"></script>
         <script src="/dhtmlxScheduler_v4.4.0/codebase/ext/dhtmlxscheduler_collision.js"></script>
+        <script type="text/javascript" src="/clock.js"></script>
         <link rel="stylesheet" href="/dhtmlxScheduler_v4.4.0/codebase/dhtmlxscheduler.css" type="text/css" charset="utf-8">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/2.4.2/flatpickr.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/2.4.2/flatpickr.js"></script>
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/2.4.2/flatpickr.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/2.4.2/flatpickr.js"></script>-->
     </head>
     <body>
     <div class="row mainrow">
@@ -34,7 +36,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <p class='thetitle'><a class = "navbar-brand" href = "/">Timed-UP</a></p>
+                    <!--<p class='thetitle'><a class = "navbar-brand" href = "/">Timed-UP</a></p>-->
+                    <div class="mainsvg">
+                        <% include ../clock.svg %>
+                    </div>
+                    
                     </div>
                     <div class="navbar collapse navbar-collapse navbar-exi-collapse">
                         <ul class = "nav navbar-nav">
@@ -42,6 +48,8 @@
                             <li><a href = "/login">Login</a></li>
                             <li><a href = "/register">Sign Up</a></li>
                         <% } else { %>
+                        
+                            <hr>
                             <% if(currentUser.slack.username) {%>
                                 <li>
                                 <p class="hasSlack myname"> Signed in as: 
@@ -49,7 +57,7 @@
                                 </p>
                                 </li>
                             <% } else { %>
-                                <li><p class="myname"> Signed in as: <strong><%= currentUser.username %></strong></p></li>
+                                <li><p class="myname text-center"> Signed in as: <strong><%= currentUser.username %></strong></p></li>
                             <% } %>
                             <br>
                             <ul class="navbut">
