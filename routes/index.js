@@ -51,7 +51,7 @@ router.get("/slack/botauth", function(req, res){
 router.post("/timedup-help", function(req, res){
     if(req.body.token === process.env.SLACK_BOT_TOKEN){
         let data = {
-        text: "To use the app go to: <" + websiteurl + " > \nAvailable commands are: \n /timedup-makegroup - Creates a group using the name and the members of the channel that have at some point sign in to the Timed-UP app using slack.(works with channels of 12 members or less) \n /timedup-groupinfo - Gives you the information of the group you've created based on the channel you're currently in. This works only if you have first created a group. \n /timedup-help - Gives you this information window... no I'm not underestimating your intelligence it just seemed right to add this."};
+        text: "To use the app go to: <" + websiteurl + " > \nAvailable commands are: \n /timedup-makegroup - Creates a group using the name and the members of the channel that have at some point sign in to the Timed-UP app using slack.(works with channels of 150 members or less) \n /timedup-groupinfo - Gives you the information of the group you've created based on the channel you're currently in. This works only if you have first created a group. \n /timedup-help - Gives you this information window... no I'm not underestimating your intelligence it just seemed right to add this."};
         res.json(data);
     } else {
         res.json({text: "YOU ARE NOT VERIRFIED TO DO THAT. SIGN IN TO A TEAM AND THE TIMED-UP APP FIRST."});
@@ -99,10 +99,54 @@ router.post("/timedup-groupinfo", function(req, res){
                     }
                 });
             } else {
-
+                User.find({"slack.id":req.body.user_id, "slack.teamid":req.body.team_id}, function(err, slackuser){
+                    console.log("this is the body", req.body);
+                    if(slackuser[0]){
+                        Team.find({id: req.body.team_id}).exec()
+                        .then(function(team){
+                            request.post('https://slack.com/api/groups.info', {form: {token: team[0].token, channel: req.body.channel_id}}, function (error, response, body) {
+                                console.log(response.statusCode, JSON.parse(body) + "this is inside the groups now" + process.env.SLACK_OAUTH_TOKEN);
+                                if (!error && response.statusCode == 200 && JSON.parse(body).ok) {
+                                    console.log("haha " + JSON.parse(body));
+                                    let channelmembers = JSON.parse(body).group.members;
+                                    let channelname = JSON.parse(body).group.name;
+                                    //console.log("members are: " + channelmembers);
+                                    if(channelmembers.length < 150){
+                                        // res.json({text: "Cool!"});
+                                        Groups.find({type: "Slack", name: channelname, authid: slackuser[0]._id}).exec()
+                                        .then(function(groupfound){
+                                            if(groupfound[0] !== undefined && groupfound[0].length > 0){
+                                                //console.log("groupfound: " + groupfound);
+                                                var usernames = groupfound[0].groupies.map(function(el){return el.slack.username});
+                                                res.json({
+                                                    text: "Group information:\n Name: " + groupfound[0].name + "\n members: " + usernames + "\n group page: <" + websiteurl + groupfound[0]._id + ">" 
+                                                });
+                                            } else {
+                                                let data = {
+                                                text: "You haven't created a group using this channel.\n You can do that by typing the command: /timedup-makegroup. \nIf you want to learn more about the bot's functionality type /timedup-help.\n You can find the Timed-UP web app here: <" + websiteurl +">"};
+                                                res.json(data);
+                                            }
+                                        }).catch(function(er){
+                                            throw er;
+                                        })
+                                    } else {
+                                        res.json({text: "Only channels with 150 or less members can create groups automatically."});
+                                    }
+                                    //res.json({text: "found them thank you for your info"});
+                                } else {
+                                    res.json({text: "Something went wrong with you request. Make sure this channel is public."});
+                                }
+                            });
+                        });
+                    } else {
+                        let data = {
+                        text: "In order to use this bot you need to first sign in to the Timed-UP application using slack.\n You can find it here: <" + websiteurl +">"};
+                        res.json(data);
+                    }
+                });
             }
         } else {
-
+            res.json({text: "This command won't work for direct messages. You'll have to be in a public or privet channel."});
         }
     } else {
         res.json({text: "YOU ARE NOT VERIRFIED TO DO THAT. SIGN IN TO A TEAM AND THE TIMED-UP APP FIRST."});
@@ -182,7 +226,7 @@ router.post("/timedup-makegroup", function(req, res){
                                         })
                                         
                                     } else {
-                                        res.json({text: "Only channels with 12 or less members can create groups automatically."});
+                                        res.json({text: "Only channels with 150 or less members can create groups automatically."});
                                     }
                                     //res.json({text: "found them thank you for your info"});
                                 } else {
@@ -209,7 +253,7 @@ router.post("/timedup-makegroup", function(req, res){
                                     let channelmembers = JSON.parse(body).group.members;
                                     let channelname = JSON.parse(body).group.name;
                                     //console.log("members are: " + channelmembers);
-                                    if(channelmembers.length < 12){
+                                    if(channelmembers.length < 150){
                                         // res.json({text: "Cool!"});
                                         Groups.find({type: "Slack", name: channelname, authid: slackuser[0]._id}).exec()
                                         .then(function(groupfound){
@@ -255,7 +299,7 @@ router.post("/timedup-makegroup", function(req, res){
                                                             })
                                                         } else {
                                                             console.log("something bad happened");
-                                                            res.json({text: "Something went wrong please try again and make sure this channel has less than 12 members."});
+                                                            res.json({text: "Something went wrong please try again and make sure this channel has less than 150 members."});
                                                         }
                                                     }).catch(function(err){
                                                         throw err;
@@ -265,7 +309,7 @@ router.post("/timedup-makegroup", function(req, res){
                                         })
                                         
                                     } else {
-                                        res.json({text: "Only channels with 12 or less members can create groups automatically."});
+                                        res.json({text: "Only channels with 150 or less members can create groups automatically."});
                                     }
                                     //res.json({text: "found them thank you for your info"});
                                 } else {

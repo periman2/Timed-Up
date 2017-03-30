@@ -51,10 +51,20 @@
 
 @keyframes bouncy {
   0% {
+    -ms-transform: translate(0, -100px);
+    -ms-transform-origin: 61.2px 31.2px;
+    -webkit-transform: translate(0, -100px);
+    -webkit-transform-origin: 61.2px 31.2px;
     transform: translate(0, -100px);
+    transform-origin: 61.2px 31.2px;
   }
   100% {
+    -ms-transform: translate(0, 0);
+    -ms-transform-origin: 61.2px 31.2px;
+    -webkit-transform: translate(0, 0);
+    -webkit-transform-origin: 61.2px 31.2px;
     transform: translate(0, 0);
+    transform-origin: 61.2px 31.2px;
   }
 }
 
