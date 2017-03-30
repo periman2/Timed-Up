@@ -84,6 +84,7 @@ $(document).ready(function(){
     $(".mainsvg").mouseleave(function(){
         
         if(hovered) {
+            hovered = false;
             unhoveredfun();
         } else {
             if(hoveredoff < 1){
@@ -136,6 +137,7 @@ $(document).ready(function(){
     }
 
     function unhoveredfun() {
+        hovered = false;
         clearInterval(clock);
         $(".let").fadeOut(1000);
         $(".smcursor").removeClass("onhover");
@@ -174,6 +176,7 @@ $(document).ready(function(){
                 "transform-origin": "61.2px 31.2px"
             });
             hoveredoff = 0;
+            hovered = true;
             clock = setInterval(liveclock, 2000);
         }, 3000);
     }
