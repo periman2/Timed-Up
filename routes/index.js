@@ -118,9 +118,9 @@ router.post("/timedup-groupinfo", function(req, res){
                                             console.log("groupfound" + groupfound);
                                             if(groupfound !== undefined && groupfound.length > 0){
                                                 //console.log("groupfound: " + groupfound);
-                                                var usernames = groupfound[0].groupies.map(function(el){return el.slack.username});
+                                                var usernames = groupfound.groupies.map(function(el){return el.slack.username});
                                                 res.json({
-                                                    text: "Group information:\n Name: " + groupfound[0].name + "\n members: " + usernames + "\n group page: <" + websiteurl + groupfound[0]._id + ">" 
+                                                    text: "Group information:\n Name: " + groupfound.name + "\n members: " + usernames + "\n group page: <" + websiteurl + groupfound._id + ">" 
                                                 });
                                             } else {
                                                 let data = {
