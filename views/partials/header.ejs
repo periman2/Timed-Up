@@ -53,7 +53,7 @@
                             <% if(currentUser.slack.username) {%>
                                 <li>
                                 <p class="hasSlack myname"> Signed in as: 
-                                <img height='30' width='30' style="border-radius:50%"src="<%= currentUser.slack.avatar %>"><strong><%= currentUser.slack.username %></strong>
+                                <img height='30' width='35' style="border-radius:50%"src="<%= currentUser.slack.avatar %>"><strong><%= " " + currentUser.slack.username %></strong>
                                 </p>
                                 </li>
                             <% } else { %>

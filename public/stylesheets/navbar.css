@@ -73,7 +73,7 @@
 
 .navbar-default .navbar-collapse .btn:hover {
     /*background: none;*/
-    background-color: transparent;
+    background-color: #CFD8DC;
     color: #FFC107;
     font-weight: 800!important;
 }
@@ -94,4 +94,9 @@
 .navbut li .btn:hover {
     background: rgba(255, 193, 5, 0.30)!important;
     color:#212121!important;
+}
+
+hr {
+    border-color:rgba(207, 216, 220, .2) !important;
+    border-width: 2px;
 }
