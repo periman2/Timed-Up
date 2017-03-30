@@ -71,7 +71,7 @@ router.post("/timedup-groupinfo", function(req, res){
                                 if (!error && response.statusCode == 200) {
                                     Groups.find({type: "Slack", name: req.body.channel_name, authid: slackuser[0]._id}).populate("groupies").exec()
                                     .then(function(groupfound){
-                                        if(groupfound !== undefined && groupfound.length > 0){
+                                        if(groupfound[0] !== undefined && groupfound[0].length > 0){
                                             //console.log(groupfound[0] + "thisis the groupfound");
                                             var usernames = groupfound[0].groupies.map(function(el){return el.slack.username});
                                             res.json({
@@ -115,12 +115,12 @@ router.post("/timedup-groupinfo", function(req, res){
                                         // res.json({text: "Cool!"});
                                         Groups.find({type: "Slack", name: req.body.channel_name, authid: slackuser[0]._id}).populate("groupies").exec()
                                         .then(function(groupfound){
-                                            console.log("groupfound" + groupfound);
-                                            if(groupfound !== undefined && groupfound.length > 0){
+                                            console.log("groupfound" + groupfound[0]);
+                                            if(groupfound[0] !== undefined && groupfound[0].length > 0){
                                                 //console.log("groupfound: " + groupfound);
-                                                var usernames = groupfound.groupies.map(function(el){return el.slack.username});
+                                                var usernames = groupfound[0].groupies.map(function(el){return el.slack.username});
                                                 res.json({
-                                                    text: "Group information:\n Name: " + groupfound.name + "\n members: " + usernames + "\n group page: <" + websiteurl + groupfound._id + ">" 
+                                                    text: "Group information:\n Name: " + groupfound[0].name + "\n members: " + usernames + "\n group page: <" + websiteurl + groupfound[0]._id + ">" 
                                                 });
                                             } else {
                                                 let data = {
