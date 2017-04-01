@@ -3,28 +3,44 @@
     padding: 0;
     margin: 0;
     background-color:#383838;
-    height: 100%;
+    
     color:#212121;
     border:0 none;
     font-size: 14px !important;
 }
 
+.col-md-3 {
+    background : #383838;
+}
 .navbar-default .navbar-collapse {
     background-color: #383838;
-    /*height: 100%;*/
-    
 }
-
+.col-md-3 {
+    background:  #383838;
+    height: 100%;
+}
 .myname {
     color: #CFD8DC;
     /*font-size: 20px;*/
 }
-
+@media(max-width: 993px) {
+    .navbar-default {
+        /*display: none !important;*/
+    }
+    .col-md-3 {
+        height: auto;
+        /*display: none;*/
+    }
+    /*.navbar-default .navbar-collapse {
+        height: 200px !important;
+    }*/
+}
 @media(min-width: 992px) {
     .navbar-default .navbar-collapse {
         border: 0 none;
         -webkit-box-shadow: none;
         box-shadow: none;
+        /*height: 100% !important;*/
     }
     .navbar-default .navbar-collapse h3{
         color: #CFD8DC;

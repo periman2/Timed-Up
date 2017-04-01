@@ -27,7 +27,7 @@
     </head>
     <body>
     <div class="row mainrow">
-            <div class="col-sm-3 navig">
+            <div class="col-md-3 navig">
                 <nav class = "navbar navbar-default navbar-fixed-side" role="navigation">
                     <div class = "navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-exi-collapse">
@@ -48,7 +48,6 @@
                             <li><a href = "/login">Login</a></li>
                             <li><a href = "/register">Sign Up</a></li>
                         <% } else { %>
-                        
                             <hr>
                             <% if(currentUser.slack.username) {%>
                                 <li>
@@ -94,7 +93,7 @@
                     </div>
                 </nav>
             </div>
-            <div class="col-sm-9 landing">
+            <div class="col-md-9 landing">
                 <% if(error && error.length > 0) { %>
                         <div class="alert alert-danger" role="alert">
                             <%= error %>

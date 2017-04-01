@@ -149,7 +149,7 @@ router.post("/timedup-groupinfo", function(req, res){
                 });
             }
         } else {
-            res.json({text: "This command won't work for direct messages. You'll have to be in a public or privet channel."});
+            res.json({text: "This command won't work for direct messages. You'll have to be in a public or private channel."});
         }
     } else {
         res.json({text: "YOU ARE NOT VERIRFIED TO DO THAT. SIGN IN TO A TEAM AND THE TIMED-UP APP FIRST."});
@@ -328,7 +328,7 @@ router.post("/timedup-makegroup", function(req, res){
                 });
             }
         } else {
-            res.json({text: "This command won't work for direct messages. You'll have to be in a public or privet channel."});
+            res.json({text: "This command won't work for direct messages. You'll have to be in a public or private channel."});
         }
     } else {
         res.json({text: "YOU ARE NOT VERIRFIED TO DO THAT. \nSIGN IN TO A TEAM AND THE TIMED-UP APP FIRST."});

@@ -2,7 +2,7 @@
 #members {
     margin: 2%;
     padding: 2%;
-    max-height: 150px;
+    max-height: 110px;
     overflow-y: auto;
     border-top: 2px solid rgba(50, 50, 50, 0.4);
     border-bottom: 2px solid rgba(50, 50, 50, 0.4);
@@ -26,7 +26,7 @@
 .mycomfriends {
     font-size: 17px;
     padding: 10px;
-    max-height: 200px;
+    max-height: 140px;
     overflow-y: auto;
     padding: 13px;
 }
@@ -45,12 +45,11 @@
 
 .mycomtimes {    font-size: 17px;
     padding: 10px;
-    max-height: 200px;
+    max-height: 160px;
     overflow-y: auto;
     padding: 13px;
     border-top: 2px solid rgba(50, 50, 50, 0.4);
     border-bottom: 2px solid rgba(50, 50, 50, 0.4);
-    max-height: 300px;
 }
 
 .mycomtimes p {
@@ -81,7 +80,7 @@
     cursor: pointer;
 }
 
-.besttimes {
+/*.besttimes {
     background-color: #e7e7e7;
     max-height: 400px;
     padding: 30px;
@@ -96,7 +95,7 @@
 .allmembers:hover, .onlycommon:hover, .pairs:hover {
     background-color: rgba(153, 153, 153, 1);
     color: #e7e7e7;
-}
+}*/
 
 .active  {
     background-color: #212121!important;
