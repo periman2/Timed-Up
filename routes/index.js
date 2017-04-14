@@ -21,7 +21,6 @@ router.get("/slack/botauth", function(req, res){
         client_secret: process.env.SLACK_CLIENT_SECRET_OFBOT,
         code: req.query.code
     }};
-    
     request.post('https://slack.com/api/oauth.access', data, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             var token = JSON.parse(body).access_token;
@@ -364,6 +363,10 @@ router.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);
 });
 
+router.get("/splash", function(req, res){
+    res.render("splash");
+});
+
 //go to sceduling page
 router.get("/myschedule",isloggedin,  function(req, res){
     Friendlist.find({authid: req.user._id}).populate("friends groups.authid groups.groupid").exec()
@@ -445,6 +448,8 @@ router.get("/:groupid", isloggedin,function(req, res){
         throw err;
     })
 })
+
+
 
 function isloggedin(req, res, next){
     if(req.isAuthenticated()) {

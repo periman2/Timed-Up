@@ -44,7 +44,8 @@ $(document).ready(function() {
             url: "/getfriendlist",
             success: function(list) {
                 //console.log(list.friends[0]);
-                var isonslack = $(".hasSclack")
+                getarrays();
+                var isonslack = $(".hasSclack");
                 var userdat = getuserdata;
                 var slackfriends = keeponlyslackids(list.friends);
                 //console.log("friendlist:", slackfriends, user);
@@ -503,8 +504,6 @@ $(document).ready(function() {
         return false;
     }
 
-    getarrays();
-
     function updatescheduler(newdata){
         // scheduler.clearAll();
         newdata.forEach(function(time){
@@ -517,27 +516,6 @@ $(document).ready(function() {
         });
         loaded = true;
     }
-    
-    
-    $("#submit").click(function(){
-        var array = makearray(hoursfromnow1,hoursfromnow2);
-        //var now = moment(mdy, 'MMMM Do, YYYY h:mm A').add(1,"minutes").toISOString()
-        var now = moment(mdy, 'MMMM Do, YYYY h:mm A').toISOString();
-        // console.log("the right 'now'", now, array);
-        // $.ajax({
-        //     type:"POST",
-        //     url:"/addarray",
-        //     data:{value: array, time: now},
-        //     success: function(data){
-        //         //console.log("done it!");
-        //         getarrays();
-        //     },
-        //     error: function(err){
-        //         console.log("something went wrong");
-        //     }
-        // })
-        // return false;
-    }); 
 
     function createarray(start, end) {
         loaded = false;

@@ -15,10 +15,10 @@ var express     = require("express"),
 
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
-indexRoutes = require("./routes/index");
-groupRoutes = require("./routes/groups");
-friendRoutes = require("./routes/friends");
-arrayRoutes = require("./routes/arrays");
+var indexRoutes = require("./routes/index");
+var groupRoutes = require("./routes/groups");
+var friendRoutes = require("./routes/friends");
+var arrayRoutes = require("./routes/arrays");
     
 
 mongoose.Promise = global.Promise;
@@ -31,7 +31,6 @@ app.use(methodOverride("_method"));
 app.use(flash());
 
 
-// User.remove();
 app.use(require("express-session")({
     secret: "eisai upervolika agrioteros malakas",
     resave: false,
@@ -105,8 +104,6 @@ passport.use(new SlackStrategy({
     //done(null, profile);
   }
 ));
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
 
 passport.serializeUser(function(user, done) {
     done(null, user);
@@ -139,9 +136,9 @@ var URL = process.env.DATABASEURL || "mongodb://localhost/timedup2"
 mongoose.connect(URL);
 var PORT = process.env.PORT || 3000;
 
-app.get("/data/:", function(req, res){
-    res.sendStatus(204);
-});
+// app.get("/data/:", function(req, res){
+//     res.sendStatus(204);
+// });
 
 app.get("*", function(req, res){
     res.sendStatus(204);

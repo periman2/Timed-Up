@@ -1,0 +1,47 @@
+body {
+    height: 100%;
+    background: grey;
+    font-family: "Montserrat";
+    background: -moz-radial-gradient(center, ellipse cover, rgba(214,214,214,1) 0%, rgba(168,168,168,1) 100%); /* ff3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(214,214,214,1)), color-stop(100%, rgba(168,168,168,1))); /* safari4+,chrome */
+    background:-webkit-radial-gradient(center, ellipse cover, rgba(214,214,214,1) 0%, rgba(168,168,168,1) 100%); /* safari5.1+,chrome10+ */
+    background: -o-radial-gradient(center, ellipse cover, rgba(214,214,214,1) 0%, rgba(168,168,168,1) 100%); /* opera 11.10+ */
+    background: -ms-radial-gradient(center, ellipse cover, rgba(214,214,214,1) 0%, rgba(168,168,168,1) 100%); /* ie10+ */
+    background:radial-gradient(ellipse at center, rgba(214,214,214,1) 0%, rgba(168,168,168,1) 100%); /* w3c */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#D6D6D6', endColorstr='#A8A8A8',GradientType=1 ); /* ie6-9 */
+}
+
+.mylogo {
+    width: 50%;
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+}
+
+.menu .col-md-4{
+    text-align: center;
+}
+
+.menu {
+    margin-top: 60px;
+    /*border-top: 1px solid grey;*/
+    border-bottom: 1px solid grey;
+    padding: 12px;
+}
+hr {
+    border-color: grey;
+}
+
+.first {
+    margin-top: 30px;
+    padding: 20px;
+    font-size: 16px;
+}
+
+.beg {
+    width: 60%;
+    margin-left: 20%;
+    font-size: 18px;
+}
