@@ -3,12 +3,12 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/splash.css">
     <link rel="stylesheet" href="/stylesheets/svglogo.css">
     <script type="text/javascript" src="/splash.js"></script>
@@ -20,7 +20,29 @@
                 <% include staticsvg.svg%>
             </div>
         </div>
-        <div class="menu">
+        <nav class="navbar navbar-default menu">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynav" aria-expanded="false">
+                        <span class="sr-only">Toggle Navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                
+                <div class="collapse navbar-collapse" id="mynav">
+                    <ul  class="nav nav-justified">
+                    <li><a href="https://timedupchingu.herokuapp.com/" class="btn btn-default" target="_blank">Visit the App</a></li>
+                    <li><a href="#work" class="btn btn-default">How does it work?</a></li>
+                    <li><a href="#slash" class="btn btn-default">Slash Commands</a></li>
+                    <li><a href="https://slack.com/oauth/authorize?&client_id=148707815554.153426475878&scope=commands,team:read,channels:history,channels:read,groups:read" class="btn btn-default" target="_blank" >Add to Slack!</a></li>
+                    <li><a href="#contact" class="btn btn-default">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--<div class="menu">
             <div class="row">
                 <div class="col-xs-2 col-xs-offset-1"><a href="https://timedupchingu.herokuapp.com/" target="_blank" class="btn btn-default">Visit the App</a></div>
                 <div class="col-xs-2"><a href="#work" class="btn btn-default">How does it work?</a></div>
@@ -28,7 +50,7 @@
                 <div class="col-xs-2"><a href="#slash" class="btn btn-default">Slash Commands</a></div>
                 <div class="col-xs-2"><a href="#contact" class="btn btn-default">Contact</a></div>
             </div>
-        </div>
+        </div>-->
         <div class="main">
             
             <div class="beginning">
