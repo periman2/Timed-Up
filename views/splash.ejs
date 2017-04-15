@@ -15,38 +15,160 @@
 </head>
 <body>
     <div class="container">
-        <div class="mylogo">
-            <% include staticsvg.svg%>
+        <div class="header">
+            <div class="mylogo">
+                <% include staticsvg.svg%>
+            </div>
         </div>
         <div class="menu">
             <div class="row">
-                <div class="col-md-4"><p class="btn btn-default btn-default">How does it work?</p></div>
-                <div class="col-md-4"><p class="btn btn-default">Add the bot to your team</p></div>
-                <div class="col-md-4"><p class="btn btn-default">Privacy Policy</p></div>
+                <div class="col-md-2 col-md-offset-1"><a href="https://timedupchingu.herokuapp.com/" target="_blank" class="btn btn-default">Visit the App</a></div>
+                <div class="col-md-2"><a href="#work" class="btn btn-default">How does it work?</a></div>
+                <div class="col-md-2"><a href="https://slack.com/oauth/authorize?&client_id=148707815554.153426475878&scope=commands,team:read,channels:history,channels:read,groups:read" target="_blank" class="btn btn-default">Add to Slack!</a></div>
+                <div class="col-md-2"><a href="#slash" class="btn btn-default">Slash Commands</a></div>
+                <div class="col-md-2"><a href="#contact" class="btn btn-default">Contact</a></div>
             </div>
         </div>
-        <div class="beginning">
-            <h2 class="text-center"><strong>Time coordination just got trivial!</strong></h2>
-            <div class="beg">
-                <p>
-                    With Timed-Up you can find the best time for a meeting between your team members in a few minutes no matter how many team members you have!
-                </p>
-                <hr>
+        <div class="main">
+            
+            <div class="beginning">
+                <h2 class="text-center"><strong>Time coordination just got trivial!</strong></h2>
+                <div class="beg">
+                    <p>
+                        With Timed-Up you can find the best time for a meeting between your team members 
+                        in a few minutes no matter how many team members your team has! 
+                        Featuring build in Slack integration and the Timed-Up Slack Bot to make this process even easier!
+                    </p>
+                    <br>
+                    <hr>
+                </div>
             </div>
-        </div>
-        <div class="first">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="desc">
-                        <p><em>
-                            After you login either by choosing the Slack method (recommended) or the local method, you should
-                             first add free time to your free time page! It's really easy to do. 
-                             Just drag and drop to add your free time.
-                        </em></p>
+            <div class="first">
+                <h2 class="text-center" id="work"><strong>How does it work?</strong></h2>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="desc">
+                            <h3>Add Free time!</h3>
+                            <p><em>
+                                After you login either by choosing the Slack method (recommended) or the local method, you should
+                                first add free time to your free time page! It's really easy to do. 
+                                Just drag and drop to add your free time.
+                            </em></p>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="imgfreetime">
+                            <img src="http://g.recordit.co/TQBYrBfUpn.gif" alt="Adding_free_time">
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-9">
-
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="imgfreetime">
+                            <img src="http://g.recordit.co/l1ezipea5Q.gif" alt="Adding_friends">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="desc right">
+                            <h3>Start adding friends and creating groups!</h3>
+                            <p><em>
+                                If you login using Slack all your team members that have also logged into the app will be automatically added to your friendlist.
+                                If you use a local account you will need to search and add friends first.
+                            </em></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="desc">
+                            <h3>Greate your first group!</h3>
+                            <p><em>
+                                To create a group manually just pick a group name and click on CREATE GROUP. To add members to that group simply select it and click on the names you want to add to it.
+                            </em></p>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="imgfreetime">
+                            <img src="http://g.recordit.co/4KVTcJo0qw.gif" alt="Create group manually.">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="desc">
+                            <p><em>
+                                ...Or create a group using a slash command. To access this functionality you need to install the Timed-Up bot into your team. 
+                                Keep in mind that this command automatically adds as group members the slack users of the channel from which it was called 
+                                and also have at some point logged into Timed-Up using the same Slack team.
+                            </em></p>
+                            <a class="btn btn-primary" href="https://slack.com/oauth/authorize?&client_id=148707815554.153426475878&scope=commands,team:read,channels:history,channels:read,groups:read">Add Timed-Up to Slack</a>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="imgfreetime long">
+                            <img src="http://g.recordit.co/arjfCx1ooa.gif" alt="Create group with command.">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7">
+                        
+                        <div class="imgfreetime Group">
+                            <img src="http://g.recordit.co/kpcFjRk9sk.gif" alt="Manage Group">
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-5">
+                        <div class="desc right">
+                            <h3>Manage and view your common time within a group page!</h3>
+                            <p><em>
+                                Now simply by going inside the group page you can view the common time of all your group members. 
+                                You will also get a list of all the members you personally have common time with and you and you can select any number of them to view your common time.
+                            </em></p>
+                        </div>
+                    </div>
+                </div>
+                <h2 class="text-center" id="slash"><strong>Slash Commands!</strong></h2>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="desc">
+                            <h3>/timedup-help</h3>
+                            <p><em>
+                                Gives a list of all the available commands.
+                            </em></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="desc">
+                            <h3>/timedup-makegroup</h3>
+                            <p><em>
+                                Creates a group in your Timed-Up account (if you have logged in the app using the Slack team you're in) with all the Timed-Up members that exist within the current Slack channel.
+                            </em></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="desc">
+                            <h3>/timedup-groupinfo</h3>
+                            <p><em>
+                                Gives you information about the created Group.
+                            </em></p>
+                        </div>
+                    </div>
+                </div>
+                <h2 class="text-center" id="contact"><strong>Contact</strong></h2>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="desc">
+                            <p>
+                                If you find any bugs or want to give any  feedback please send an email to: <strong>timedupapp@gmail.com</strong>.<br><br>
+                                If you're a member of the following Chingu teams: Chingu-Penguins, Chingu-Rhinos, Chingu-Iguanas or Chingu-Central, <br>
+                                my username is <strong>@periman</strong> or <strong>@peris</strong> you can also message me directly there.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

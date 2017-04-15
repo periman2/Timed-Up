@@ -50,7 +50,7 @@ router.get("/slack/botauth", function(req, res){
 router.post("/timedup-help", function(req, res){
     if(req.body.token === process.env.SLACK_BOT_TOKEN){
         let data = {
-        text: "To use the app go to: <" + websiteurl + " > \nAvailable commands are: \n /timedup-makegroup - Creates a group using the name and the members of the channel that have at some point sign in to the Timed-UP app using slack.(works with channels of 150 members or less) \n /timedup-groupinfo - Gives you the information of the group you've created based on the channel you're currently in. This works only if you have first created a group. \n /timedup-help - Gives you this information window... no I'm not underestimating your intelligence it just seemed right to add this."};
+        text: "To use the app go to: <" + websiteurl + " > \nAvailable commands are: \n /timedup-makegroup - Creates a group using the name and the members of the channel that have at some point sign in to the Timed-UP app using slack.(works with channels of 150 members or less) \n /timedup-groupinfo - Gives you the information of the group you've created based on the channel you're currently in. This works only if you have first created a group. \n /timedup-help - Gives you this information window."};
         res.json(data);
     } else {
         res.json({text: "YOU ARE NOT VERIRFIED TO DO THAT. SIGN IN TO A TEAM AND THE TIMED-UP APP FIRST."});

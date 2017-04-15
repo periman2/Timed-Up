@@ -9,6 +9,7 @@ body {
     background: -ms-radial-gradient(center, ellipse cover, rgba(214,214,214,1) 0%, rgba(168,168,168,1) 100%); /* ie10+ */
     background:radial-gradient(ellipse at center, rgba(214,214,214,1) 0%, rgba(168,168,168,1) 100%); /* w3c */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#D6D6D6', endColorstr='#A8A8A8',GradientType=1 ); /* ie6-9 */
+    padding-top: 250px;
 }
 
 .mylogo {
@@ -20,22 +21,54 @@ body {
     margin-top: 0;
 }
 
-.menu .col-md-4{
+.menu .col-md-3{
     text-align: center;
 }
 
 .menu {
-    margin-top: 60px;
+    background: inherit;
+    z-index: 9999;
+    width: 100%;
+    height: 100px;
+    padding: 30px;
+    margin-bottom: -100px;
     /*border-top: 1px solid grey;*/
     border-bottom: 1px solid grey;
     padding: 12px;
+    position: relative;
+}
+
+.menu .btn {
+    -webkit-box-shadow: 0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+    -moz-box-shadow:    0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+    box-shadow:         0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+}
+
+.menu-scrolled {
+    background: rgba(214,214,214,1);
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+    position: fixed;
+    top: 0;
+    width: 68.5%;
+}
+.header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.main {
+    position: relative;
+    padding: 200px 0 100px;
 }
 hr {
     border-color: grey;
 }
 
 .first {
-    margin-top: 30px;
+    margin-top: 50px;
     padding: 20px;
     font-size: 16px;
 }
@@ -44,4 +77,33 @@ hr {
     width: 60%;
     margin-left: 20%;
     font-size: 18px;
+}
+
+.imgfreetime img{
+    border-radius: 1em;
+    height: 50%;
+    max-width: 100%;
+    float: right;
+    -webkit-box-shadow: 0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+    -moz-box-shadow:    0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+    box-shadow:         0px 3px 11px 0px rgba(50, 50, 50, 0.52);
+}
+
+.long {
+    height: 250px;
+}
+.Group {
+    clear: both;
+    float: left;
+    width: 100%;
+}
+.right {
+    clear: both;
+    float: right;
+    text-align: right;
+}
+
+.row {
+    clear: both;
+    margin-top: 40px;
 }
