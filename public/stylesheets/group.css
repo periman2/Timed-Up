@@ -2,7 +2,7 @@
 #members {
     margin: 2%;
     padding: 2%;
-    max-height: 110px;
+    max-height: 5%;
     overflow-y: auto;
     border-top: 2px solid rgba(50, 50, 50, 0.4);
     border-bottom: 2px solid rgba(50, 50, 50, 0.4);
@@ -39,7 +39,7 @@
     font-size: 17px;
     border-left: 2px solid rgba(50, 50, 50, 0.4);
     padding: 10px;
-    height: 170px;
+    height: 10%;
     overflow-y: auto;
 }
 

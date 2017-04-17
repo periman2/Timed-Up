@@ -3,7 +3,7 @@
     padding: 0;
     margin: 0;
     background-color:#383838;
-    
+    /*height: 100%;*/
     color:#212121;
     border:0 none;
     font-size: 14px !important;
@@ -11,9 +11,12 @@
 
 .col-md-3 {
     background : #383838;
+    /*height: 100% !important;*/
+    /*overflow: scroll;*/
 }
 .navbar-default .navbar-collapse {
     background-color: #383838;
+    /*height: 100%;*/
 }
 .col-md-3 {
     background:  #383838;
@@ -24,16 +27,9 @@
     /*font-size: 20px;*/
 }
 @media(max-width: 993px) {
-    .navbar-default {
-        /*display: none !important;*/
-    }
     .col-md-3 {
-        height: auto;
-        /*display: none;*/
+        /*height: auto;*/
     }
-    /*.navbar-default .navbar-collapse {
-        height: 200px !important;
-    }*/
 }
 @media(min-width: 992px) {
     .navbar-default .navbar-collapse {

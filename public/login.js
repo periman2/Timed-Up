@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $(".loginform").delay(5000).fadeIn(1000);
+    $(".loginform").delay(3000).fadeIn(1000);
     $("#login").click(function(){
         $(".signupform").fadeOut(400);
         $(".loginform").delay(400).fadeIn(500);
@@ -9,7 +9,7 @@ $(document).ready(function() {
         $(".signupform").delay(400).fadeIn(500);
     });
 
-  $(".smcursor, .bigcursor").fadeIn(3000);
+  $(".smcursor, .bigcursor").fadeIn(2000);
   
   setTimeout(function(){
     $(".smcursor").addClass("firstanimationsm");

@@ -132,7 +132,7 @@ app.use(groupRoutes);
 app.use(arrayRoutes);
 app.use(indexRoutes);
 
-var URL = process.env.DATABASEURL || "mongodb://localhost/timedup2"
+var URL = process.env.DATABASEURL || "mongodb://localhost/timedup2";
 mongoose.connect(URL);
 var PORT = process.env.PORT || 3000;
 
