@@ -27,7 +27,7 @@
     font-size: 17px;
     padding: 10px;
     max-height: 140px;
-    overflow-y: auto;
+    overflow-x: auto;
     padding: 13px;
 }
 .mycomfriends input {
@@ -39,8 +39,9 @@
     font-size: 17px;
     border-left: 2px solid rgba(50, 50, 50, 0.4);
     padding: 10px;
-    height: 10%;
-    overflow-y: auto;
+    max-height: 220px;
+    /*height: 10%;*/
+    overflow-x: auto;
 }
 
 .mycomtimes {    font-size: 17px;
