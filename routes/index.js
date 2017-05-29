@@ -13,7 +13,7 @@ var Team = require("../models/teams");
 //===========================
 //ROUTES FOR TIMED-UP BOT
 //===========================
-var websiteurl = "https://timedupchingu.herokuapp.com/";
+var websiteurl = "https://timedup.herokuapp.com/";
 
 router.get("/slack/botauth", function(req, res){
     var data = {form: {
