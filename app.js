@@ -32,7 +32,7 @@ app.use(flash());
 
 
 app.use(require("express-session")({
-    secret: "eisai upervolika agrioteros malakas",
+    secret: "asdfsdfdsf dsf dsf dfsafdafefevcxgx x",
     resave: false,
     saveUninitialized: false
 }));
